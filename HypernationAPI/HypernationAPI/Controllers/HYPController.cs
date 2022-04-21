@@ -20,16 +20,15 @@ namespace HypernationAPI.Controllers
         {
             HttpResponseMessage result = null;
             var httpRequest = HttpContext.Current.Request;
-            var filePath = "";
-            var modifiedFilePath = "";
+
             if (httpRequest.Files.Count > 0)
             {
                 //var docfiles = new List<string>();
                 foreach (string file in httpRequest.Files)
                 {
                     var postedFile = httpRequest.Files[file];
-                    filePath = HttpContext.Current.Server.MapPath("~/TempDocs/" + postedFile.FileName);
-                    modifiedFilePath = HttpContext.Current.Server.MapPath("~/TempDocs/Modified/m_" + postedFile.FileName);
+                    var filePath = HttpContext.Current.Server.MapPath("~/TempDocs/" + postedFile.FileName);
+                    var modifiedFilePath = HttpContext.Current.Server.MapPath("~/TempDocs/Modified/m_" + postedFile.FileName);
                     postedFile.SaveAs(filePath);
                     //docfiles.Add(filePath);
 
