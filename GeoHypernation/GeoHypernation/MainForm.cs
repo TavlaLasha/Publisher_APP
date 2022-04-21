@@ -55,7 +55,7 @@ namespace GeoHypernation
                             {
                                 try
                                 {
-                                    wwd.ProcessWordDocument(FileName, saveFileDialog.FileName);
+                                    wwd.ProcessWordDocument(@"C:\Users\lasha\Desktop\demo2.docx", saveFileDialog.FileName);
                                 }
                                 finally
                                 {
@@ -107,8 +107,8 @@ namespace GeoHypernation
                     OpenFileDialog openFileDialog1 = new OpenFileDialog()
                     {
                         FileName = "Select MS Word Document",
-                        Filter = "Word Document (*.xml)|*.xml",
-                        //Filter = "Word Document (*.docx)|*.docx|Word Document (*.doc)|*.doc|Rich Text Format (*.rtf)|*.rtf",
+                        //Filter = "Word Document (*.xml)|*.xml",
+                        Filter = "Word Document (*.docx)|*.docx|Word Document (*.doc)|*.doc|Rich Text Format (*.rtf)|*.rtf",
                         Title = "Open MS Word Document"
                     };
                     DialogResult result = openFileDialog1.ShowDialog(); // Show the dialog.

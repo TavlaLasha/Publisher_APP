@@ -1,6 +1,7 @@
 ﻿using Microsoft.Office.Interop.Word;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -8,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace HypBLL
 {
-    internal class WorkWithDoc
+    public class WorkWithDoc
     {
-        public bool ProcessWordDocument(object filename, object SaveAs)
+        public static bool ProcessWordDocument(object filename, object SaveAs)
         {
             Application wordApp = new Application();
             object missing = Missing.Value;
@@ -31,13 +32,13 @@ namespace HypBLL
                                                     ref missing, ref missing, ref missing, ref missing);
                 WordDoc.Activate();
 
-                Object xmlFormat = WdSaveFormat.wdFormatXML;
+                //Object xmlFormat = WdSaveFormat.wdFormatXML;
                 //Object f = fileName;
 
                 HYP hyp = new HYP();
                 wordApp = hyp.HYPExecute(wordApp);
 
-                WordDoc.SaveAs(ref SaveAs, ref xmlFormat, ref missing, ref missing,
+                WordDoc.SaveAs(ref SaveAs, ref missing, ref missing, ref missing,
                                             ref missing, ref missing, ref missing,
                                             ref missing, ref missing, ref missing,
                                             ref missing, ref missing, ref missing,

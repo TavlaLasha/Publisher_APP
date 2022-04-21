@@ -1,32 +1,64 @@
-﻿using DocumentFormat.OpenXml;
-using DocumentFormat.OpenXml.Packaging;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Spire.Doc;
-//using Microsoft.Office.Interop.Word;
-using System.Xml.Linq;
+﻿using HypBLL;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Threading.Tasks;
+using System.Web;
+using System.Web.Http;
 
 namespace HypernationAPI.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class HYPController : ControllerBase
+    public class HYPController : ApiController
     {
-        [HttpPost(Name = "HypernateDoc")]
-        public string HypernateDoc(string docXml)
+        [HttpPost]
+        [Route("api/TakeDoc")]
+        public HttpResponseMessage HypernateDocAsync()
         {
-            Document doc = new Document();
-            Stream st = new MemoryStream();
+            HttpResponseMessage result = null;
+            var httpRequest = HttpContext.Current.Request;
+            var filePath = "";
+            var modifiedFilePath = "";
+            if (httpRequest.Files.Count > 0)
+            {
+                //var docfiles = new List<string>();
+                foreach (string file in httpRequest.Files)
+                {
+                    var postedFile = httpRequest.Files[file];
+                    filePath = HttpContext.Current.Server.MapPath("~/TempDocs/" + postedFile.FileName);
+                    modifiedFilePath = HttpContext.Current.Server.MapPath("~/TempDocs/Modified/m_" + postedFile.FileName);
+                    postedFile.SaveAs(filePath);
+                    //docfiles.Add(filePath);
 
-            //byte[] existingData = System .GetBytes("foo");
-            //MemoryStream ms = new MemoryStream();
-            //ms.Write(existingData, 0, existingData.Length);
-            //WriteUnknownData(ms);
+                    if (!WorkWithDoc.ProcessWordDocument(filePath, modifiedFilePath))
+                    {
+                        result = Request.CreateResponse(HttpStatusCode.ExpectationFailed);
+                    }
 
-            doc.LoadFromStream(docXml.ToStream(), FileFormat.Xml);
-            doc.SaveToFile("", FileFormat.Docx);
 
-            return docXml;
+                    result = new HttpResponseMessage(HttpStatusCode.OK)
+                    {
+                        Content = new StreamContent(File.OpenRead(modifiedFilePath))
+
+                    };
+                    result.Content.Headers.ContentDisposition =
+                    new ContentDispositionHeaderValue("attachment")
+                    {
+                        FileName = postedFile.FileName
+                    };
+                    var contentType = MimeMapping.GetMimeMapping(Path.GetExtension(modifiedFilePath));
+                    result.Content.Headers.ContentType = new MediaTypeHeaderValue(contentType);
+                }
+            }
+            else
+            {
+                result = Request.CreateResponse(HttpStatusCode.BadRequest);
+            }
+
+            return result;
         }
     }
 }

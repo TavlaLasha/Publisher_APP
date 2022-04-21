@@ -1,4 +1,4 @@
-﻿using HypernationAPI.BLL.Interfaces;
+﻿using HypBLL.Interfaces;
 using Microsoft.Office.Interop.Word;
 using System;
 using System.Collections.Generic;
@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace HypBLL
 {
-    internal class HYP : IHYP
+    public class HYP : IHYP
     {
         public Application HYPExecute(Application wordApp)
         {
