@@ -55,7 +55,7 @@ namespace GeoHypernation
                             {
                                 try
                                 {
-                                    wwd.ProcessWordDocument(@"C:\Users\lasha\Desktop\demo2.docx", saveFileDialog.FileName);
+                                    wwd.ProcessWordDocument(FileName, saveFileDialog.FileName);
                                 }
                                 finally
                                 {

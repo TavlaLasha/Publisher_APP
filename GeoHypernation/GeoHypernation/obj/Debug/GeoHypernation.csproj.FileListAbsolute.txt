@@ -13,7 +13,6 @@ C:\Users\lasha\Desktop\Project\Publisher_APP\GeoHypernation\GeoHypernation\bin\D
 C:\Users\lasha\Desktop\Project\Publisher_APP\GeoHypernation\GeoHypernation\bin\Debug\GeoHypernation.exe
 C:\Users\lasha\Desktop\Project\Publisher_APP\GeoHypernation\GeoHypernation\bin\Debug\GeoHypernation.pdb
 C:\Users\lasha\Desktop\Project\Publisher_APP\GeoHypernation\GeoHypernation\obj\Debug\GeoHypernation.csproj.AssemblyReference.cache
-C:\Users\lasha\Desktop\Project\Publisher_APP\GeoHypernation\GeoHypernation\obj\Debug\GeoHypernation.csproj.SuggestedBindingRedirects.cache
 C:\Users\lasha\Desktop\Project\Publisher_APP\GeoHypernation\GeoHypernation\obj\Debug\GeoHypernation.MainForm.resources
 C:\Users\lasha\Desktop\Project\Publisher_APP\GeoHypernation\GeoHypernation\obj\Debug\GeoHypernation.Properties.Resources.resources
 C:\Users\lasha\Desktop\Project\Publisher_APP\GeoHypernation\GeoHypernation\obj\Debug\GeoHypernation.csproj.GenerateResource.cache

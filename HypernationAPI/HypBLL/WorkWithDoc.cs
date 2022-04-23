@@ -20,7 +20,7 @@ namespace HypBLL
 
             if (File.Exists((string)filename))
             {
-                object readOnly = false;
+                object readOnly = true;
 
                 object isvisible = false;
 
@@ -49,6 +49,51 @@ namespace HypBLL
                 return true;
             }
             else
+            {
+                return false;
+            }
+        }
+        public static bool ConvertToPDF(string input, string output, WdSaveFormat format)
+        {
+            try
+            {
+                // Create an instance of Word.exe
+                _Application oWord = new Application
+                {
+                    // Make this instance of word invisible (Can still see it in the taskmgr).
+                    Visible = false
+                };
+
+                // Interop requires objects.
+                object oMissing = Missing.Value;
+                object isVisible = true;
+                object readOnly = true;     // Does not cause any word dialog to show up
+                                            //object readOnly = false;  // Causes a word object dialog to show at the end of the conversion
+                object oInput = input;
+                object oOutput = output;
+                object oFormat = format;
+
+                // Load a document into our instance of word.exe
+                _Document oDoc = oWord.Documents.Open(
+                    ref oInput, ref oMissing, ref readOnly, ref oMissing, ref oMissing,
+                    ref oMissing, ref oMissing, ref oMissing, ref oMissing, ref oMissing,
+                    ref oMissing, ref isVisible, ref oMissing, ref oMissing, ref oMissing, ref oMissing
+                    );
+
+                // Make this document the active document.
+                oDoc.Activate();
+
+                // Save this document using Word
+                oDoc.SaveAs(ref oOutput, ref oFormat, ref oMissing, ref oMissing,
+                    ref oMissing, ref oMissing, ref oMissing, ref oMissing, ref oMissing,
+                    ref oMissing, ref oMissing, ref oMissing, ref oMissing, ref oMissing, ref oMissing, ref oMissing
+                    );
+
+                // Always close Word.exe.
+                oWord.Quit(ref oMissing, ref oMissing, ref oMissing);
+                return true;
+            }
+            catch
             {
                 return false;
             }
