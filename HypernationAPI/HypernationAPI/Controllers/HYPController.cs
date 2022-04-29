@@ -14,7 +14,6 @@ using System.Web.Http.Cors;
 
 namespace HypernationAPI.Controllers
 {
-    [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class HYPController : ApiController
     {
         [HttpPost]
