@@ -10,9 +10,11 @@ using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
+using System.Web.Http.Cors;
 
 namespace HypernationAPI.Controllers
 {
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class HYPController : ApiController
     {
         [HttpPost]
@@ -70,12 +72,54 @@ namespace HypernationAPI.Controllers
         }
 
         [HttpGet]
+        [Route("api/GetDocPage/{fileName}")]
+        public HttpResponseMessage GetDocPage(string fileName, int page=1)
+        {
+            try
+            {
+                if (fileName == "" || fileName == " ")
+                {
+                    throw new HttpException("File Name is Required Parameter");
+                }
+                HttpResponseMessage result;
+                var filePath = HttpContext.Current.Server.MapPath("~/TempDocs/Modified/m_" + fileName);
+                if (!File.Exists(filePath))
+                {
+                    filePath = HttpContext.Current.Server.MapPath($"~/TempDocs/{fileName}");
+                    if (!File.Exists(filePath))
+                    {
+                        throw new HttpException("File does not exist in temporary storage");
+                    }
+                }
+
+
+
+                result = new HttpResponseMessage(HttpStatusCode.OK)
+                {
+                    Content = new StringContent($"{fileName}")
+                };
+                return result;
+            }
+            catch (HttpException ex)
+            {
+                HttpResponseMessage result = Request.CreateResponse(HttpStatusCode.BadRequest);
+                result.Content = new StringContent(ex.Message);
+                return result;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return Request.CreateResponse(HttpStatusCode.InternalServerError);
+            }
+        }
+
+        [HttpGet]
         [Route("api/HypDoc/{fileName}")]
         public HttpResponseMessage HypernateDoc(string fileName)
         {
             try
             {
-                if(fileName == "")
+                if(fileName == "" || fileName == " ")
                 {
                     throw new HttpException("File Name is Required Parameter");
                 }

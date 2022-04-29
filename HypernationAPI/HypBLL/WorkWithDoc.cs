@@ -53,6 +53,46 @@ namespace HypBLL
                 return false;
             }
         }
+        //public static Application GetPage(object filename, int page = 1)
+        //{
+            //Application wordApp = new Application();
+            //object missing = Missing.Value;
+
+            //Document WordDoc;
+
+            //if (File.Exists((string)filename))
+            //{
+            //    object readOnly = true;
+
+            //    object isvisible = false;
+
+            //    wordApp.Visible = false;
+            //    WordDoc = wordApp.Documents.Open(ref filename, ref missing, ref readOnly,
+            //                                        ref missing, ref missing, ref missing,
+            //                                        ref missing, ref missing, ref missing,
+            //                                        ref missing, ref missing, ref missing,
+            //                                        ref missing, ref missing, ref missing, ref missing);
+            //    WordDoc.Activate();
+
+            //    var range = WordDoc.Range();
+            //    range.Start = WordDoc.GoTo(WdGoToItem.wdGoToPage, WdGoToDirection.wdGoToAbsolute, pageStart).Start;
+
+            //    if (pageend < WordDoc.ComputeStatistics(WdStatistic.wdStatisticPages, false))
+            //    {
+            //        range.End = WordDoc.GoTo(WdGoToItem.wdGoToPage, WdGoToDirection.wdGoToAbsolute, pageend + 1).End - 1;
+            //    }
+
+            //    range.Copy();
+
+            //    WordDoc.Close();
+            //    wordApp.Quit();
+            //    return true;
+            //}
+            //else
+            //{
+            //    return false;
+            //}
+        //}
         public static bool ConvertToPDF(string input, string output, WdSaveFormat format)
         {
             try
