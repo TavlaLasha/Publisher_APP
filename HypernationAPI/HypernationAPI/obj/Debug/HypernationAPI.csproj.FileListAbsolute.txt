@@ -85,3 +85,13 @@ C:\Users\lasha\Desktop\Project\Publisher_APP\HypernationAPI\HypernationAPI\obj\D
 C:\Users\lasha\Desktop\Project\Publisher_APP\HypernationAPI\HypernationAPI\obj\Debug\HypernationAPI.csproj.CopyComplete
 C:\Users\lasha\Desktop\Project\Publisher_APP\HypernationAPI\HypernationAPI\obj\Debug\HypernationAPI.dll
 C:\Users\lasha\Desktop\Project\Publisher_APP\HypernationAPI\HypernationAPI\obj\Debug\HypernationAPI.pdb
+C:\Users\lasha\Desktop\Project\Publisher_APP\HypernationAPI\HypernationAPI\bin\System.Web.Cors.dll
+C:\Users\lasha\Desktop\Project\Publisher_APP\HypernationAPI\HypernationAPI\bin\System.Web.Http.Cors.dll
+C:\Users\lasha\Desktop\Project\Publisher_APP\HypernationAPI\HypernationAPI\bin\System.Web.Http.Cors.xml
+C:\Users\lasha\Desktop\Project\Publisher_APP\HypernationAPI\HypernationAPI\bin\DocumentFormat.OpenXml.dll
+C:\Users\lasha\Desktop\Project\Publisher_APP\HypernationAPI\HypernationAPI\bin\OpenXmlPowerTools.dll
+C:\Users\lasha\Desktop\Project\Publisher_APP\HypernationAPI\HypernationAPI\bin\System.Management.Automation.dll
+C:\Users\lasha\Desktop\Project\Publisher_APP\HypernationAPI\HypernationAPI\bin\HypBLL.dll.config
+C:\Users\lasha\Desktop\Project\Publisher_APP\HypernationAPI\HypernationAPI\bin\DocumentFormat.OpenXml.xml
+C:\Users\lasha\Desktop\Project\Publisher_APP\HypernationAPI\HypernationAPI\bin\Models.dll
+C:\Users\lasha\Desktop\Project\Publisher_APP\HypernationAPI\HypernationAPI\bin\Models.pdb

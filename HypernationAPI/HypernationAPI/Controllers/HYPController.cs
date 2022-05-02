@@ -1,5 +1,6 @@
 ﻿using HypBLL;
 using Microsoft.Office.Interop.Word;
+using Models.DataViewModels;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -38,17 +39,24 @@ namespace HypernationAPI.Controllers
                         if (File.Exists(filePath))
                         {
                             FileName = $"{Path.GetFileNameWithoutExtension(FileName)}{DateTime.Now.Ticks}{contentType}";
-                            string newFilePath = HttpContext.Current.Server.MapPath($"~/TempDocs/{FileName}");
-                            postedFile.SaveAs(newFilePath);
+                            filePath = HttpContext.Current.Server.MapPath($"~/TempDocs/{FileName}");
+                        }
+                        postedFile.SaveAs(filePath);
+
+                        FileInfo fs = new FileInfo(filePath);
+                        string FileSize;
+                        if (fs.Length/1024 > 1024)
+                        {
+                            FileSize = $"{fs.Length / 1048576} MB";
                         }
                         else
                         {
-                            postedFile.SaveAs(filePath);
+                            FileSize = $"{fs.Length / 1024} Kb";
                         }
 
                         result = new HttpResponseMessage(HttpStatusCode.Accepted)
                         {
-                            Content = new StringContent($"{FileName}")
+                            Content = new StringContent($"{FileName};{FileSize};{WorkWithDoc.GetPageCount(filePath)}")
                         };
                     }
                     else
@@ -91,11 +99,11 @@ namespace HypernationAPI.Controllers
                     }
                 }
 
-
+                var data = WorkWithDoc.GetPage(filePath, page);
 
                 result = new HttpResponseMessage(HttpStatusCode.OK)
                 {
-                    Content = new StringContent($"{fileName}")
+                    Content = new StringContent(data)
                 };
                 return result;
             }
@@ -208,9 +216,7 @@ namespace HypernationAPI.Controllers
             }
             catch (HttpException ex)
             {
-                HttpResponseMessage result = Request.CreateResponse(HttpStatusCode.BadRequest);
-                result.Content = new StringContent(ex.Message);
-                return result;
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ex.Message);
             }
             catch (Exception ex)
             {
