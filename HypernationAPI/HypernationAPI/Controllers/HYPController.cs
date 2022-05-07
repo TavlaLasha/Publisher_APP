@@ -1,6 +1,5 @@
 ﻿using HypBLL;
 using Microsoft.Office.Interop.Word;
-using Models.DataViewModels;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -56,8 +55,9 @@ namespace HypernationAPI.Controllers
 
                         result = new HttpResponseMessage(HttpStatusCode.Accepted)
                         {
-                            Content = new StringContent($"{FileName};{FileSize};{WorkWithDoc.GetPageCount(filePath)}")
+                            Content = new StringContent($"{FileName};{FileSize}")
                         };
+                        result.Headers.Add("PageCount", "3");
                     }
                     else
                     {
@@ -98,13 +98,14 @@ namespace HypernationAPI.Controllers
                         throw new HttpException("File does not exist in temporary storage");
                     }
                 }
-
-                var data = WorkWithDoc.GetPage(filePath, page);
+                WorkWithDoc wwd = new WorkWithDoc();
+                var data = wwd.GetPage(filePath, page);
 
                 result = new HttpResponseMessage(HttpStatusCode.OK)
                 {
-                    Content = new StringContent(data)
+                    Content = new StringContent(data[0])
                 };
+                result.Headers.Add("PageCount", data[1]);
                 return result;
             }
             catch (HttpException ex)
@@ -116,7 +117,7 @@ namespace HypernationAPI.Controllers
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
-                return Request.CreateResponse(HttpStatusCode.InternalServerError);
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, ex.Message);
             }
         }
 

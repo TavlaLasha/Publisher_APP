@@ -93,5 +93,3 @@ C:\Users\lasha\Desktop\Project\Publisher_APP\HypernationAPI\HypernationAPI\bin\O
 C:\Users\lasha\Desktop\Project\Publisher_APP\HypernationAPI\HypernationAPI\bin\System.Management.Automation.dll
 C:\Users\lasha\Desktop\Project\Publisher_APP\HypernationAPI\HypernationAPI\bin\HypBLL.dll.config
 C:\Users\lasha\Desktop\Project\Publisher_APP\HypernationAPI\HypernationAPI\bin\DocumentFormat.OpenXml.xml
-C:\Users\lasha\Desktop\Project\Publisher_APP\HypernationAPI\HypernationAPI\bin\Models.dll
-C:\Users\lasha\Desktop\Project\Publisher_APP\HypernationAPI\HypernationAPI\bin\Models.pdb

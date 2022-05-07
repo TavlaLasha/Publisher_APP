@@ -52,29 +52,29 @@ namespace HypBLL
                 return false;
             }
         }
-        public static int GetPageCount(object filename)
-        {
-            var application = new Application();
+        //public static int GetPageCount(object filename)
+        //{
+        //    var application = new Application();
 
-            object missing = Missing.Value;
-            object readOnly = true;
-            object isVisible = false;
-            application.Visible = false;
-            var document = application.Documents.Open(ref filename, ref missing, ref readOnly,
-                                                ref missing, ref missing, ref missing,
-                                                ref missing, ref missing, ref missing,
-                                                ref missing, ref missing, isVisible,
-                                                ref missing, ref missing, ref missing, ref missing);
+        //    object missing = Missing.Value;
+        //    object readOnly = true;
+        //    object isVisible = false;
+        //    application.Visible = false;
+        //    var document = application.Documents.Open(ref filename, ref missing, ref readOnly,
+        //                                        ref missing, ref missing, ref missing,
+        //                                        ref missing, ref missing, ref missing,
+        //                                        ref missing, ref missing, isVisible,
+        //                                        ref missing, ref missing, ref missing, ref missing);
 
-            // Get the page count.
-            var numberOfPages = document.ComputeStatistics(WdStatistic.wdStatisticPages, false);
-            // Close word.
-            //document.Close();
-            application.Quit(WdSaveOptions.wdDoNotSaveChanges, ref missing, ref missing);
+        //    // Get the page count.
+        //    var numberOfPages = document.ComputeStatistics(WdStatistic.wdStatisticPages, false);
+        //    // Close word.
+        //    //document.Close();
+        //    application.Quit(WdSaveOptions.wdDoNotSaveChanges, ref missing, ref missing);
 
-            return numberOfPages;
-        }
-        public static string GetPage(object filename, int page = 1)
+        //    return numberOfPages;
+        //}
+        public string[] GetPage(object filename, int page = 1)
         {
             if (File.Exists((string)filename))
             {
@@ -94,20 +94,30 @@ namespace HypBLL
                                                     ref missing, ref missing, ref missing, ref missing);
                 WordDoc.Activate();
 
+                int PageCount = WordDoc.ComputeStatistics(WdStatistic.wdStatisticPages, false);
+                if(PageCount < page)
+                {
+                    throw new InvalidOperationException("Page number exceeded document length");
+                }
+
                 var range = WordDoc.Range();
                 range.Start = WordDoc.GoTo(WdGoToItem.wdGoToPage, WdGoToDirection.wdGoToAbsolute, page).Start;
 
-                //if (pageend < WordDoc.ComputeStatistics(WdStatistic.wdStatisticPages, false))
-                //{
+                if (page < PageCount)
+                {
                     range.End = WordDoc.GoTo(WdGoToItem.wdGoToPage, WdGoToDirection.wdGoToAbsolute, page + 1).End - 1;
-                //}
-                range.Copy();
-                _Application app = new Application();
-                app.Visible = false;
-                _Document doc2 = app.Documents.Add();
-                doc2.Range().Paste();
-                WordDoc.Close();
-                wordApp.Quit();
+                }
+                //range.Copy();
+
+                //_Application app = new Application();
+
+                _Document doc2 = wordApp.Documents.Add();
+                doc2.Activate();
+
+                doc2.Range().FormattedText = range.FormattedText;
+
+                WordDoc.Close(WdSaveOptions.wdDoNotSaveChanges);
+                //wordApp.Quit();
 
                 doc2.SaveAs(ref tempPath, ref missing, ref missing, ref missing,
                                             ref missing, ref missing, ref missing,
@@ -115,7 +125,7 @@ namespace HypBLL
                                             ref missing, ref missing, ref missing,
                                             ref missing, ref missing, ref missing);
                 doc2.Close(WdSaveOptions.wdDoNotSaveChanges);
-                app.Quit();
+                wordApp.Quit();
 
 
                 HTMLConverter s = new HTMLConverter();
@@ -125,11 +135,11 @@ namespace HypBLL
                     File.Delete((string)tempPath);
                 }
 
-                return data;
+                return new string[2] { data, PageCount.ToString() };
             }
             else
             {
-                return "";
+                return new string[0];
             }
         }
         public static bool ConvertToPDF(string input, string output, WdSaveFormat format)
