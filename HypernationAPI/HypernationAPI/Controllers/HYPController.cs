@@ -1,5 +1,6 @@
 ﻿using HypBLL;
 using Microsoft.Office.Interop.Word;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -7,6 +8,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
@@ -53,11 +55,13 @@ namespace HypernationAPI.Controllers
                             FileSize = $"{fs.Length / 1024} Kb";
                         }
 
+                        var jObject = JsonConvert.SerializeObject(new Dictionary<string, string>() { { "FileName", FileName }, { "FileSize", FileSize } });
+
                         result = new HttpResponseMessage(HttpStatusCode.Accepted)
                         {
-                            Content = new StringContent($"{FileName};{FileSize}")
+                            Content = new StringContent(jObject, Encoding.UTF8, "application/json")
+                            //Content = new StringContent($"{FileName};{FileSize}")
                         };
-                        result.Headers.Add("PageCount", "3");
                     }
                     else
                     {
@@ -137,10 +141,10 @@ namespace HypernationAPI.Controllers
                 {
                     var modifiedFilePath = HttpContext.Current.Server.MapPath("~/TempDocs/Modified/m_" + fileName);
 
-                    if (!WorkWithDoc.ProcessWordDocument(filePath, modifiedFilePath))
+                    if (!WorkWithDoc.HypernateWordDocument(filePath, modifiedFilePath))
                     {
                         result = Request.CreateResponse(HttpStatusCode.InternalServerError);
-                        result.Content = new StringContent("API Failed In Hypernating Given File");
+                        result.Content = new StringContent("API Failed To Hypernate Given File");
                         return result;
                     }
 
@@ -224,6 +228,15 @@ namespace HypernationAPI.Controllers
                 Console.WriteLine(ex.Message);
                 return Request.CreateResponse(HttpStatusCode.InternalServerError);
             }
+        }
+
+        [HttpGet]
+        [Route("api/Test")]
+        public HttpResponseMessage Test()
+        {
+            HttpResponseMessage result = Request.CreateResponse((HttpStatusCode)418);
+            result.Content = new StringContent("You are the best! Keep on going!");
+            return result;
         }
 
     }

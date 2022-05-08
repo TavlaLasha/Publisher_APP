@@ -10,6 +10,11 @@ namespace HypBLL
 {
     public class HYP : IHYP
     {
+        //TODO: constructor
+        //public HYP()
+        //{
+
+        //}
         public Application HYPExecute(Application wordApp)
         {
             wordApp = HYPconsonants(wordApp);

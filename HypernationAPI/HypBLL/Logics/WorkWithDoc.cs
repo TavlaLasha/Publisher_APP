@@ -13,7 +13,7 @@ namespace HypBLL
 {
     public class WorkWithDoc
     {
-        public static bool ProcessWordDocument(object filename, object SaveAs)
+        public static bool HypernateWordDocument(object filename, object SaveAs)
         {
             Application wordApp = new Application();
             object missing = Missing.Value;
@@ -107,7 +107,6 @@ namespace HypBLL
                 {
                     range.End = WordDoc.GoTo(WdGoToItem.wdGoToPage, WdGoToDirection.wdGoToAbsolute, page + 1).End - 1;
                 }
-                //range.Copy();
 
                 //_Application app = new Application();
 
