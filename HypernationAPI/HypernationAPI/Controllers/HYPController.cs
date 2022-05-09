@@ -52,15 +52,15 @@ namespace HypernationAPI.Controllers
                         postedFile.SaveAs(filePath);
 
                         FileInfo fs = new FileInfo(filePath);
-                        string FileSize;
-                        if (fs.Length/1024 > 1024)
-                        {
-                            FileSize = $"{fs.Length / 1048576} MB";
-                        }
-                        else
-                        {
-                            FileSize = $"{fs.Length / 1024} Kb";
-                        }
+                        string FileSize = fs.Length.ToString();
+                        //if (fs.Length/1024 > 1024)
+                        //{
+                        //    FileSize = $"{fs.Length / 1048576} MB";
+                        //}
+                        //else
+                        //{
+                        //    FileSize = $"{fs.Length / 1024} Kb";
+                        //}
 
                         var jObject = JsonConvert.SerializeObject(new Dictionary<string, string>() { { "FileName", FileName }, { "FileSize", FileSize } });
 
