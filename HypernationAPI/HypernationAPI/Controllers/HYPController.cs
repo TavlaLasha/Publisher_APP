@@ -1,4 +1,5 @@
 ﻿using HypBLL;
+using HypBLL.Interfaces;
 using Microsoft.Office.Interop.Word;
 using Newtonsoft.Json;
 using System;
@@ -18,6 +19,12 @@ namespace HypernationAPI.Controllers
 {
     public class HYPController : ApiController
     {
+        readonly IWorkWithDoc _workWithDoc;
+        public HYPController(IWorkWithDoc workWithDoc)
+        {
+            _workWithDoc = workWithDoc;
+        }
+
         [HttpPost]
         [Route("api/TakeDoc")]
         public HttpResponseMessage TakeDoc()
@@ -93,7 +100,7 @@ namespace HypernationAPI.Controllers
                     throw new HttpException("File Name is Required Parameter");
                 }
                 HttpResponseMessage result;
-                var filePath = HttpContext.Current.Server.MapPath("~/TempDocs/Modified/m_" + fileName);
+                var filePath = HttpContext.Current.Server.MapPath($"~/TempDocs/Modified/m_{fileName}");
                 if (!File.Exists(filePath))
                 {
                     filePath = HttpContext.Current.Server.MapPath($"~/TempDocs/{fileName}");
@@ -102,8 +109,7 @@ namespace HypernationAPI.Controllers
                         throw new HttpException("File does not exist in temporary storage");
                     }
                 }
-                WorkWithDoc wwd = new WorkWithDoc();
-                var data = wwd.GetPage(filePath, page);
+                var data = _workWithDoc.GetPage(filePath, page);
 
                 result = new HttpResponseMessage(HttpStatusCode.OK)
                 {
@@ -141,7 +147,7 @@ namespace HypernationAPI.Controllers
                 {
                     var modifiedFilePath = HttpContext.Current.Server.MapPath("~/TempDocs/Modified/m_" + fileName);
 
-                    if (!WorkWithDoc.HypernateWordDocument(filePath, modifiedFilePath))
+                    if (!_workWithDoc.HypernateDocument(filePath, modifiedFilePath))
                     {
                         result = Request.CreateResponse(HttpStatusCode.InternalServerError);
                         result.Content = new StringContent("API Failed To Hypernate Given File");
@@ -192,7 +198,7 @@ namespace HypernationAPI.Controllers
                     {
                         FileName = $"{ Path.GetFileNameWithoutExtension(fileName)}.pdf";
                         OutputFilePath = HttpContext.Current.Server.MapPath($"~/TempDocs/Modified/m_{FileName}");
-                        if (!WorkWithDoc.ConvertToPDF(modifiedFilePath, OutputFilePath, WdSaveFormat.wdFormatPDF))
+                        if (!_workWithDoc.ConvertToPDF(modifiedFilePath, OutputFilePath, WdSaveFormat.wdFormatPDF))
                         {
                             throw new HttpException("Could not convert to PDF");
                         }

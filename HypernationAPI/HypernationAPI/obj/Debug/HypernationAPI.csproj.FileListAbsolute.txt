@@ -93,3 +93,11 @@ C:\Users\lasha\Desktop\Project\Publisher_APP\HypernationAPI\HypernationAPI\bin\O
 C:\Users\lasha\Desktop\Project\Publisher_APP\HypernationAPI\HypernationAPI\bin\System.Management.Automation.dll
 C:\Users\lasha\Desktop\Project\Publisher_APP\HypernationAPI\HypernationAPI\bin\HypBLL.dll.config
 C:\Users\lasha\Desktop\Project\Publisher_APP\HypernationAPI\HypernationAPI\bin\DocumentFormat.OpenXml.xml
+C:\Users\lasha\Desktop\Project\Publisher_APP\HypernationAPI\HypernationAPI\bin\System.Runtime.CompilerServices.Unsafe.dll
+C:\Users\lasha\Desktop\Project\Publisher_APP\HypernationAPI\HypernationAPI\bin\Unity.Abstractions.dll
+C:\Users\lasha\Desktop\Project\Publisher_APP\HypernationAPI\HypernationAPI\bin\Unity.Container.dll
+C:\Users\lasha\Desktop\Project\Publisher_APP\HypernationAPI\HypernationAPI\bin\Unity.WebApi.dll
+C:\Users\lasha\Desktop\Project\Publisher_APP\HypernationAPI\HypernationAPI\bin\System.Threading.Tasks.Extensions.dll
+C:\Users\lasha\Desktop\Project\Publisher_APP\HypernationAPI\HypernationAPI\bin\System.Runtime.CompilerServices.Unsafe.xml
+C:\Users\lasha\Desktop\Project\Publisher_APP\HypernationAPI\HypernationAPI\bin\Unity.Abstractions.pdb
+C:\Users\lasha\Desktop\Project\Publisher_APP\HypernationAPI\HypernationAPI\bin\Unity.Container.pdb

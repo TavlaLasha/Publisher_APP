@@ -1,4 +1,5 @@
-﻿using HypBLL.Logics;
+﻿using HypBLL.Interfaces;
+using HypBLL.Logics;
 using Microsoft.Office.Interop.Word;
 using System;
 using System.Collections.Generic;
@@ -11,9 +12,9 @@ using System.Web;
 
 namespace HypBLL
 {
-    public class WorkWithDoc
+    public class WorkWithDoc : IWorkWithDoc
     {
-        public static bool HypernateWordDocument(object filename, object SaveAs)
+        public bool HypernateDocument(object filename, object saveAs)
         {
             Application wordApp = new Application();
             object missing = Missing.Value;
@@ -37,7 +38,7 @@ namespace HypBLL
                 HYP hyp = new HYP();
                 wordApp = hyp.HYPExecute(wordApp);
 
-                WordDoc.SaveAs(ref SaveAs, ref missing, ref missing, ref missing,
+                WordDoc.SaveAs(ref saveAs, ref missing, ref missing, ref missing,
                                             ref missing, ref missing, ref missing,
                                             ref missing, ref missing, ref missing,
                                             ref missing, ref missing, ref missing,
@@ -52,28 +53,6 @@ namespace HypBLL
                 return false;
             }
         }
-        //public static int GetPageCount(object filename)
-        //{
-        //    var application = new Application();
-
-        //    object missing = Missing.Value;
-        //    object readOnly = true;
-        //    object isVisible = false;
-        //    application.Visible = false;
-        //    var document = application.Documents.Open(ref filename, ref missing, ref readOnly,
-        //                                        ref missing, ref missing, ref missing,
-        //                                        ref missing, ref missing, ref missing,
-        //                                        ref missing, ref missing, isVisible,
-        //                                        ref missing, ref missing, ref missing, ref missing);
-
-        //    // Get the page count.
-        //    var numberOfPages = document.ComputeStatistics(WdStatistic.wdStatisticPages, false);
-        //    // Close word.
-        //    //document.Close();
-        //    application.Quit(WdSaveOptions.wdDoNotSaveChanges, ref missing, ref missing);
-
-        //    return numberOfPages;
-        //}
         public string[] GetPage(object filename, int page = 1)
         {
             if (File.Exists((string)filename))
@@ -106,6 +85,10 @@ namespace HypBLL
                 if (page < PageCount)
                 {
                     range.End = WordDoc.GoTo(WdGoToItem.wdGoToPage, WdGoToDirection.wdGoToAbsolute, page + 1).End - 1;
+                }
+                else
+                {
+                    range.End = WordDoc.GoTo(WdGoToItem.wdGoToPage, WdGoToDirection.wdGoToAbsolute, page).End - 1;
                 }
 
                 //_Application app = new Application();
@@ -141,7 +124,7 @@ namespace HypBLL
                 return new string[0];
             }
         }
-        public static bool ConvertToPDF(string input, string output, WdSaveFormat format)
+        public bool ConvertToPDF(string input, string output, WdSaveFormat format)
         {
             try
             {
