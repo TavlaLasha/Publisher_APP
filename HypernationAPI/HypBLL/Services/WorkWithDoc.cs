@@ -4,6 +4,7 @@ using Microsoft.Office.Interop.Word;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -72,53 +73,56 @@ namespace HypBLL
                 WordDoc.Activate();
 
                 int PageCount = WordDoc.ComputeStatistics(WdStatistic.wdStatisticPages, false);
-                if(PageCount < page)
+                if(page > PageCount || page < 1)
                 {
                     throw new InvalidOperationException("Page number exceeded document length");
                 }
 
-                var range = WordDoc.Range();
-                range.Start = WordDoc.GoTo(WdGoToItem.wdGoToPage, WdGoToDirection.wdGoToAbsolute, page).Start;
+                string tempDirectory = Directory.CreateDirectory(HttpContext.Current.Server.MapPath($"~/TempDocs/Temp/{Path.GetFileNameWithoutExtension(filename.ToString())}")).FullName;
 
-                if (page < PageCount)
+                int start = ((page - 2) > 0) ? page - 2 : 1;
+                int end;
+                if (page <= 3)
                 {
-                    range.End = WordDoc.GoTo(WdGoToItem.wdGoToPage, WdGoToDirection.wdGoToAbsolute, page + 1).End - 1;
+                    end = (5 < PageCount) ? 5 : PageCount;
                 }
                 else
                 {
-                    range.End = WordDoc.GoTo(WdGoToItem.wdGoToPage, WdGoToDirection.wdGoToAbsolute, page).End - 1;
+                    end = ((page + 2) < PageCount) ? page + 2 : PageCount;
                 }
 
-                //_Application app = new Application();
+                Range range;
+                for (int i = start; i <= end; i++)
+                {
+                    range = WordDoc.Range();
+                    range.Start = WordDoc.GoTo(WdGoToItem.wdGoToPage, WdGoToDirection.wdGoToAbsolute, i).Start;
 
-                _Document doc2 = wordApp.Documents.Add();
-                doc2.Activate();
-
-                doc2.Range().FormattedText = range.FormattedText;
-
+                    if (i < PageCount)
+                    {
+                        range.End = WordDoc.GoTo(WdGoToItem.wdGoToPage, WdGoToDirection.wdGoToAbsolute, i + 1).End - 1;
+                    }
+                    else
+                    {
+                        range.End = WordDoc.GoTo(WdGoToItem.wdGoToPage, WdGoToDirection.wdGoToAbsolute, i).End - 1;
+                    }
+                    string tempPath = Path.Combine(tempDirectory, $"{i}.html");
+                    if (!File.Exists(tempPath))
+                    {
+                        range.ExportFragment(tempPath, WdSaveFormat.wdFormatFilteredHTML);
+                    }
+                }
                 WordDoc.Close(WdSaveOptions.wdDoNotSaveChanges);
-                //wordApp.Quit();
-                Directory.CreateDirectory(HttpContext.Current.Server.MapPath($"~/TempDocs/Temp"));
-                
-                object tempPath = HttpContext.Current.Server.MapPath($"~/TempDocs/Temp/tmp_{DateTime.Now.Ticks}.docx");
-
-                doc2.SaveAs(ref tempPath, ref missing, ref missing, ref missing,
-                                            ref missing, ref missing, ref missing,
-                                            ref missing, ref missing, ref missing,
-                                            ref missing, ref missing, ref missing,
-                                            ref missing, ref missing, ref missing);
-                doc2.Close(WdSaveOptions.wdDoNotSaveChanges);
                 wordApp.Quit();
 
 
-                HTMLConverter s = new HTMLConverter();
-                string data = s.ConvertToHtml((string)tempPath);
+                //HTMLConverter s = new HTMLConverter();
+                //string data = s.ConvertToHtml((string)tempPath);
 
-                if (File.Exists((string)tempPath)) {
-                    File.Delete((string)tempPath);
-                }
+                //if (File.Exists((string)tempPath)) {
+                //    File.Delete((string)tempPath);
+                //}
 
-                return new string[2] { data, PageCount.ToString() };
+                return new string[2] { tempDirectory, PageCount.ToString() };
             }
             else
             {
@@ -166,6 +170,24 @@ namespace HypBLL
                 return true;
             }
             catch
+            {
+                return false;
+            }
+        }
+
+        public bool ZipUpFiles(string dirPath, string outputPath)
+        {
+            try
+            {
+                if (File.Exists(outputPath))
+                {
+                    File.Delete(outputPath);
+                }
+                ZipFile.CreateFromDirectory(dirPath, outputPath);
+
+                return true;
+            }
+            catch (Exception ex)
             {
                 return false;
             }

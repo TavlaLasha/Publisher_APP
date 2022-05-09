@@ -12,5 +12,6 @@ namespace HypBLL.Interfaces
         bool HypernateDocument(object filename, object saveAs);
         string[] GetPages(object filename, int page = 1);
         bool ConvertToPDF(string input, string output, WdSaveFormat format);
+        bool ZipUpFiles(string dirPath, string outputPath);
     }
 }

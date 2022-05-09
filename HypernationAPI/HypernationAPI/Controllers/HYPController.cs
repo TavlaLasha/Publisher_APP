@@ -56,7 +56,6 @@ namespace HypernationAPI.Controllers
                         long FileSize = fs.Length;
 
                         var jObject = JsonConvert.SerializeObject(new DocDTO() { fileName = FileName, fileSize = FileSize });
-                        //var jObject = JsonConvert.SerializeObject(new Dictionary<string, string>() { { "FileName", FileName }, { "FileSize", FileSize } });
 
                         result = new HttpResponseMessage(HttpStatusCode.Accepted)
                         {
@@ -83,8 +82,8 @@ namespace HypernationAPI.Controllers
         }
 
         [HttpGet]
-        [Route("api/GetDocPage/{fileName}")]
-        public HttpResponseMessage GetDocPage(string fileName, int page=1)
+        [Route("api/GetDocPages/{fileName}")]
+        public HttpResponseMessage GetDocPages(string fileName, int page=1)
         {
             try
             {
@@ -93,7 +92,7 @@ namespace HypernationAPI.Controllers
                     throw new HttpException("File Name is Required Parameter");
                 }
                 HttpResponseMessage result;
-                var filePath = HttpContext.Current.Server.MapPath($"~/TempDocs/Modified/m_{fileName}");
+                var filePath = HttpContext.Current.Server.MapPath($"~/TempDocs/Modified/{fileName}");
                 if (!File.Exists(filePath))
                 {
                     filePath = HttpContext.Current.Server.MapPath($"~/TempDocs/{fileName}");
@@ -104,10 +103,25 @@ namespace HypernationAPI.Controllers
                 }
                 var data = _workWithDoc.GetPages(filePath, page);
 
+                string zipFileName = $"{Path.GetFileNameWithoutExtension(fileName)}.zip";
+                string zipFilePath = HttpContext.Current.Server.MapPath($"~/TempDocs/Temp/{zipFileName}");
+
+                if (!_workWithDoc.ZipUpFiles(data[0], zipFilePath))
+                {
+                    throw new HttpException("Error when zipping up files");
+                }
+
                 result = new HttpResponseMessage(HttpStatusCode.OK)
                 {
-                    Content = new StringContent(data[0])
+                    Content = new StreamContent(File.OpenRead(zipFilePath))
                 };
+                result.Content.Headers.ContentDisposition =
+                new ContentDispositionHeaderValue("attachment")
+                {
+                    FileName = zipFileName
+                };
+                string contentType = MimeMapping.GetMimeMapping(Path.GetExtension(zipFilePath));
+                result.Content.Headers.ContentType = new MediaTypeHeaderValue(contentType);
                 result.Headers.Add("PageCount", data[1]);
                 return result;
             }
@@ -138,7 +152,7 @@ namespace HypernationAPI.Controllers
                 string filePath = HttpContext.Current.Server.MapPath($"~/TempDocs/{fileName}");
                 if (File.Exists(filePath))
                 {
-                    string modifiedFilePath = HttpContext.Current.Server.MapPath("~/TempDocs/Modified/m_" + fileName);
+                    string modifiedFilePath = HttpContext.Current.Server.MapPath("~/TempDocs/Modified/" + fileName);
 
                     if (!_workWithDoc.HypernateDocument(filePath, modifiedFilePath))
                     {
@@ -187,14 +201,14 @@ namespace HypernationAPI.Controllers
                 }
                 string FileName = fileName;
                 HttpResponseMessage result;
-                string modifiedFilePath = HttpContext.Current.Server.MapPath($"~/TempDocs/Modified/m_{FileName}");
+                string modifiedFilePath = HttpContext.Current.Server.MapPath($"~/TempDocs/Modified/{FileName}");
                 if (File.Exists(modifiedFilePath))
                 {
                     string OutputFilePath;
                     if (pdf)
                     {
                         FileName = $"{ Path.GetFileNameWithoutExtension(fileName)}.pdf";
-                        OutputFilePath = HttpContext.Current.Server.MapPath($"~/TempDocs/Modified/m_{FileName}");
+                        OutputFilePath = HttpContext.Current.Server.MapPath($"~/TempDocs/Modified/{FileName}");
                         if (!_workWithDoc.ConvertToPDF(modifiedFilePath, OutputFilePath, WdSaveFormat.wdFormatPDF))
                         {
                             throw new HttpException("Could not convert to PDF");
