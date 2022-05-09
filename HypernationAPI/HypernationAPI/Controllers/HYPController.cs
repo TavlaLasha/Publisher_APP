@@ -71,6 +71,7 @@ namespace HypernationAPI.Controllers
                 else
                 {
                     result = Request.CreateResponse(HttpStatusCode.ExpectationFailed);
+                    result.Content = new StringContent("No File Received");
                 }
                 return result;
             }
@@ -88,18 +89,15 @@ namespace HypernationAPI.Controllers
             try
             {
                 if (fileName == "" || fileName == " ")
-                {
                     throw new HttpException("File Name is Required Parameter");
-                }
+
                 HttpResponseMessage result;
                 var filePath = HttpContext.Current.Server.MapPath($"~/TempDocs/Modified/{fileName}");
                 if (!File.Exists(filePath))
                 {
                     filePath = HttpContext.Current.Server.MapPath($"~/TempDocs/{fileName}");
                     if (!File.Exists(filePath))
-                    {
                         throw new HttpException("File does not exist in temporary storage");
-                    }
                 }
                 var data = _workWithDoc.GetPages(filePath, page);
 
@@ -107,9 +105,7 @@ namespace HypernationAPI.Controllers
                 string zipFilePath = HttpContext.Current.Server.MapPath($"~/TempDocs/Temp/{zipFileName}");
 
                 if (!_workWithDoc.ZipUpFiles(data[0], zipFilePath))
-                {
                     throw new HttpException("Error when zipping up files");
-                }
 
                 result = new HttpResponseMessage(HttpStatusCode.OK)
                 {
@@ -145,35 +141,32 @@ namespace HypernationAPI.Controllers
             try
             {
                 if(fileName == "" || fileName == " ")
-                {
                     throw new HttpException("File Name is Required Parameter");
-                }
+
                 HttpResponseMessage result;
                 string filePath = HttpContext.Current.Server.MapPath($"~/TempDocs/{fileName}");
+
                 if (File.Exists(filePath))
-                {
-                    string modifiedFilePath = HttpContext.Current.Server.MapPath("~/TempDocs/Modified/" + fileName);
-
-                    if (!_workWithDoc.HypernateDocument(filePath, modifiedFilePath))
-                    {
-                        result = Request.CreateResponse(HttpStatusCode.InternalServerError);
-                        result.Content = new StringContent("API Failed To Hypernate Given File");
-                        return result;
-                    }
-                    FileInfo fs = new FileInfo(filePath);
-                    long FileSize = fs.Length;
-
-                    string jObject = JsonConvert.SerializeObject(new DocDTO() { fileName = fileName, fileSize = FileSize });
-
-                    result = new HttpResponseMessage(HttpStatusCode.OK)
-                    {
-                        Content = new StringContent(jObject, Encoding.UTF8, "application/json")
-                    };
-                }
-                else
-                {
                     throw new HttpException("File does not exist in temporary storage");
+
+                string modifiedFilePath = HttpContext.Current.Server.MapPath("~/TempDocs/Modified/" + fileName);
+
+                if (!_workWithDoc.HypernateDocument(filePath, modifiedFilePath))
+                {
+                    result = Request.CreateResponse(HttpStatusCode.InternalServerError);
+                    result.Content = new StringContent("API Failed To Hypernate Given File");
+                    return result;
                 }
+                FileInfo fs = new FileInfo(filePath);
+                long FileSize = fs.Length;
+
+                string jObject = JsonConvert.SerializeObject(new DocDTO() { fileName = fileName, fileSize = FileSize });
+
+                result = new HttpResponseMessage(HttpStatusCode.OK)
+                {
+                    Content = new StringContent(jObject, Encoding.UTF8, "application/json")
+                };
+
                 return result;
             }
             catch (HttpException ex)
@@ -195,45 +188,41 @@ namespace HypernationAPI.Controllers
         {
             try
             {
-                if (fileName == "")
-                {
+                if (fileName == "" || fileName == " ")
                     throw new HttpException("File name is required parameter");
-                }
+
                 string FileName = fileName;
                 HttpResponseMessage result;
                 string modifiedFilePath = HttpContext.Current.Server.MapPath($"~/TempDocs/Modified/{FileName}");
-                if (File.Exists(modifiedFilePath))
+
+                if (!File.Exists(modifiedFilePath))
+                    throw new HttpException("File does not exist in temporary storage");
+
+                string OutputFilePath;
+                if (pdf)
                 {
-                    string OutputFilePath;
-                    if (pdf)
+                    FileName = $"{ Path.GetFileNameWithoutExtension(fileName)}.pdf";
+                    OutputFilePath = HttpContext.Current.Server.MapPath($"~/TempDocs/Modified/{FileName}");
+                    if (!_workWithDoc.ConvertToPDF(modifiedFilePath, OutputFilePath, WdSaveFormat.wdFormatPDF))
                     {
-                        FileName = $"{ Path.GetFileNameWithoutExtension(fileName)}.pdf";
-                        OutputFilePath = HttpContext.Current.Server.MapPath($"~/TempDocs/Modified/{FileName}");
-                        if (!_workWithDoc.ConvertToPDF(modifiedFilePath, OutputFilePath, WdSaveFormat.wdFormatPDF))
-                        {
-                            throw new HttpException("Could not convert to PDF");
-                        }
+                        throw new HttpException("Could not convert to PDF");
                     }
-                    else
-                    {
-                        OutputFilePath = modifiedFilePath;
-                    }
-                    result = new HttpResponseMessage(HttpStatusCode.OK)
-                    {
-                        Content = new StreamContent(File.OpenRead(OutputFilePath))
-                    };
-                    result.Content.Headers.ContentDisposition =
-                    new ContentDispositionHeaderValue("attachment")
-                    {
-                        FileName = FileName
-                    };
-                    string contentType = MimeMapping.GetMimeMapping(Path.GetExtension(OutputFilePath));
-                    result.Content.Headers.ContentType = new MediaTypeHeaderValue(contentType);
                 }
                 else
                 {
-                    throw new HttpException("File does not exist in temporary storage");
+                    OutputFilePath = modifiedFilePath;
                 }
+                result = new HttpResponseMessage(HttpStatusCode.OK)
+                {
+                    Content = new StreamContent(File.OpenRead(OutputFilePath))
+                };
+                result.Content.Headers.ContentDisposition =
+                new ContentDispositionHeaderValue("attachment")
+                {
+                    FileName = FileName
+                };
+                string contentType = MimeMapping.GetMimeMapping(Path.GetExtension(OutputFilePath));
+                result.Content.Headers.ContentType = new MediaTypeHeaderValue(contentType);
                 return result;
             }
             catch (HttpException ex)
