@@ -1,6 +1,7 @@
 ﻿using HypBLL;
 using HypBLL.Interfaces;
 using Microsoft.Office.Interop.Word;
+using Models.DataViewModels;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -39,7 +40,7 @@ namespace HypernationAPI.Controllers
                     var postedFile = httpRequest.Files[0];
                     var contentType = Path.GetExtension(postedFile.FileName);
                     string FileName = "Null";
-                    //Console.WriteLine(contentType);
+
                     if (contentType == ".docx" || contentType == ".doc" || contentType == ".rtf")
                     {
                         FileName = postedFile.FileName;
@@ -52,22 +53,14 @@ namespace HypernationAPI.Controllers
                         postedFile.SaveAs(filePath);
 
                         FileInfo fs = new FileInfo(filePath);
-                        string FileSize = fs.Length.ToString();
-                        //if (fs.Length/1024 > 1024)
-                        //{
-                        //    FileSize = $"{fs.Length / 1048576} MB";
-                        //}
-                        //else
-                        //{
-                        //    FileSize = $"{fs.Length / 1024} Kb";
-                        //}
+                        long FileSize = fs.Length;
 
-                        var jObject = JsonConvert.SerializeObject(new Dictionary<string, string>() { { "FileName", FileName }, { "FileSize", FileSize } });
+                        var jObject = JsonConvert.SerializeObject(new DocDTO() { fileName = FileName, fileSize = FileSize });
+                        //var jObject = JsonConvert.SerializeObject(new Dictionary<string, string>() { { "FileName", FileName }, { "FileSize", FileSize } });
 
                         result = new HttpResponseMessage(HttpStatusCode.Accepted)
                         {
                             Content = new StringContent(jObject, Encoding.UTF8, "application/json")
-                            //Content = new StringContent($"{FileName};{FileSize}")
                         };
                     }
                     else
@@ -109,7 +102,7 @@ namespace HypernationAPI.Controllers
                         throw new HttpException("File does not exist in temporary storage");
                     }
                 }
-                var data = _workWithDoc.GetPage(filePath, page);
+                var data = _workWithDoc.GetPages(filePath, page);
 
                 result = new HttpResponseMessage(HttpStatusCode.OK)
                 {
@@ -142,10 +135,10 @@ namespace HypernationAPI.Controllers
                     throw new HttpException("File Name is Required Parameter");
                 }
                 HttpResponseMessage result;
-                var filePath = HttpContext.Current.Server.MapPath($"~/TempDocs/{fileName}");
+                string filePath = HttpContext.Current.Server.MapPath($"~/TempDocs/{fileName}");
                 if (File.Exists(filePath))
                 {
-                    var modifiedFilePath = HttpContext.Current.Server.MapPath("~/TempDocs/Modified/m_" + fileName);
+                    string modifiedFilePath = HttpContext.Current.Server.MapPath("~/TempDocs/Modified/m_" + fileName);
 
                     if (!_workWithDoc.HypernateDocument(filePath, modifiedFilePath))
                     {
@@ -153,10 +146,14 @@ namespace HypernationAPI.Controllers
                         result.Content = new StringContent("API Failed To Hypernate Given File");
                         return result;
                     }
+                    FileInfo fs = new FileInfo(filePath);
+                    long FileSize = fs.Length;
+
+                    string jObject = JsonConvert.SerializeObject(new DocDTO() { fileName = fileName, fileSize = FileSize });
 
                     result = new HttpResponseMessage(HttpStatusCode.OK)
                     {
-                        Content = new StringContent($"{fileName}")
+                        Content = new StringContent(jObject, Encoding.UTF8, "application/json")
                     };
                 }
                 else
@@ -190,7 +187,7 @@ namespace HypernationAPI.Controllers
                 }
                 string FileName = fileName;
                 HttpResponseMessage result;
-                var modifiedFilePath = HttpContext.Current.Server.MapPath($"~/TempDocs/Modified/m_{FileName}");
+                string modifiedFilePath = HttpContext.Current.Server.MapPath($"~/TempDocs/Modified/m_{FileName}");
                 if (File.Exists(modifiedFilePath))
                 {
                     string OutputFilePath;
@@ -216,7 +213,7 @@ namespace HypernationAPI.Controllers
                     {
                         FileName = FileName
                     };
-                    var contentType = MimeMapping.GetMimeMapping(Path.GetExtension(OutputFilePath));
+                    string contentType = MimeMapping.GetMimeMapping(Path.GetExtension(OutputFilePath));
                     result.Content.Headers.ContentType = new MediaTypeHeaderValue(contentType);
                 }
                 else

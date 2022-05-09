@@ -10,7 +10,7 @@ namespace HypBLL.Interfaces
     public interface IWorkWithDoc
     {
         bool HypernateDocument(object filename, object saveAs);
-        string[] GetPage(object filename, int page = 1);
+        string[] GetPages(object filename, int page = 1);
         bool ConvertToPDF(string input, string output, WdSaveFormat format);
     }
 }

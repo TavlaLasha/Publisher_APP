@@ -53,14 +53,12 @@ namespace HypBLL
                 return false;
             }
         }
-        public string[] GetPage(object filename, int page = 1)
+        public string[] GetPages(object filename, int page = 1)
         {
             if (File.Exists((string)filename))
             {
                 _Application wordApp = new Application();
                 object missing = Missing.Value;
-
-                object tempPath = HttpContext.Current.Server.MapPath($"~/TempDocs/Temp/tmp_{DateTime.Now.Ticks}.docx");
 
                 object readOnly = true;
                 object isVisible = false;
@@ -100,6 +98,9 @@ namespace HypBLL
 
                 WordDoc.Close(WdSaveOptions.wdDoNotSaveChanges);
                 //wordApp.Quit();
+                Directory.CreateDirectory(HttpContext.Current.Server.MapPath($"~/TempDocs/Temp"));
+                
+                object tempPath = HttpContext.Current.Server.MapPath($"~/TempDocs/Temp/tmp_{DateTime.Now.Ticks}.docx");
 
                 doc2.SaveAs(ref tempPath, ref missing, ref missing, ref missing,
                                             ref missing, ref missing, ref missing,

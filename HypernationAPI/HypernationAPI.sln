@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HypernationAPI", "Hypernati
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HypBLL", "HypBLL\HypBLL.csproj", "{305298CA-3531-4478-9250-0571CBB8D47C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Models", "Models\Models.csproj", "{898415B0-9AB3-4DE6-8B73-6A5A679DB6DB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{305298CA-3531-4478-9250-0571CBB8D47C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{305298CA-3531-4478-9250-0571CBB8D47C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{305298CA-3531-4478-9250-0571CBB8D47C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{898415B0-9AB3-4DE6-8B73-6A5A679DB6DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{898415B0-9AB3-4DE6-8B73-6A5A679DB6DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{898415B0-9AB3-4DE6-8B73-6A5A679DB6DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{898415B0-9AB3-4DE6-8B73-6A5A679DB6DB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

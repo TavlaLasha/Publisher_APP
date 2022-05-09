@@ -277,6 +277,10 @@
       <Project>{305298CA-3531-4478-9250-0571CBB8D47C}</Project>
       <Name>HypBLL</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Models\Models.csproj">
+      <Project>{898415B0-9AB3-4DE6-8B73-6A5A679DB6DB}</Project>
+      <Name>Models</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
