@@ -14,7 +14,7 @@ namespace HypBLL.Interfaces
         Application HYPcleanfirst(Application wordApp);
         Application HYPcleanlast(Application wordApp);
         Application HYPcleanlastconpunct(Application wordApp);
-        Application HYPExecute(Application wordApp);
+        Application HYPExecute();
         Application FindAndReplace(Application wordApp, object toFindText, object replaceWithText);
     }
 }

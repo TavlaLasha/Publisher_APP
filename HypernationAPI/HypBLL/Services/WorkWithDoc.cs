@@ -1,5 +1,6 @@
 ﻿using HypBLL.Interfaces;
 using HypBLL.Logics;
+using HypBLL.Services;
 using Microsoft.Office.Interop.Word;
 using System;
 using System.Collections.Generic;
@@ -37,8 +38,43 @@ namespace HypBLL
                                                 ref missing, ref missing, ref missing, ref missing);
             WordDoc.Activate();
 
-            HYP hyp = new HYP();
-            wordApp = hyp.HYPExecute(wordApp);
+            HYP hyp = new HYP(wordApp);
+            wordApp = hyp.HYPExecute();
+
+            WordDoc.SaveAs(ref saveAs, ref missing, ref missing, ref missing,
+                                        ref missing, ref missing, ref missing,
+                                        ref missing, ref missing, ref missing,
+                                        ref missing, ref missing, ref missing,
+                                        ref missing, ref missing, ref missing);
+
+            WordDoc.Close();
+            wordApp.Quit();
+            return true;
+        }
+        public bool CleanDocument(object filename, object saveAs)
+        {
+            if (!File.Exists((string)filename))
+                throw new HttpException("File does not exist in temporary storage");
+
+            Application wordApp = new Application();
+            object missing = Missing.Value;
+
+            Document WordDoc;
+
+            object readOnly = true;
+
+            object isVisible = false;
+
+            wordApp.Visible = false;
+            WordDoc = wordApp.Documents.Open(ref filename, ref missing, ref readOnly,
+                                                ref missing, ref missing, ref missing,
+                                                ref missing, ref missing, ref missing,
+                                                ref missing, ref missing, isVisible,
+                                                ref missing, ref missing, ref missing, ref missing);
+            WordDoc.Activate();
+
+            CleanDoc hyp = new CleanDoc(wordApp);
+            wordApp = hyp.Execute();
 
             WordDoc.SaveAs(ref saveAs, ref missing, ref missing, ref missing,
                                         ref missing, ref missing, ref missing,

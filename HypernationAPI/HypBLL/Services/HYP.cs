@@ -10,13 +10,16 @@ namespace HypBLL
 {
     public class HYP : IHYP
     {
-        //TODO: constructor
-        //public HYP()
-        //{
-
-        //}
-        public Application HYPExecute(Application wordApp)
+        private Application wordApp;
+        public HYP(Application wordApp)
         {
+            this.wordApp = wordApp;
+        }
+        public Application HYPExecute()
+        {
+            if (wordApp == null)
+                throw new Exception("No Document Given");
+
             wordApp = HYPconsonants(wordApp);
             wordApp = HYPwovels(wordApp);
             wordApp = HYPcleanfirst(wordApp);
