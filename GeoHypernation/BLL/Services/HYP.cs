@@ -1,4 +1,4 @@
-﻿using GeoHypernation.BLL.Interfaces;
+﻿using BLL.Contracts;
 using Microsoft.Office.Interop.Word;
 using System;
 using System.Collections.Generic;
@@ -6,12 +6,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GeoHypernation.BLL
+namespace BLL.Services
 {
-    internal class HYP : IHYP
+    public class HYP : IHYP
     {
-        public Application HYPExecute(Application wordApp)
+        private Application wordApp;
+        public HYP(Application wordApp)
         {
+            this.wordApp = wordApp;
+        }
+        public Application HYPExecute()
+        {
+            if (wordApp == null)
+                throw new Exception("No Document Given");
+
             wordApp = HYPconsonants(wordApp);
             wordApp = HYPwovels(wordApp);
             wordApp = HYPcleanfirst(wordApp);
@@ -810,7 +818,7 @@ namespace GeoHypernation.BLL
             //foreach (int i in varData)
             //{
             //    //wordApp = FindAndReplace(wordApp, ((char)i).ToString(), ((char)i).ToString() + (((char)31).ToString()).ToString());
-                
+
             //}
             Console.WriteLine("end_vow");
             return wordApp;
@@ -954,7 +962,7 @@ namespace GeoHypernation.BLL
 
             for (int i = 0; i < 57; i++)
             {
-                wordApp = FindAndReplace(wordApp, $"{((char)31).ToString()}({((char)varData[i][0]).ToString()}{((char)varData[i][1]).ToString()})"+ @"([\ \.\,\!\?\)\-\;\:\“^13])", @"\1\2");
+                wordApp = FindAndReplace(wordApp, $"{((char)31).ToString()}({((char)varData[i][0]).ToString()}{((char)varData[i][1]).ToString()})" + @"([\ \.\,\!\?\)\-\;\:\“^13])", @"\1\2");
             }
 
             //foreach (char c in varDataPunct)
@@ -1019,4 +1027,3 @@ namespace GeoHypernation.BLL
         }
     }
 }
-

@@ -10,7 +10,7 @@ namespace Models.DataViewModels
     public class DocDTO
     {
         [Required(ErrorMessage = "FileName is Required")]
-        public string fileName;
-        public long fileSize;
+        public string FileName { set; get; }
+        public long FileSize { set; get; }
     }
 }

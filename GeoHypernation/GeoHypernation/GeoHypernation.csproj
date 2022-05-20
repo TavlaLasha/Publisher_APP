@@ -62,9 +62,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BLL\HYP.cs" />
-    <Compile Include="BLL\Interfaces\IHYP.cs" />
-    <Compile Include="BLL\WorkWithDoc.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -102,11 +99,24 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Images\200.gif" />
+    <Content Include="Images\LOGO.jpg" />
     <Content Include="Images\microsoft-word-document-icon.jpg" />
     <Content Include="soft_hyphen.ico" />
     <None Include="Images\soft_hyphen.ico" />
     <None Include="Resources\Icon.ico" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\BLL\BLL.csproj">
+      <Project>{716A10D0-E4CB-499F-A387-317861E38B0A}</Project>
+      <Name>BLL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Models\Models.csproj">
+      <Project>{21D29983-9432-4F12-AE8B-2D562D6CFF3E}</Project>
+      <Name>Models</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="TempDocs\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

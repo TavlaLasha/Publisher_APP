@@ -12,7 +12,8 @@ namespace HypBLL.Contracts
         Application Execute();
         Application CleanSpaces(Application wordApp);
         Application CleanNewLines(Application wordApp);
-        Application CleanPStarts(Application wordApp);
+        Application CleanTabs(Application wordApp);
+        Application CorrectPDashStarts(Application wordApp);
         Application FindAndReplace(Application wordApp, object toFindText, object replaceWithText);
     }
 }

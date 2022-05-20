@@ -21,8 +21,9 @@ namespace HypBLL.Services
                 throw new Exception("No Document Given");
 
             wordApp = CleanSpaces(wordApp);
-            //wordApp = CleanPStarts(wordApp);
-            //wordApp = CleanSpaces(wordApp);
+            wordApp = CleanNewLines(wordApp);
+            wordApp = CleanTabs(wordApp);
+            wordApp = CorrectPDashStarts(wordApp);
 
             return wordApp;
         }
@@ -34,14 +35,21 @@ namespace HypBLL.Services
 
         public Application CleanNewLines(Application wordApp)
         {
-            throw new NotImplementedException();
+            wordApp = FindAndReplace(wordApp, "^11", "^13");
+            return wordApp;
         }
-
-        public Application CleanPStarts(Application wordApp)
+        public Application CorrectPDashStarts(Application wordApp)
         {
-            throw new NotImplementedException();
+            wordApp = FindAndReplace(wordApp, "([-─])^13", @"—\1");
+            return wordApp;
         }
 
+        //For InDesign
+        public Application CleanTabs(Application wordApp)
+        {
+            wordApp = FindAndReplace(wordApp, "^9(^13)", @"\1");
+            return wordApp;
+        }
 
         public Application FindAndReplace(Application wordApp, object toFindText, object replaceWithText)
         {

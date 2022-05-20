@@ -1,4 +1,5 @@
-﻿using GeoHypernation.BLL;
+﻿using BLL.Services;
+using Models.DataViewModels;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -6,6 +7,7 @@ using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -15,86 +17,81 @@ namespace GeoHypernation
 {
     public partial class MainForm : Form
     {
+        //readonly string exeDir = Path.GetDirectoryName((new System.Uri(Assembly.GetEntryAssembly().CodeBase)).AbsolutePath);
+
         private string FileName = "";
-        private delegate void SafeCallDelegate(bool visibility);
+        private int DocPageCount = 0;
+        //private delegate void SafeCallDelegate(bool visibility);
         private bool working = false;
+
+        private bool cl_splace = false;
+        private bool cl_newLines = false;
+        private bool cor_PDashStarts = false;
+        private bool cl_tabs = false;
+        private bool do_hyp = false;
+
+        private string workingDir;
+        private int CurrentPage=1;
+
+        WorkWithDoc wwd;
+
         public MainForm()
         {
             InitializeComponent();
             this.AllowDrop = true;
             this.DragEnter += new DragEventHandler(MainForm_DragEnter);
             this.DragDrop += new DragEventHandler(MainForm_DragDrop);
+            //webBrowser.DocumentText = $"<html><head></head><body><img style='width:100%' src='{Path.Combine(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName, "Images\\LOGO.jpg")}'/></body></html>";
         }
 
-        private void start_btn_Click(object sender, EventArgs e)
+        private void Start_btn_Click(object sender, EventArgs e)
         {
             if (FileName != "")
             {
-                SaveFileDialog saveFileDialog = new SaveFileDialog
-                {
-                    InitialDirectory = @"Documents",
-                    Title = "Save Hypernated Document",
-                    CheckFileExists = false,
-                    CheckPathExists = true,
-                    DefaultExt = ".docx",
-                    Filter = "Word Document (*.docx)|*.docx|Word Document (*.doc)|*.doc|Rich Text Format (*.rtf)|*.rtf",
-                    //Filter = "Word Document (*.xml)|*.xml",
-                    FilterIndex = 0,
-                    RestoreDirectory = true,
-                    FileName = FileName
-                };
-                if (saveFileDialog.ShowDialog() == DialogResult.OK)
-                {
-                    try
-                    {
+                cl_splace = space_chkbx.Checked;
+                cl_newLines = tab_chkbx.Checked;
+                cor_PDashStarts = tab_chkbx.Checked;
+                cl_tabs = tab_chkbx.Checked;
+                do_hyp = hyp_chkbx.Checked;
 
-                        WorkWithDoc wwd = new WorkWithDoc();
-                        //ThreadStart threadStart = new ThreadStart();
-                        Thread thread = new Thread(
-                            delegate ()
+                try
+                {
+                    Thread thread = new Thread(
+                        delegate ()
+                        {
+                            try
                             {
-                                try
+                                if (cl_splace || cl_newLines || cor_PDashStarts || cl_tabs)
                                 {
-                                    wwd.ProcessWordDocument(FileName, saveFileDialog.FileName);
+                                    if (!wwd.CleanDocument(cl_splace, cl_newLines, cor_PDashStarts, cl_tabs))
+                                    {
+                                        MessageBox.Show("დოკუმენტის გასუფთავების დროს მოხდა შეცდომა. ბოდიშს გიხდით", "შეცდომა", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    }
+
                                 }
-                                finally
+                                if (do_hyp)
                                 {
-                                    if (loading_img.InvokeRequired)
+                                    if (!wwd.HypernateDocument())
                                     {
-                                        loading_img.Invoke(new MethodInvoker(delegate
-                                        {
-                                            loading_img.Visible = false;
-                                        }));
+                                        MessageBox.Show("დოკუმენტის დამარცვლის დროს მოხდა შეცდომა. ბოდიშს გიხდით", "შეცდომა", MessageBoxButtons.OK, MessageBoxIcon.Error);
                                     }
-                                    MessageBox.Show("ოპერაცია წარმატებულია!", "წარმატება", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                                    if (docBox.InvokeRequired)
-                                    {
-                                        docBox.Invoke(new MethodInvoker(delegate
-                                        {
-                                            docBox.Visible = false;
-                                        }));
-                                    }
-                                    working = false;
                                 }
-                            });
-                        thread.SetApartmentState(ApartmentState.MTA);
-                        thread.Start();
-                        loading_img.Visible = true;
-                        working = true;
-
-                        Console.WriteLine(saveFileDialog.FileName);
-                        
-                    }
-                    catch(Exception ex)
-                    {
-                        MessageBox.Show("მოხდა შეცდომა. ბოდიშს გიხდით", "შეცდომა", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
+                            }
+                            finally
+                            {
+                                Change_working_state(false);
+                                MessageBox.Show($"ფაილი {Path.GetFileName(FileName)} წარმატებით დამუშავდა და შეინახა მითითებულ ადგილას.", "წარმატება", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            }
+                        });
+                    thread.SetApartmentState(ApartmentState.STA);
+                    thread.Start();
+                    Change_working_state(true);
+                                            
                 }
-            }
-            else
-            {
-                MessageBox.Show("No File Selected", "შეცდომა", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                catch(Exception ex)
+                {
+                    MessageBox.Show("მოხდა შეცდომა. ბოდიშს გიხდით", "შეცდომა", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
         }
 
@@ -104,18 +101,19 @@ namespace GeoHypernation
             {
                 try
                 {
-                    OpenFileDialog openFileDialog1 = new OpenFileDialog()
+                    OpenFileDialog ofd = new OpenFileDialog()
                     {
-                        FileName = "Select MS Word Document",
-                        //Filter = "Word Document (*.xml)|*.xml",
+                        InitialDirectory = @"Documents",
+                        FileName = "აირჩიეთ MS Word დოკუმენტი",
                         Filter = "Word Document (*.docx)|*.docx|Word Document (*.doc)|*.doc|Rich Text Format (*.rtf)|*.rtf",
-                        Title = "Open MS Word Document"
+                        Title = "გახსენით MS Word დოკუმენტი"
                     };
-                    DialogResult result = openFileDialog1.ShowDialog(); // Show the dialog.
+                    DialogResult result = ofd.ShowDialog(); // Show the dialog.
                     if (result == DialogResult.OK) // Test result.
                     {
-                        FileName = openFileDialog1.FileName;
-                        initializeDocBox(FileName);
+                        FileName = ofd.FileName;
+                        wwd = new WorkWithDoc(FileName);
+                        InitializeDocBox(FileName);
                     }
                 }
                 catch (Exception ex)
@@ -133,11 +131,12 @@ namespace GeoHypernation
                 if (files.Length == 1)
                 {
                     FileName = files.SingleOrDefault();
-                    initializeDocBox(FileName);
+                    wwd = new WorkWithDoc(FileName);
+                    InitializeDocBox(FileName);
                 }
                 else
                 {
-                    MessageBox.Show("Error");
+                    MessageBox.Show("მოხდა შეცდომა. ბოდიშს გიხდით", "შეცდომა", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
@@ -146,19 +145,183 @@ namespace GeoHypernation
         {
             if (e.Data.GetDataPresent(DataFormats.FileDrop)) e.Effect = DragDropEffects.Copy;
         }
+        private void Save_btn_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog saveFileDialog = new SaveFileDialog
+            {
+                InitialDirectory = @"Documents",
+                Title = "სად შევინახოთ დამუშავებული ფაილი",
+                CheckFileExists = false,
+                CheckPathExists = true,
+                DefaultExt = ".docx",
+                Filter = "Word Document (*.docx)|*.docx|Word Document (*.doc)|*.doc|Rich Text Format (*.rtf)|*.rtf",
+                FilterIndex = 0,
+                RestoreDirectory = true,
+                FileName = FileName
+            };
+            if (saveFileDialog.ShowDialog() == DialogResult.OK)
+            {
 
-        private void initializeDocBox(string filename)
+            }
+            else
+            {
+                MessageBox.Show("დოკუმენტი არ გვაქვს", "შეცდომა", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void InitializeDocBox(string filename)
         {
             size_lbl.Text = (new FileInfo(filename).Length / 1000.0).ToString() + " Kb";
             type_lbl.Text = Path.GetExtension(filename);
             filename_lbl.Text = new FileInfo(filename).Name;
             docBox.Visible = true;
+            Thread thread = new Thread(
+                            delegate ()
+                            {
+                                try
+                                {
+                                    Change_working_state(true);
+                                    DocDTO result = wwd.GetPages(1);
+                                    workingDir = result.FileName;
+                                    DocPageCount = result.PageCount;
+                                }
+                                catch
+                                {
+                                    MessageBox.Show("მოხდა შეცდომა. ბოდიშს გიხდით", "შეცდომა", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                }
+                                finally
+                                {
+                                    string FilePath = Path.Combine(workingDir, "1.html");
+                                    if (File.Exists(FilePath))
+                                    {
+                                        if (webBrowser.InvokeRequired)
+                                        {
+                                            webBrowser.Invoke(new MethodInvoker(delegate
+                                            {
+                                                webBrowser.Navigate(FilePath);
+                                            }));
+                                        }
+                                        CurrentPage = 1;
+                                        Paginate();
+                                    }
+                                    Change_working_state(false);
+                                }
+                            });
+            thread.SetApartmentState(ApartmentState.STA);
+            thread.Start();
         }
 
-        private void close_btn_Click(object sender, EventArgs e)
+        private void Close_btn_Click(object sender, EventArgs e)
         {
-            docBox.Visible = false;
+            Close_Doc();
         }
 
+        private void Change_working_state(bool working = false)
+        {
+            this.working = working;
+            if (working)
+            {
+                if (loading_img.InvokeRequired)
+                {
+                    loading_img.Invoke(new MethodInvoker(delegate
+                    {
+                        loading_img.Visible = true;
+                    }));
+                }
+                else
+                {
+                    loading_img.Visible = true;
+                }
+            }
+            else
+            {
+                if (loading_img.InvokeRequired)
+                {
+                    loading_img.Invoke(new MethodInvoker(delegate
+                    {
+                        loading_img.Visible = false;
+                    }));
+                }
+                else
+                {
+                    loading_img.Visible = false;
+                }
+            }
+        }
+
+        private void Close_Doc()
+        {
+            if (docBox.InvokeRequired)
+            {
+                docBox.Invoke(new MethodInvoker(delegate
+                {
+                    docBox.Visible = false;
+                }));
+            }
+            else
+            {
+                docBox.Visible = false;
+            }
+            FileName = String.Empty;
+            if (Directory.Exists(workingDir))
+            {
+                Directory.Delete(workingDir, true);
+            }
+            if (webBrowser.InvokeRequired)
+            {
+                webBrowser.Invoke(new MethodInvoker(delegate
+                {
+                    webBrowser.Navigate((Uri)null);
+                }));
+            }
+            else
+            {
+                webBrowser.Navigate((Uri)null);
+            }
+        }
+
+        private void Paginate()
+        {
+            if (Directory.Exists(workingDir))
+            {
+                if(CurrentPage == 1)
+                {
+                    Create_Pagination_Buttons(1, 4, 4);
+                }
+            }
+        }
+
+        private void Create_Pagination_Buttons(int start, int end, int final)
+        {
+            //Pagination_Box.Controls.Clear();
+
+            for(int i=start; i<=end; i++)
+            {
+                Button btnPage = new Button();
+                btnPage.Location = new System.Drawing.Point(38 * i, 5);
+                btnPage.Size = new System.Drawing.Size(35, 20);
+                btnPage.Name = i.ToString()+"_btn";
+                btnPage.Text = i.ToString();
+                btnPage.Enabled = !(CurrentPage == i);
+                btnPage.Click += new System.EventHandler(this.Page_btn_Click);
+
+                //Pagination_Box.Controls.Add(btnPage);
+                if (Pagination_Box.InvokeRequired)
+                {
+                    Pagination_Box.Invoke(new MethodInvoker(delegate
+                    {
+                        Pagination_Box.Controls.Add(btnPage);
+                    }));
+                }
+            }
+        }
+
+        private void Page_btn_Click(object sender, EventArgs e)
+        {
+            Button btnPager = (sender as Button);
+            string PagePath = Path.Combine(workingDir, $"{int.Parse(btnPager.Text)}.html");
+            if(File.Exists(PagePath))
+                webBrowser.Navigate(PagePath);
+        }
     }
 }

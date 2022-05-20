@@ -25,31 +25,38 @@ namespace HypBLL
             object missing = Missing.Value;
 
             Document WordDoc;
+            try
+            {
+                object readOnly = true;
 
-            object readOnly = true;
+                object isVisible = false;
 
-            object isVisible = false;
+                wordApp.Visible = false;
+                WordDoc = wordApp.Documents.Open(ref filename, ref missing, ref readOnly,
+                                                    ref missing, ref missing, ref missing,
+                                                    ref missing, ref missing, ref missing,
+                                                    ref missing, ref missing, isVisible,
+                                                    ref missing, ref missing, ref missing, ref missing);
+                WordDoc.Activate();
 
-            wordApp.Visible = false;
-            WordDoc = wordApp.Documents.Open(ref filename, ref missing, ref readOnly,
-                                                ref missing, ref missing, ref missing,
-                                                ref missing, ref missing, ref missing,
-                                                ref missing, ref missing, isVisible,
-                                                ref missing, ref missing, ref missing, ref missing);
-            WordDoc.Activate();
+                HYP hyp = new HYP(wordApp);
+                wordApp = hyp.HYPExecute();
 
-            HYP hyp = new HYP(wordApp);
-            wordApp = hyp.HYPExecute();
+                WordDoc.SaveAs(ref saveAs, ref missing, ref missing, ref missing,
+                                            ref missing, ref missing, ref missing,
+                                            ref missing, ref missing, ref missing,
+                                            ref missing, ref missing, ref missing,
+                                            ref missing, ref missing, ref missing);
 
-            WordDoc.SaveAs(ref saveAs, ref missing, ref missing, ref missing,
-                                        ref missing, ref missing, ref missing,
-                                        ref missing, ref missing, ref missing,
-                                        ref missing, ref missing, ref missing,
-                                        ref missing, ref missing, ref missing);
-
-            WordDoc.Close();
-            wordApp.Quit();
-            return true;
+                WordDoc.Close();
+                wordApp.Quit();
+                return true;
+            }
+            catch
+            {
+                wordApp.Quit(WdSaveOptions.wdDoNotSaveChanges);
+                return false;
+            }
         }
         public bool CleanDocument(object filename, object saveAs)
         {

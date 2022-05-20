@@ -55,7 +55,7 @@ namespace HypernationAPI.Controllers
                         FileInfo fs = new FileInfo(filePath);
                         long FileSize = fs.Length;
 
-                        var jObject = JsonConvert.SerializeObject(new DocDTO() { fileName = FileName, fileSize = FileSize });
+                        var jObject = JsonConvert.SerializeObject(new DocDTO() { FileName = FileName, FileSize = FileSize });
 
                         result = new HttpResponseMessage(HttpStatusCode.Accepted)
                         {
@@ -160,7 +160,7 @@ namespace HypernationAPI.Controllers
                 FileInfo fs = new FileInfo(filePath);
                 long FileSize = fs.Length;
 
-                string jObject = JsonConvert.SerializeObject(new DocDTO() { fileName = fileName, fileSize = FileSize });
+                string jObject = JsonConvert.SerializeObject(new DocDTO() { FileName = fileName, FileSize = FileSize });
 
                 result = new HttpResponseMessage(HttpStatusCode.OK)
                 {
@@ -208,7 +208,7 @@ namespace HypernationAPI.Controllers
                 FileInfo fs = new FileInfo(filePath);
                 long FileSize = fs.Length;
 
-                string jObject = JsonConvert.SerializeObject(new DocDTO() { fileName = fileName, fileSize = FileSize });
+                string jObject = JsonConvert.SerializeObject(new DocDTO() { FileName = fileName, FileSize = FileSize });
 
                 result = new HttpResponseMessage(HttpStatusCode.OK)
                 {
