@@ -1,1 +1,2 @@
 C:\Users\lasha\Desktop\Project\Publisher_APP\HypernationAPI\HypBLL\obj\Debug\BLL.csproj.CoreCompileInputs.cache
+C:\Users\lasha\Desktop\Project\Publisher_APP\HypernationAPI\HypBLL\obj\Debug\BLL.csproj.AssemblyReference.cache

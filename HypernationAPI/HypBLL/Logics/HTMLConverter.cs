@@ -5,7 +5,7 @@ using DocumentFormat.OpenXml.Packaging;
 using System.Drawing.Imaging;
 using System.Xml.Linq;
 
-namespace HypBLL.Logics
+namespace BLL.Logics
 {
     public class HTMLConverter
     {

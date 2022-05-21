@@ -1,4 +1,4 @@
-﻿using HypBLL.Interfaces;
+﻿using BLL.Interfaces;
 using Microsoft.Office.Interop.Word;
 using System;
 using System.Collections.Generic;
@@ -6,12 +6,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HypBLL
+namespace BLL
 {
-    public class HYP : IHYP
+    public class HYPManagement : IHYPManagement
     {
         private Application wordApp;
-        public HYP(Application wordApp)
+        public HYPManagement(Application wordApp)
         {
             this.wordApp = wordApp;
         }

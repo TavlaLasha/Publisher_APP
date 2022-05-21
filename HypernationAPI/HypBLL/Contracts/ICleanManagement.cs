@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HypBLL.Contracts
+namespace BLL.Contracts
 {
     public interface ICleanManagement
     {

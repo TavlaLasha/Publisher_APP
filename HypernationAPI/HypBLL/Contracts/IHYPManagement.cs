@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HypBLL.Interfaces
+namespace BLL.Interfaces
 {
-    public interface IHYP
+    public interface IHYPManagement
     {
         Application HYPConsonants(Application wordApp);
         Application HYPWovels(Application wordApp);

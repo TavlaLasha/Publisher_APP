@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HypBLL.Interfaces
+namespace BLL.Interfaces
 {
-    public interface IWorkWithDoc
+    public interface IDocManagement
     {
         bool HypernateDocument(object filename, object saveAs);
         bool CleanDocument(object filename, object saveAs);

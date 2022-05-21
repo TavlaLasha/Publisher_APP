@@ -1,4 +1,4 @@
-﻿using HypBLL.Contracts;
+﻿using BLL.Contracts;
 using Microsoft.Office.Interop.Word;
 using System;
 using System.Collections.Generic;
@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HypBLL.Services
+namespace BLL.Services
 {
     public class CleanManagement : ICleanManagement
     {

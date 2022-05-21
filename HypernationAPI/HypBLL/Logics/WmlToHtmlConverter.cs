@@ -20,7 +20,7 @@ using OpenXmlPowerTools;
 // Content-Language: en-US
 // Content-Language: fr-FR
 
-namespace HypBLL.Logics
+namespace BLL.Logics
 {
     //public partial class WmlDocument
     //{

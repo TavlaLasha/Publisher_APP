@@ -12,9 +12,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 
-namespace HypBLL
+namespace BLL
 {
-    public class WorkWithDoc : IWorkWithDoc
+    public class DocManagement : IDocManagement
     {
         public bool HypernateDocument(object filename, object saveAs)
         {
@@ -39,7 +39,7 @@ namespace HypBLL
                                                     ref missing, ref missing, ref missing, ref missing);
                 WordDoc.Activate();
 
-                HYP hyp = new HYP(wordApp);
+                HYPManagement hyp = new HYPManagement(wordApp);
                 wordApp = hyp.HYPExecute();
 
                 WordDoc.SaveAs(ref saveAs, ref missing, ref missing, ref missing,
