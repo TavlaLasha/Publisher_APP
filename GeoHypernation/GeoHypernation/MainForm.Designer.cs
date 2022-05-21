@@ -272,9 +272,9 @@
             // 
             // Pagination_Box
             // 
-            this.Pagination_Box.Location = new System.Drawing.Point(410, 347);
+            this.Pagination_Box.Location = new System.Drawing.Point(354, 347);
             this.Pagination_Box.Name = "Pagination_Box";
-            this.Pagination_Box.Size = new System.Drawing.Size(224, 39);
+            this.Pagination_Box.Size = new System.Drawing.Size(334, 39);
             this.Pagination_Box.TabIndex = 7;
             this.Pagination_Box.TabStop = false;
             // 

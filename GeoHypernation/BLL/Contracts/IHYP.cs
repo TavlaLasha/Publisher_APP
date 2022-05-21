@@ -9,11 +9,13 @@ namespace BLL.Contracts
 {
     public interface IHYP
     {
-        Application HYPconsonants(Application wordApp);
-        Application HYPwovels(Application wordApp);
-        Application HYPcleanfirst(Application wordApp);
-        Application HYPcleanlast(Application wordApp);
-        Application HYPcleanlastconpunct(Application wordApp);
+        Application HYPConsonants(Application wordApp);
+        Application HYPWovels(Application wordApp);
+        Application CleanFirst(Application wordApp);
+        Application CleanLast(Application wordApp);
+        Application CleanConstr(Application wordApp);
+        Application CleanHarmonics(Application wordApp);
+        Application CleanLastConpunct(Application wordApp);
         Application HYPExecute();
         Application FindAndReplace(Application wordApp, object toFindText, object replaceWithText);
     }

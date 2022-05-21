@@ -1,12 +1,11 @@
+C:\Users\lasha\Desktop\Project\Publisher_APP\HypernationAPI\HypBLL\bin\Debug\DocumentFormat.OpenXml.xml
+C:\Users\lasha\Desktop\Project\Publisher_APP\HypernationAPI\HypBLL\bin\Debug\HypBLL.dll.config
 C:\Users\lasha\Desktop\Project\Publisher_APP\HypernationAPI\HypBLL\bin\Debug\HypBLL.dll
 C:\Users\lasha\Desktop\Project\Publisher_APP\HypernationAPI\HypBLL\bin\Debug\HypBLL.pdb
-C:\Users\lasha\Desktop\Project\Publisher_APP\HypernationAPI\HypBLL\obj\Debug\HypBLL.csproj.AssemblyReference.cache
-C:\Users\lasha\Desktop\Project\Publisher_APP\HypernationAPI\HypBLL\obj\Debug\HypBLL.csproj.CoreCompileInputs.cache
-C:\Users\lasha\Desktop\Project\Publisher_APP\HypernationAPI\HypBLL\obj\Debug\HypBLL.dll
-C:\Users\lasha\Desktop\Project\Publisher_APP\HypernationAPI\HypBLL\obj\Debug\HypBLL.pdb
-C:\Users\lasha\Desktop\Project\Publisher_APP\HypernationAPI\HypBLL\bin\Debug\HypBLL.dll.config
 C:\Users\lasha\Desktop\Project\Publisher_APP\HypernationAPI\HypBLL\bin\Debug\DocumentFormat.OpenXml.dll
 C:\Users\lasha\Desktop\Project\Publisher_APP\HypernationAPI\HypBLL\bin\Debug\OpenXmlPowerTools.dll
 C:\Users\lasha\Desktop\Project\Publisher_APP\HypernationAPI\HypBLL\bin\Debug\System.Management.Automation.dll
-C:\Users\lasha\Desktop\Project\Publisher_APP\HypernationAPI\HypBLL\bin\Debug\DocumentFormat.OpenXml.xml
+C:\Users\lasha\Desktop\Project\Publisher_APP\HypernationAPI\HypBLL\obj\Debug\HypBLL.csproj.CoreCompileInputs.cache
 C:\Users\lasha\Desktop\Project\Publisher_APP\HypernationAPI\HypBLL\obj\Debug\HypBLL.csproj.CopyComplete
+C:\Users\lasha\Desktop\Project\Publisher_APP\HypernationAPI\HypBLL\obj\Debug\HypBLL.dll
+C:\Users\lasha\Desktop\Project\Publisher_APP\HypernationAPI\HypBLL\obj\Debug\HypBLL.pdb

@@ -19,6 +19,7 @@ namespace BLL.Services
         readonly string exeDir = Path.GetDirectoryName((new System.Uri(Assembly.GetEntryAssembly().CodeBase)).AbsolutePath);
         private object DocPath;
         private object SaveDocPath;
+        private Application wordApp = new Application();
         public WorkWithDoc(string docPath)
         {
             DocPath = docPath;
@@ -28,8 +29,6 @@ namespace BLL.Services
             if (!File.Exists((string)DocPath))
                 throw new Exception("File not specified or does not exist in temporary storage");
 
-            Console.WriteLine(exeDir);
-            Application wordApp = new Application();
             object missing = Missing.Value;
 
             Document WordDoc;
@@ -56,7 +55,6 @@ namespace BLL.Services
                                         ref missing, ref missing, ref missing);
 
             WordDoc.Close();
-            wordApp.Quit();
             return true;
         }
         public bool CleanDocument(bool cl_splace, bool cl_newLines, bool cor_PDashStarts, bool cl_tabs)
@@ -64,7 +62,6 @@ namespace BLL.Services
             if (!File.Exists((string)DocPath))
                 throw new Exception("File not specified or does not exist in temporary storage");
 
-            Application wordApp = new Application();
             object missing = Missing.Value;
 
             Document WordDoc;
@@ -91,7 +88,6 @@ namespace BLL.Services
                                         ref missing, ref missing, ref missing);
 
             WordDoc.Close();
-            wordApp.Quit();
             return true;
         }
         public DocDTO GetPages(int page = 1)
@@ -99,7 +95,6 @@ namespace BLL.Services
             if (!File.Exists((string)DocPath))
                 throw new Exception("File not specified or does not exist in temporary storage");
 
-            _Application wordApp = new Application();
             object missing = Missing.Value;
 
             object readOnly = true;
@@ -131,29 +126,37 @@ namespace BLL.Services
             {
                 end = ((page + 2) < PageCount) ? page + 2 : PageCount;
             }
-
+            List<int> Pages = new List<int>();
             Range range;
-            for (int i = start; i <= end; i++)
+            for (int i = start; i <= end+1; i++)
             {
                 range = WordDoc.Range();
-                range.Start = WordDoc.GoTo(WdGoToItem.wdGoToPage, WdGoToDirection.wdGoToAbsolute, i).Start;
+                int index = i;
+                if (index == end + 1)
+                    index = PageCount;
 
+                range.Start = WordDoc.GoTo(WdGoToItem.wdGoToPage, WdGoToDirection.wdGoToAbsolute, index).Start;
+                
                 if (i < PageCount)
                 {
-                    range.End = WordDoc.GoTo(WdGoToItem.wdGoToPage, WdGoToDirection.wdGoToAbsolute, i + 1).End - 1;
+                    range.End = WordDoc.GoTo(WdGoToItem.wdGoToPage, WdGoToDirection.wdGoToAbsolute, index + 1).End - 1;
                 }
                 else
                 {
-                    range.End = WordDoc.GoTo(WdGoToItem.wdGoToPage, WdGoToDirection.wdGoToAbsolute, i).End - 1;
+                    range.End = WordDoc.GoTo(WdGoToItem.wdGoToPage, WdGoToDirection.wdGoToAbsolute, index).End - 1;
                 }
-                string tempPath = Path.Combine(tempDirectory, $"{i}.html");
+                string tempPath = Path.Combine(tempDirectory, $"{index}.html");
                 if (!File.Exists(tempPath))
                 {
                     range.ExportFragment(tempPath, WdSaveFormat.wdFormatFilteredHTML);
                 }
+                if (File.Exists(tempPath))
+                {
+                    Pages.Add(i);
+                }
             }
+
             WordDoc.Close(WdSaveOptions.wdDoNotSaveChanges);
-            wordApp.Quit();
 
 
             //HTMLConverter s = new HTMLConverter();
@@ -164,7 +167,7 @@ namespace BLL.Services
             //    File.Delete((string)tempPath);
             //}
 
-            return new DocDTO() { FileName = tempDirectory, PageCount = PageCount };
+            return new DocDTO() { FileName = (string)DocPath, TempDirectory = tempDirectory, PageCount = PageCount, Pages = Pages };
         }
         public bool ConvertToPDF(string input, string output, WdSaveFormat format)
         {
@@ -204,16 +207,5 @@ namespace BLL.Services
             oWord.Quit(ref oMissing, ref oMissing, ref oMissing);
             return true;
         }
-
-        //public bool ZipUpFiles(string dirPath, string outputPath)
-        //{
-        //    if (File.Exists(outputPath))
-        //    {
-        //        File.Delete(outputPath);
-        //    }
-        //    ZipFile.CreateFromDirectory(dirPath, outputPath);
-
-        //    return true;
-        //}
     }
 }

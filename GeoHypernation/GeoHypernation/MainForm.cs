@@ -112,7 +112,9 @@ namespace GeoHypernation
                     if (result == DialogResult.OK) // Test result.
                     {
                         FileName = ofd.FileName;
+                        Change_working_state(true);
                         wwd = new WorkWithDoc(FileName);
+                        Change_working_state(false);
                         InitializeDocBox(FileName);
                     }
                 }
@@ -131,7 +133,9 @@ namespace GeoHypernation
                 if (files.Length == 1)
                 {
                     FileName = files.SingleOrDefault();
+                    Change_working_state(true);
                     wwd = new WorkWithDoc(FileName);
+                    Change_working_state(false);
                     InitializeDocBox(FileName);
                 }
                 else
@@ -147,21 +151,24 @@ namespace GeoHypernation
         }
         private void Save_btn_Click(object sender, EventArgs e)
         {
-            SaveFileDialog saveFileDialog = new SaveFileDialog
+            if (File.Exists(FileName))
             {
-                InitialDirectory = @"Documents",
-                Title = "სად შევინახოთ დამუშავებული ფაილი",
-                CheckFileExists = false,
-                CheckPathExists = true,
-                DefaultExt = ".docx",
-                Filter = "Word Document (*.docx)|*.docx|Word Document (*.doc)|*.doc|Rich Text Format (*.rtf)|*.rtf",
-                FilterIndex = 0,
-                RestoreDirectory = true,
-                FileName = FileName
-            };
-            if (saveFileDialog.ShowDialog() == DialogResult.OK)
-            {
+                SaveFileDialog saveFileDialog = new SaveFileDialog
+                {
+                    InitialDirectory = @"Documents",
+                    Title = "სად შევინახოთ დამუშავებული ფაილი",
+                    CheckFileExists = false,
+                    CheckPathExists = false,
+                    DefaultExt = ".docx",
+                    Filter = "Word Document (*.docx)|*.docx|Word Document (*.doc)|*.doc|Rich Text Format (*.rtf)|*.rtf",
+                    FilterIndex = 0,
+                    RestoreDirectory = true,
+                    FileName = FileName
+                };
+                if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                {
 
+                }
             }
             else
             {
@@ -175,40 +182,48 @@ namespace GeoHypernation
             type_lbl.Text = Path.GetExtension(filename);
             filename_lbl.Text = new FileInfo(filename).Name;
             docBox.Visible = true;
-            Thread thread = new Thread(
-                            delegate ()
-                            {
+            List<int> Pages = null;
+            //Thread thread = new Thread(
+            //                delegate ()
+            //                {
                                 try
                                 {
                                     Change_working_state(true);
                                     DocDTO result = wwd.GetPages(1);
-                                    workingDir = result.FileName;
+                                    workingDir = result.TempDirectory;
                                     DocPageCount = result.PageCount;
-                                }
+                                    Pages = result.Pages;
+
+                string FilePath = Path.Combine(workingDir, "1.html");
+                if (File.Exists(FilePath) && Pages.Count > 0)
+                {
+                    if (webBrowser.InvokeRequired)
+                    {
+                        webBrowser.Invoke(new MethodInvoker(delegate
+                        {
+                            webBrowser.Navigate(FilePath);
+                        }));
+                    }
+                    else
+                    {
+                        webBrowser.Navigate(FilePath);
+                    }
+                    CurrentPage = 1;
+                    Paginate(Pages, DocPageCount);
+                }
+                Change_working_state(false);
+            }
                                 catch
                                 {
                                     MessageBox.Show("მოხდა შეცდომა. ბოდიშს გიხდით", "შეცდომა", MessageBoxButtons.OK, MessageBoxIcon.Error);
                                 }
                                 finally
                                 {
-                                    string FilePath = Path.Combine(workingDir, "1.html");
-                                    if (File.Exists(FilePath))
-                                    {
-                                        if (webBrowser.InvokeRequired)
-                                        {
-                                            webBrowser.Invoke(new MethodInvoker(delegate
-                                            {
-                                                webBrowser.Navigate(FilePath);
-                                            }));
-                                        }
-                                        CurrentPage = 1;
-                                        Paginate();
-                                    }
-                                    Change_working_state(false);
+                                    
                                 }
-                            });
-            thread.SetApartmentState(ApartmentState.STA);
-            thread.Start();
+            //                });
+            //thread.SetApartmentState(ApartmentState.STA);
+            //thread.Start();
         }
 
         private void Close_btn_Click(object sender, EventArgs e)
@@ -278,31 +293,34 @@ namespace GeoHypernation
             {
                 webBrowser.Navigate((Uri)null);
             }
+            Pagination_Box.Controls.Clear();
         }
 
-        private void Paginate()
+        private void Paginate(List<int> pages, int docPageCount)
         {
             if (Directory.Exists(workingDir))
             {
                 if(CurrentPage == 1)
                 {
-                    Create_Pagination_Buttons(1, 4, 4);
+                    Create_Pagination_Buttons(1, pages.Count-1, docPageCount);
                 }
             }
         }
 
         private void Create_Pagination_Buttons(int start, int end, int final)
         {
-            //Pagination_Box.Controls.Clear();
+            Pagination_Box.Controls.Clear();
 
-            for(int i=start; i<=end; i++)
+            for (int i = start; i <= end; i++)
             {
-                Button btnPage = new Button();
-                btnPage.Location = new System.Drawing.Point(38 * i, 5);
-                btnPage.Size = new System.Drawing.Size(35, 20);
-                btnPage.Name = i.ToString()+"_btn";
-                btnPage.Text = i.ToString();
-                btnPage.Enabled = !(CurrentPage == i);
+                Button btnPage = new Button
+                {
+                    Location = new System.Drawing.Point(38 * i, 10),
+                    Size = new System.Drawing.Size(30, 20),
+                    Name = i.ToString() + "_btn",
+                    Text = i.ToString(),
+                    Enabled = !(CurrentPage == i)
+                };
                 btnPage.Click += new System.EventHandler(this.Page_btn_Click);
 
                 //Pagination_Box.Controls.Add(btnPage);
@@ -313,7 +331,45 @@ namespace GeoHypernation
                         Pagination_Box.Controls.Add(btnPage);
                     }));
                 }
+                else
+                {
+                    Pagination_Box.Controls.Add(btnPage);
+                }
             }
+            if (!(end == final))
+            {
+                Label sepLbl = new Label
+                {
+                    Location = new System.Drawing.Point(38 * (end + 1), 10),
+                    Size = new System.Drawing.Size(20, 20),
+                    Name = "sep_lbl",
+                    Text = "..."
+                };
+                Pagination_Box.Controls.Add(sepLbl);
+                Button btnFinalPage = new Button
+                {
+                    Location = new System.Drawing.Point(36 * (end + 2), 10),
+                    Size = new System.Drawing.Size(35, 20),
+                    Name = "final_btn",
+                    Text = final.ToString(),
+                    Enabled = !(CurrentPage == final)
+                };
+                btnFinalPage.Click += new System.EventHandler(this.Page_btn_Click);
+                Pagination_Box.Controls.Add(btnFinalPage);
+            }
+            //else
+            //{
+            //    Button btnFinalPage = new Button
+            //    {
+            //        Location = new System.Drawing.Point(38 * end, 5),
+            //        Size = new System.Drawing.Size(35, 20),
+            //        Name = "final_btn",
+            //        Text = end.ToString(),
+            //        Enabled = !(CurrentPage == end)
+            //    };
+            //    btnFinalPage.Click += new System.EventHandler(this.Page_btn_Click);
+            //    Pagination_Box.Controls.Add(btnFinalPage);
+            //}
         }
 
         private void Page_btn_Click(object sender, EventArgs e)
