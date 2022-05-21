@@ -44,7 +44,7 @@ namespace HypBLL.Services
             return wordApp;
         }
 
-        //For InDesign
+        //For InDesign call CorrectPDashStarts and CleanTabs
         public Application CleanTabs(Application wordApp)
         {
             wordApp = FindAndReplace(wordApp, "^9(^13)", @"\1");
