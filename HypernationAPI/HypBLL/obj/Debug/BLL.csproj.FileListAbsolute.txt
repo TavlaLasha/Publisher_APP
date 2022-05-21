@@ -1,2 +1,11 @@
+C:\Users\lasha\Desktop\Project\Publisher_APP\HypernationAPI\HypBLL\bin\Debug\BLL.dll.config
+C:\Users\lasha\Desktop\Project\Publisher_APP\HypernationAPI\HypBLL\bin\Debug\BLL.dll
+C:\Users\lasha\Desktop\Project\Publisher_APP\HypernationAPI\HypBLL\bin\Debug\BLL.pdb
+C:\Users\lasha\Desktop\Project\Publisher_APP\HypernationAPI\HypBLL\bin\Debug\DocumentFormat.OpenXml.dll
+C:\Users\lasha\Desktop\Project\Publisher_APP\HypernationAPI\HypBLL\bin\Debug\OpenXmlPowerTools.dll
+C:\Users\lasha\Desktop\Project\Publisher_APP\HypernationAPI\HypBLL\bin\Debug\System.Management.Automation.dll
+C:\Users\lasha\Desktop\Project\Publisher_APP\HypernationAPI\HypBLL\bin\Debug\DocumentFormat.OpenXml.xml
 C:\Users\lasha\Desktop\Project\Publisher_APP\HypernationAPI\HypBLL\obj\Debug\BLL.csproj.CoreCompileInputs.cache
-C:\Users\lasha\Desktop\Project\Publisher_APP\HypernationAPI\HypBLL\obj\Debug\BLL.csproj.AssemblyReference.cache
+C:\Users\lasha\Desktop\Project\Publisher_APP\HypernationAPI\HypBLL\obj\Debug\BLL.csproj.CopyComplete
+C:\Users\lasha\Desktop\Project\Publisher_APP\HypernationAPI\HypBLL\obj\Debug\BLL.dll
+C:\Users\lasha\Desktop\Project\Publisher_APP\HypernationAPI\HypBLL\obj\Debug\BLL.pdb
