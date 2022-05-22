@@ -42,8 +42,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataViewModels\DocDTO.cs" />
+    <Compile Include="DataViewModels\WordManagement\BarbarismDTO.cs" />
+    <Compile Include="DataViewModels\DocManagement\DocDTO.cs" />
+    <Compile Include="DataViewModels\WordManagement\MorphologyDTO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

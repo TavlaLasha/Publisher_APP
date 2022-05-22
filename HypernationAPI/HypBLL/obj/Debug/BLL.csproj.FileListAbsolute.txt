@@ -9,3 +9,11 @@ C:\Users\lasha\Desktop\Project\Publisher_APP\HypernationAPI\HypBLL\obj\Debug\BLL
 C:\Users\lasha\Desktop\Project\Publisher_APP\HypernationAPI\HypBLL\obj\Debug\BLL.csproj.CopyComplete
 C:\Users\lasha\Desktop\Project\Publisher_APP\HypernationAPI\HypBLL\obj\Debug\BLL.dll
 C:\Users\lasha\Desktop\Project\Publisher_APP\HypernationAPI\HypBLL\obj\Debug\BLL.pdb
+C:\Users\lasha\Desktop\Project\Publisher_APP\HypernationAPI\HypBLL\bin\Debug\DAL.dll
+C:\Users\lasha\Desktop\Project\Publisher_APP\HypernationAPI\HypBLL\bin\Debug\Models.dll
+C:\Users\lasha\Desktop\Project\Publisher_APP\HypernationAPI\HypBLL\bin\Debug\EntityFramework.dll
+C:\Users\lasha\Desktop\Project\Publisher_APP\HypernationAPI\HypBLL\bin\Debug\DAL.pdb
+C:\Users\lasha\Desktop\Project\Publisher_APP\HypernationAPI\HypBLL\bin\Debug\DAL.dll.config
+C:\Users\lasha\Desktop\Project\Publisher_APP\HypernationAPI\HypBLL\bin\Debug\Models.pdb
+C:\Users\lasha\Desktop\Project\Publisher_APP\HypernationAPI\HypBLL\bin\Debug\EntityFramework.xml
+C:\Users\lasha\Desktop\Project\Publisher_APP\HypernationAPI\HypBLL\obj\Debug\BLL.csproj.AssemblyReference.cache

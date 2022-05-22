@@ -65,9 +65,11 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Contracts\IBarbarismManagement.cs" />
     <Compile Include="Contracts\ICleanManagement.cs" />
     <Compile Include="Contracts\IDocManagement.cs" />
     <Compile Include="Logics\HTMLConverter.cs" />
+    <Compile Include="Services\BarbarismManagement.cs" />
     <Compile Include="Services\CleanManagement.cs" />
     <Compile Include="Services\HYPManagement.cs" />
     <Compile Include="Contracts\IHYPManagement.cs" />
@@ -79,6 +81,16 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DAL\DAL.csproj">
+      <Project>{C0BCB792-8999-4B3C-A9CB-B8E58AEB0FBA}</Project>
+      <Name>DAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Models\Models.csproj">
+      <Project>{898415B0-9AB3-4DE6-8B73-6A5A679DB6DB}</Project>
+      <Name>Models</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
