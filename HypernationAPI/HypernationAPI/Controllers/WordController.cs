@@ -99,14 +99,14 @@ namespace HypernationAPI.Controllers
                 result.Content = new StringContent(ex.Message);
                 return result;
             }
-            catch
+            catch (Exception ex)
             {
                 return Request.CreateResponse(HttpStatusCode.InternalServerError);
             }
         }
 
         [Route("api/Barbarism/EditBarbarism/{id}")]
-        [HttpPost]
+        [HttpPut]
         public HttpResponseMessage EditBarbarism(string id, [FromBody] BarbarismDTO bdt)
         {
             try

@@ -34,7 +34,7 @@ namespace BLL.Services
             if (id == string.Empty || Convert.ToInt32(id) < 1)
                 throw new HttpException("No ID given");
 
-            if (!_unitOfWork.BarbarismRepo.ExistsBarbarism(id))
+            if (_unitOfWork.BarbarismRepo.ExistsBarbarism(id))
                 throw new HttpException($"Data with ID: {id} could not be found");
 
             _unitOfWork.BarbarismRepo.DeleteBarbarism(Convert.ToInt32(id));

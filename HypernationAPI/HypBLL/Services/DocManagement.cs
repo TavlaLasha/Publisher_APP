@@ -1,4 +1,4 @@
-﻿using BLL.Interfaces;
+﻿using BLL.Contracts;
 using BLL.Logics;
 using BLL.Services;
 using Microsoft.Office.Interop.Word;

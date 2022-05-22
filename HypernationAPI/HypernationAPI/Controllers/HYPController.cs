@@ -1,5 +1,5 @@
 ﻿using BLL;
-using BLL.Interfaces;
+using BLL.Contracts;
 using Microsoft.Office.Interop.Word;
 using Models.DataViewModels;
 using Newtonsoft.Json;
