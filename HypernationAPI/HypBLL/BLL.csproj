@@ -75,6 +75,7 @@
     <Compile Include="Contracts\IBarbarismManagement.cs" />
     <Compile Include="Contracts\ICleanManagement.cs" />
     <Compile Include="Contracts\IDocManagement.cs" />
+    <Compile Include="Contracts\IMorphologyManagement.cs" />
     <Compile Include="Logics\HTMLConverter.cs" />
     <Compile Include="Services\BarbarismManagement.cs" />
     <Compile Include="Services\CleanManagement.cs" />
@@ -84,6 +85,7 @@
     <Compile Include="Logics\WmlToHtmlConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\DocManagement.cs" />
+    <Compile Include="Services\MorphologyManagement.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

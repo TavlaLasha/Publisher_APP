@@ -10,74 +10,74 @@ using System.Web;
 
 namespace BLL.Services
 {
-    public class BarbarismManagement : IBarbarismManagement
+    public class MorphologyManagement : IMorphologyManagement
     {
-        public bool AddBarbarism(BarbarismDTO brbDTO)
+        public bool AddMorphology(MorphologyDTO morphDTO)
         {
             UnitOfWork _unitOfWork = new UnitOfWork(new DAL.EF.GeoHypDBContext());
 
-            if (brbDTO == null || (brbDTO.Wrong_Word == string.Empty || brbDTO.Wrong_Word == null) || (brbDTO.Correct_Word == string.Empty || brbDTO.Correct_Word == null))
+            if (morphDTO == null || (morphDTO.Wrong_Word == string.Empty || morphDTO.Wrong_Word == null) || (morphDTO.Correct_Word == string.Empty || morphDTO.Correct_Word == null))
                 throw new HttpException("No valid model given");
 
-            if (_unitOfWork.BarbarismRepo.ExistsBarbarism(brbDTO.Wrong_Word))
-                throw new HttpException($"Barbarism: {brbDTO.Wrong_Word} already exists in the database");
+            if (_unitOfWork.MorphologyRepo.ExistsMorphology(morphDTO.Wrong_Word))
+                throw new HttpException($"Morphology: {morphDTO.Wrong_Word} already exists in the database");
 
-            _unitOfWork.BarbarismRepo.AddBarbarism(brbDTO);
-            _unitOfWork.BarbarismRepo.SaveChanges();
+            _unitOfWork.MorphologyRepo.AddMorphology(morphDTO);
+            _unitOfWork.MorphologyRepo.SaveChanges();
             return true;
         }
 
-        public bool DeleteBarbarism(string id)
+        public bool DeleteMorphology(string id)
         {
             UnitOfWork _unitOfWork = new UnitOfWork(new DAL.EF.GeoHypDBContext());
 
             if (id == string.Empty || Convert.ToInt32(id) < 1)
                 throw new HttpException("No ID given");
 
-            if (_unitOfWork.BarbarismRepo.ExistsBarbarism(id))
+            if (_unitOfWork.MorphologyRepo.ExistsMorphology(id))
                 throw new HttpException($"Data with ID: {id} could not be found");
 
-            _unitOfWork.BarbarismRepo.DeleteBarbarism(Convert.ToInt32(id));
-            _unitOfWork.BarbarismRepo.SaveChanges();
+            _unitOfWork.MorphologyRepo.DeleteMorphology(Convert.ToInt32(id));
+            _unitOfWork.MorphologyRepo.SaveChanges();
             return true;
         }
 
-        public bool EditBarbarism(string id, BarbarismDTO brbDTO)
+        public bool EditMorphology(string id, MorphologyDTO morphDTO)
         {
             UnitOfWork _unitOfWork = new UnitOfWork(new DAL.EF.GeoHypDBContext());
 
-            if (brbDTO == null || (brbDTO.Wrong_Word == string.Empty || brbDTO.Wrong_Word == null) || (brbDTO.Correct_Word == string.Empty || brbDTO.Correct_Word == null))
+            if (morphDTO == null || (morphDTO.Wrong_Word == string.Empty || morphDTO.Wrong_Word == null) || (morphDTO.Correct_Word == string.Empty || morphDTO.Correct_Word == null))
                 throw new HttpException("No valid model given");
 
             if (id == string.Empty || Convert.ToInt32(id) < 1)
                 throw new HttpException("No ID given");
 
             int Id = Convert.ToInt32(id);
-            if (!_unitOfWork.BarbarismRepo.ExistsBarbarismId(Id))
+            if (!_unitOfWork.MorphologyRepo.ExistsMorphologyId(Id))
                 throw new HttpException($"Data with ID: {Id} could not be found");
 
-            _unitOfWork.BarbarismRepo.EditBarbarism(Id, brbDTO);
-            _unitOfWork.BarbarismRepo.SaveChanges();
+            _unitOfWork.MorphologyRepo.EditMorphology(Id, morphDTO);
+            _unitOfWork.MorphologyRepo.SaveChanges();
             return true;
         }
 
-        public BarbarismDTO GetBarbarism(string id)
+        public MorphologyDTO GetMorphology(string id)
         {
             UnitOfWork _unitOfWork = new UnitOfWork(new DAL.EF.GeoHypDBContext());
             if (id == string.Empty || Convert.ToInt32(id) < 1)
                 throw new HttpException("No ID given");
 
             int Id = Convert.ToInt32(id);
-            if (!_unitOfWork.BarbarismRepo.ExistsBarbarismId(Id))
+            if(!_unitOfWork.MorphologyRepo.ExistsMorphologyId(Id))
                 throw new HttpException($"Data with ID: {Id} could not be found");
 
-            return _unitOfWork.BarbarismRepo.GetBarbarism(Id);
+            return _unitOfWork.MorphologyRepo.GetMorphology(Id);
         }
 
-        public IEnumerable<BarbarismDTO> GetAllBarbarisms()
+        public IEnumerable<MorphologyDTO> GetAllMorphologies()
         {
             UnitOfWork _unitOfWork = new UnitOfWork(new DAL.EF.GeoHypDBContext());
-            return _unitOfWork.BarbarismRepo.GetAllBarbarisms();
+            return _unitOfWork.MorphologyRepo.GetAllMorphologies();
         }
     }
 }

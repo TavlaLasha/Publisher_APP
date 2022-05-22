@@ -9,11 +9,13 @@ namespace DAL.Repository.Contracts
 {
     public interface IMorphologyRepository : IDisposable
     {
-        IEnumerable<MorphologyDTO> GetMorphologies();
-        MorphologyDTO GetMorphology(string id);
+        IEnumerable<MorphologyDTO> GetAllMorphologies();
+        MorphologyDTO GetMorphology(int id);
+        bool ExistsMorphology(string wrong_word);
+        bool ExistsMorphologyId(int id);
         bool AddMorphology(MorphologyDTO morphDTO);
-        bool EditMorphology(string id, MorphologyDTO morphDTO);
-        bool DeleteMorphology(string id);
+        bool EditMorphology(int id, MorphologyDTO morphDTO);
+        bool DeleteMorphology(int id);
         void SaveChanges();
     }
 }

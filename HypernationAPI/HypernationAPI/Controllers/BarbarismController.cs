@@ -12,10 +12,10 @@ using System.Web.Http;
 
 namespace HypernationAPI.Controllers
 {
-    public class WordController : ApiController
+    public class BarbarismController : ApiController
     {
         readonly IBarbarismManagement _barbManagement;
-        public WordController(IBarbarismManagement barbManagement)
+        public BarbarismController(IBarbarismManagement barbManagement)
         {
             _barbManagement = barbManagement;
         }

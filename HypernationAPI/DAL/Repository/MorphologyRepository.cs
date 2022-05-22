@@ -38,11 +38,11 @@ namespace DAL.Repository
             }
         }
 
-        public bool DeleteMorphology(string id)
+        public bool DeleteMorphology(int id)
         {
             try
             {
-                var morph = _db.Morphologies.Where(i => i.id.Equals(id)).First();
+                var morph = _db.Morphologies.Where(i => i.id == id).First();
                 _db.Morphologies.Remove(morph);
                 return true;
             }
@@ -52,11 +52,11 @@ namespace DAL.Repository
             }
         }
 
-        public bool EditMorphology(string id, MorphologyDTO morphDTO)
+        public bool EditMorphology(int id, MorphologyDTO morphDTO)
         {
             try
             {
-                var morph = _db.Morphologies.Where(i => i.id.Equals(id)).First();
+                var morph = _db.Morphologies.Where(i => i.id == id).First();
                 morph.wrong_word = morphDTO.Wrong_Word;
                 morph.correct_word = morphDTO.Correct_Word;
                 return true;
@@ -67,7 +67,7 @@ namespace DAL.Repository
             }
         }
 
-        public IEnumerable<MorphologyDTO> GetMorphologies()
+        public IEnumerable<MorphologyDTO> GetAllMorphologies()
         {
             return _db.Morphologies.Select(i => new MorphologyDTO
             {
@@ -77,14 +77,23 @@ namespace DAL.Repository
             });
         }
 
-        public MorphologyDTO GetMorphology(string id)
+        public MorphologyDTO GetMorphology(int id)
         {
-            return _db.Morphologies.Where(i => i.id.Equals(id)).Select(i => new MorphologyDTO
+            return _db.Morphologies.Where(i => i.id == id).Select(i => new MorphologyDTO
             {
                 Id = i.id,
                 Wrong_Word = i.wrong_word,
                 Correct_Word = i.correct_word,
             }).FirstOrDefault();
+        }
+        public bool ExistsMorphologyId(int id)
+        {
+            return _db.Morphologies.Any(i => i.id == id);
+        }
+
+        public bool ExistsMorphology(string wrong_word)
+        {
+            return _db.Morphologies.Any(i => i.wrong_word.Equals(wrong_word));
         }
 
         public void SaveChanges()

@@ -14,6 +14,7 @@ namespace HypernationAPI
 			var container = new UnityContainer();
             container.RegisterType<IDocManagement, DocManagement>();
             container.RegisterType<IBarbarismManagement, BarbarismManagement>();
+            container.RegisterType<IMorphologyManagement, MorphologyManagement>();
             container.RegisterType<ICleanManagement, CleanManagement>();
 
             // register all your components with the container here
