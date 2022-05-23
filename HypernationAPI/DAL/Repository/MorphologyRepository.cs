@@ -57,8 +57,10 @@ namespace DAL.Repository
             try
             {
                 var morph = _db.Morphologies.Where(i => i.id == id).First();
-                morph.wrong_word = morphDTO.Wrong_Word;
-                morph.correct_word = morphDTO.Correct_Word;
+                if (morphDTO.Wrong_Word != null)
+                    morph.wrong_word = morphDTO.Wrong_Word;
+                if (morphDTO.Correct_Word != null)
+                    morph.correct_word = morphDTO.Correct_Word;
                 return true;
             }
             catch

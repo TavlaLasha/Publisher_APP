@@ -77,7 +77,7 @@ namespace HypernationAPI.Controllers
         {
             try
             {
-                if(bdt == null || bdt.Wrong_Word == string.Empty)
+                if(bdt == null || bdt.Wrong_Word == string.Empty || bdt.Correct_Word == string.Empty)
                     throw new HttpException("Model invalid or null");
 
                 bool dt = _barbManagement.AddBarbarism(bdt);
@@ -114,7 +114,7 @@ namespace HypernationAPI.Controllers
                 if(id == string.Empty)
                     throw new HttpException("ID is important parameter");
 
-                if (bdt == null || bdt.Wrong_Word == string.Empty)
+                if (bdt == null || (bdt.Wrong_Word == string.Empty && bdt.Correct_Word == string.Empty && bdt.Description == string.Empty))
                     throw new HttpException("Model invalid or null");
 
                 bool dt = _barbManagement.EditBarbarism(id, bdt);

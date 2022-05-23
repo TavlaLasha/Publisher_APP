@@ -58,9 +58,12 @@ namespace DAL.Repository
             try
             {
                 var brb = _db.Barbarisms.Where(i => i.id == id).First();
-                brb.wrong_word = brbDTO.Wrong_Word;
-                brb.correct_word = brbDTO.Correct_Word;
-                brb.decription = brbDTO.Description;
+                if (brbDTO.Wrong_Word != null)
+                    brb.wrong_word = brbDTO.Wrong_Word;
+                if (brbDTO.Correct_Word != null)
+                    brb.correct_word = brbDTO.Correct_Word;
+                if (brbDTO.Description != null)
+                    brb.decription = brbDTO.Description;
                 return true;
             }
             catch

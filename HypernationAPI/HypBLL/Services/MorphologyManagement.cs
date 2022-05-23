@@ -46,7 +46,7 @@ namespace BLL.Services
         {
             UnitOfWork _unitOfWork = new UnitOfWork(new DAL.EF.GeoHypDBContext());
 
-            if (morphDTO == null || (morphDTO.Wrong_Word == string.Empty || morphDTO.Wrong_Word == null) || (morphDTO.Correct_Word == string.Empty || morphDTO.Correct_Word == null))
+            if (morphDTO == null || ((morphDTO.Wrong_Word == string.Empty || morphDTO.Wrong_Word == null) && (morphDTO.Correct_Word == string.Empty || morphDTO.Correct_Word == null)))
                 throw new HttpException("No valid model given");
 
             if (id == string.Empty || Convert.ToInt32(id) < 1)
