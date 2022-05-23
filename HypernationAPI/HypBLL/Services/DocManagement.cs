@@ -2,6 +2,7 @@
 using BLL.Logics;
 using BLL.Services;
 using Microsoft.Office.Interop.Word;
+using Models.DataViewModels.DocManagement;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -58,10 +59,14 @@ namespace BLL
                 return false;
             }
         }
-        public bool CleanDocument(object filename, object saveAs)
+        public bool CleanDocument(object filename, object saveAs, DocCleanDTO docclDTo = null)
         {
             if (!File.Exists((string)filename))
                 throw new HttpException("File does not exist in temporary storage");
+            if (docclDTo != null && (!docclDTo.CleanNewLines && !docclDTo.CleanSpaces && !docclDTo.CleanTabs && !docclDTo.CorrectPDashStarts))
+            {
+                throw new HttpException("Nothing to do");
+            }
 
             Application wordApp = new Application();
             object missing = Missing.Value;
@@ -72,26 +77,51 @@ namespace BLL
 
             object isVisible = false;
 
-            wordApp.Visible = false;
-            WordDoc = wordApp.Documents.Open(ref filename, ref missing, ref readOnly,
-                                                ref missing, ref missing, ref missing,
-                                                ref missing, ref missing, ref missing,
-                                                ref missing, ref missing, isVisible,
-                                                ref missing, ref missing, ref missing, ref missing);
-            WordDoc.Activate();
+            try
+            {
+                wordApp.Visible = false;
+                WordDoc = wordApp.Documents.Open(ref filename, ref missing, ref readOnly,
+                                                    ref missing, ref missing, ref missing,
+                                                    ref missing, ref missing, ref missing,
+                                                    ref missing, ref missing, isVisible,
+                                                    ref missing, ref missing, ref missing, ref missing);
+                WordDoc.Activate();
 
-            CleanManagement hyp = new CleanManagement(wordApp);
-            wordApp = hyp.Execute();
+                CleanManagement hyp = new CleanManagement();
+                if (docclDTo == null || (docclDTo.CleanNewLines && docclDTo.CleanSpaces && docclDTo.CleanTabs && docclDTo.CorrectPDashStarts))
+                {
+                    wordApp = hyp.ExecuteAll(wordApp);
+                }
+                else if (docclDTo != null)
+                {
+                    if (docclDTo.CleanSpaces)
+                        wordApp = hyp.CleanSpaces(wordApp);
 
-            WordDoc.SaveAs(ref saveAs, ref missing, ref missing, ref missing,
-                                        ref missing, ref missing, ref missing,
-                                        ref missing, ref missing, ref missing,
-                                        ref missing, ref missing, ref missing,
-                                        ref missing, ref missing, ref missing);
+                    if (docclDTo.CleanNewLines)
+                        wordApp = hyp.CleanNewLines(wordApp);
 
-            WordDoc.Close();
-            wordApp.Quit();
-            return true;
+                    if (docclDTo.CleanTabs)
+                        wordApp = hyp.CleanTabs(wordApp);
+
+                    if (docclDTo.CorrectPDashStarts)
+                        wordApp = hyp.CorrectPDashStarts(wordApp);
+                }
+
+                WordDoc.SaveAs(ref saveAs, ref missing, ref missing, ref missing,
+                                            ref missing, ref missing, ref missing,
+                                            ref missing, ref missing, ref missing,
+                                            ref missing, ref missing, ref missing,
+                                            ref missing, ref missing, ref missing);
+
+                WordDoc.Close();
+                wordApp.Quit();
+                return true;
+            }
+            catch
+            {
+                wordApp.Quit(WdSaveOptions.wdDoNotSaveChanges);
+                return false;
+            }
         }
         public string[] GetPages(object filename, int page = 1)
         {
@@ -103,66 +133,74 @@ namespace BLL
 
             object readOnly = true;
             object isVisible = false;
-            wordApp.Visible = false;
-
-            _Document WordDoc = wordApp.Documents.Open(ref filename, ref missing, ref readOnly,
-                                                ref missing, ref missing, ref missing,
-                                                ref missing, ref missing, ref missing,
-                                                ref missing, ref missing, ref isVisible,
-                                                ref missing, ref missing, ref missing, ref missing);
-            WordDoc.Activate();
-
-            int PageCount = WordDoc.ComputeStatistics(WdStatistic.wdStatisticPages, false);
-            if(page > PageCount || page < 1)
+            try
             {
-                throw new InvalidOperationException("Page number exceeded document length");
-            }
+                wordApp.Visible = false;
 
-            string tempDirectory = Directory.CreateDirectory(HttpContext.Current.Server.MapPath($"~/TempDocs/Temp/{Path.GetFileNameWithoutExtension(filename.ToString())}")).FullName;
+                _Document WordDoc = wordApp.Documents.Open(ref filename, ref missing, ref readOnly,
+                                                    ref missing, ref missing, ref missing,
+                                                    ref missing, ref missing, ref missing,
+                                                    ref missing, ref missing, ref isVisible,
+                                                    ref missing, ref missing, ref missing, ref missing);
+                WordDoc.Activate();
 
-            int start = ((page - 2) > 0) ? page - 2 : 1;
-            int end;
-            if (page <= 3)
-            {
-                end = (5 < PageCount) ? 5 : PageCount;
-            }
-            else
-            {
-                end = ((page + 2) < PageCount) ? page + 2 : PageCount;
-            }
-
-            Range range;
-            for (int i = start; i <= end; i++)
-            {
-                range = WordDoc.Range();
-                range.Start = WordDoc.GoTo(WdGoToItem.wdGoToPage, WdGoToDirection.wdGoToAbsolute, i).Start;
-
-                if (i < PageCount)
+                int PageCount = WordDoc.ComputeStatistics(WdStatistic.wdStatisticPages, false);
+                if (page > PageCount || page < 1)
                 {
-                    range.End = WordDoc.GoTo(WdGoToItem.wdGoToPage, WdGoToDirection.wdGoToAbsolute, i + 1).End - 1;
+                    throw new InvalidOperationException("Page number exceeded document length");
+                }
+
+                string tempDirectory = Directory.CreateDirectory(HttpContext.Current.Server.MapPath($"~/TempDocs/Temp/{Path.GetFileNameWithoutExtension(filename.ToString())}")).FullName;
+
+                int start = ((page - 2) > 0) ? page - 2 : 1;
+                int end;
+                if (page <= 3)
+                {
+                    end = (5 < PageCount) ? 5 : PageCount;
                 }
                 else
                 {
-                    range.End = WordDoc.GoTo(WdGoToItem.wdGoToPage, WdGoToDirection.wdGoToAbsolute, i).End - 1;
+                    end = ((page + 2) < PageCount) ? page + 2 : PageCount;
                 }
-                string tempPath = Path.Combine(tempDirectory, $"{i}.html");
-                if (!File.Exists(tempPath))
+
+                Range range;
+                for (int i = start; i <= end; i++)
                 {
-                    range.ExportFragment(tempPath, WdSaveFormat.wdFormatFilteredHTML);
+                    range = WordDoc.Range();
+                    range.Start = WordDoc.GoTo(WdGoToItem.wdGoToPage, WdGoToDirection.wdGoToAbsolute, i).Start;
+
+                    if (i < PageCount)
+                    {
+                        range.End = WordDoc.GoTo(WdGoToItem.wdGoToPage, WdGoToDirection.wdGoToAbsolute, i + 1).End - 1;
+                    }
+                    else
+                    {
+                        range.End = WordDoc.GoTo(WdGoToItem.wdGoToPage, WdGoToDirection.wdGoToAbsolute, i).End - 1;
+                    }
+                    string tempPath = Path.Combine(tempDirectory, $"{i}.html");
+                    if (!File.Exists(tempPath))
+                    {
+                        range.ExportFragment(tempPath, WdSaveFormat.wdFormatFilteredHTML);
+                    }
                 }
+                WordDoc.Close(WdSaveOptions.wdDoNotSaveChanges);
+                wordApp.Quit();
+
+
+                //HTMLConverter s = new HTMLConverter();
+                //string data = s.ConvertToHtml((string)tempPath);
+
+                //if (File.Exists((string)tempPath)) {
+                //    File.Delete((string)tempPath);
+                //}
+
+                return new string[2] { tempDirectory, PageCount.ToString() };
             }
-            WordDoc.Close(WdSaveOptions.wdDoNotSaveChanges);
-            wordApp.Quit();
-
-
-            //HTMLConverter s = new HTMLConverter();
-            //string data = s.ConvertToHtml((string)tempPath);
-
-            //if (File.Exists((string)tempPath)) {
-            //    File.Delete((string)tempPath);
-            //}
-
-            return new string[2] { tempDirectory, PageCount.ToString() };
+            catch
+            {
+                wordApp.Quit(WdSaveOptions.wdDoNotSaveChanges);
+                return new string[0];
+            }
         }
         public bool ConvertToPDF(string input, string output, WdSaveFormat format)
         {
@@ -182,25 +220,33 @@ namespace BLL
             object oOutput = output;
             object oFormat = format;
 
-            // Load a document into our instance of word.exe
-            _Document oDoc = oWord.Documents.Open(
-                ref oInput, ref oMissing, ref readOnly, ref oMissing, ref oMissing,
-                ref oMissing, ref oMissing, ref oMissing, ref oMissing, ref oMissing,
-                ref oMissing, ref isVisible, ref oMissing, ref oMissing, ref oMissing, ref oMissing
-                );
+            try
+            {
+                // Load a document into our instance of word.exe
+                _Document oDoc = oWord.Documents.Open(
+                    ref oInput, ref oMissing, ref readOnly, ref oMissing, ref oMissing,
+                    ref oMissing, ref oMissing, ref oMissing, ref oMissing, ref oMissing,
+                    ref oMissing, ref isVisible, ref oMissing, ref oMissing, ref oMissing, ref oMissing
+                    );
 
-            // Make this document the active document.
-            oDoc.Activate();
+                // Make this document the active document.
+                oDoc.Activate();
 
-            // Save this document using Word
-            oDoc.SaveAs(ref oOutput, ref oFormat, ref oMissing, ref oMissing,
-                ref oMissing, ref oMissing, ref oMissing, ref oMissing, ref oMissing,
-                ref oMissing, ref oMissing, ref oMissing, ref oMissing, ref oMissing, ref oMissing, ref oMissing
-                );
+                // Save this document using Word
+                oDoc.SaveAs(ref oOutput, ref oFormat, ref oMissing, ref oMissing,
+                    ref oMissing, ref oMissing, ref oMissing, ref oMissing, ref oMissing,
+                    ref oMissing, ref oMissing, ref oMissing, ref oMissing, ref oMissing, ref oMissing, ref oMissing
+                    );
 
-            // Always close Word.exe.
-            oWord.Quit(ref oMissing, ref oMissing, ref oMissing);
-            return true;
+                // Always close Word.exe.
+                oWord.Quit(ref oMissing, ref oMissing, ref oMissing);
+                return true;
+            }
+            catch
+            {
+                oWord.Quit(WdSaveOptions.wdDoNotSaveChanges);
+                return false;
+            }
         }
 
         public bool ZipUpFiles(string dirPath, string outputPath)

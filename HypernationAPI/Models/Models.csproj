@@ -42,6 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataViewModels\DocManagement\DocCleanDTO.cs" />
     <Compile Include="DataViewModels\WordManagement\BarbarismDTO.cs" />
     <Compile Include="DataViewModels\DocManagement\DocDTO.cs" />
     <Compile Include="DataViewModels\WordManagement\MorphologyDTO.cs" />

@@ -135,54 +135,6 @@ namespace HypernationAPI.Controllers
         }
 
         [HttpGet]
-        [Route("api/CleanDoc/{fileName}")]
-        public HttpResponseMessage CleanDoc(string fileName)
-        {
-            try
-            {
-                if (fileName == "" || fileName == " ")
-                    throw new HttpException("File Name is Required Parameter");
-
-                HttpResponseMessage result;
-                string filePath = HttpContext.Current.Server.MapPath($"~/TempDocs/{fileName}");
-
-                if (!File.Exists(filePath))
-                    throw new HttpException("File does not exist in temporary storage");
-
-                string modifiedFilePath = HttpContext.Current.Server.MapPath("~/TempDocs/Modified/" + fileName);
-
-                if (!_docManagement.CleanDocument(filePath, modifiedFilePath))
-                {
-                    result = Request.CreateResponse(HttpStatusCode.InternalServerError);
-                    result.Content = new StringContent("API Failed To Clean Given File");
-                    return result;
-                }
-                FileInfo fs = new FileInfo(filePath);
-                long FileSize = fs.Length;
-
-                string jObject = JsonConvert.SerializeObject(new DocDTO() { FileName = fileName, FileSize = FileSize });
-
-                result = new HttpResponseMessage(HttpStatusCode.OK)
-                {
-                    Content = new StringContent(jObject, Encoding.UTF8, "application/json")
-                };
-
-                return result;
-            }
-            catch (HttpException ex)
-            {
-                HttpResponseMessage result = Request.CreateResponse(HttpStatusCode.BadRequest);
-                result.Content = new StringContent(ex.Message);
-                return result;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                return Request.CreateResponse(HttpStatusCode.InternalServerError);
-            }
-        }
-
-        [HttpGet]
         [Route("api/HypDoc/{fileName}")]
         public HttpResponseMessage HypernateDoc(string fileName)
         {

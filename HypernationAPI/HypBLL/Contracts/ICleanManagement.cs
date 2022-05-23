@@ -9,11 +9,10 @@ namespace BLL.Contracts
 {
     public interface ICleanManagement
     {
-        Application Execute();
+        Application ExecuteAll(Application wordApp);
         Application CleanSpaces(Application wordApp);
         Application CleanNewLines(Application wordApp);
         Application CleanTabs(Application wordApp);
         Application CorrectPDashStarts(Application wordApp);
-        Application FindAndReplace(Application wordApp, object toFindText, object replaceWithText);
     }
 }

@@ -10,12 +10,7 @@ namespace BLL.Services
 {
     public class CleanManagement : ICleanManagement
     {
-        private Application wordApp;
-        public CleanManagement(Application wordApp)
-        {
-            this.wordApp = wordApp;
-        }
-        public Application Execute()
+        public Application ExecuteAll(Application wordApp)
         {
             if (wordApp == null)
                 throw new Exception("No Document Given");
@@ -29,17 +24,26 @@ namespace BLL.Services
         }
         public Application CleanSpaces(Application wordApp)
         {
+            if (wordApp == null)
+                throw new Exception("No Document Given");
+
             wordApp = FindAndReplace(wordApp, " [ ]@([! ])", @" \1");
             return wordApp;
         }
 
         public Application CleanNewLines(Application wordApp)
         {
+            if (wordApp == null)
+                throw new Exception("No Document Given");
+
             wordApp = FindAndReplace(wordApp, "^11", "^13");
             return wordApp;
         }
         public Application CorrectPDashStarts(Application wordApp)
         {
+            if (wordApp == null)
+                throw new Exception("No Document Given");
+
             wordApp = FindAndReplace(wordApp, "([-─])^13", @"—\1");
             return wordApp;
         }
@@ -47,11 +51,14 @@ namespace BLL.Services
         //For InDesign call CorrectPDashStarts and CleanTabs
         public Application CleanTabs(Application wordApp)
         {
+            if (wordApp == null)
+                throw new Exception("No Document Given");
+
             wordApp = FindAndReplace(wordApp, "^9(^13)", @"\1");
             return wordApp;
         }
 
-        public Application FindAndReplace(Application wordApp, object toFindText, object replaceWithText)
+        private Application FindAndReplace(Application wordApp, object toFindText, object replaceWithText)
         {
             object matchCase = false;
 
