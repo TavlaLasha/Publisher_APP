@@ -4,11 +4,13 @@ using Microsoft.Office.Interop.Word;
 using Models.DataViewModels;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
 
@@ -16,13 +18,32 @@ namespace BLL.Services
 {
     public class WorkWithDoc : IWorkWithDoc
     {
+        private readonly SynchronizationContext syncContext;
+        private bool stopRequested;
+
         readonly string exeDir = Path.GetDirectoryName((new System.Uri(Assembly.GetEntryAssembly().CodeBase)).AbsolutePath);
         private object DocPath;
         private object SaveDocPath;
         private Application wordApp = new Application();
+
+
         public WorkWithDoc(string docPath)
         {
+            syncContext = AsyncOperationManager.SynchronizationContext;
             DocPath = docPath;
+        }
+
+        //public void StartHypernation()
+        //{
+        //    stopRequested = false;
+        //    var thread = new Thread(HypernateDocument);
+        //    thread.IsBackground = true;
+        //    thread.Start();
+        //}
+
+        public void Stop()
+        {
+            stopRequested = true;
         }
         public bool HypernateDocument()
         {

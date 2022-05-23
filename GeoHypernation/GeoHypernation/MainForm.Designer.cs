@@ -233,9 +233,9 @@
             // loading_img
             // 
             this.loading_img.Image = global::GeoHypernation.Properties.Resources._200;
-            this.loading_img.Location = new System.Drawing.Point(452, 73);
+            this.loading_img.Location = new System.Drawing.Point(354, 4);
             this.loading_img.Name = "loading_img";
-            this.loading_img.Size = new System.Drawing.Size(236, 207);
+            this.loading_img.Size = new System.Drawing.Size(456, 341);
             this.loading_img.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.loading_img.TabIndex = 5;
             this.loading_img.TabStop = false;

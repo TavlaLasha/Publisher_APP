@@ -11,7 +11,7 @@ namespace HypernationAPI
         public static void Register(HttpConfiguration config)
         {
             // Web API configuration and services
-            EnableCorsAttribute cors = new EnableCorsAttribute("*", "*", "GET,POST");
+            EnableCorsAttribute cors = new EnableCorsAttribute("*", "*", "GET,POST,PUT,DELETE");
             config.EnableCors(cors);
 
             // Web API routes
