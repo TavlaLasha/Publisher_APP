@@ -28,6 +28,7 @@ namespace DAL.Repository
                     id = morphDTO.Id,
                     wrong_word = morphDTO.Wrong_Word,
                     correct_word = morphDTO.Correct_Word,
+                    description = morphDTO.Description
                 };
                 _db.Morphologies.Add(morph);
                 return true;
@@ -59,8 +60,13 @@ namespace DAL.Repository
                 var morph = _db.Morphologies.Where(i => i.id == id).First();
                 if (morphDTO.Wrong_Word != null)
                     morph.wrong_word = morphDTO.Wrong_Word;
+
                 if (morphDTO.Correct_Word != null)
                     morph.correct_word = morphDTO.Correct_Word;
+
+                if (morphDTO.Description != null)
+                    morph.description = morphDTO.Description;
+
                 return true;
             }
             catch
@@ -76,6 +82,7 @@ namespace DAL.Repository
                 Id = i.id,
                 Wrong_Word = i.wrong_word,
                 Correct_Word = i.correct_word,
+                Description = i.description
             });
         }
 
@@ -86,6 +93,7 @@ namespace DAL.Repository
                 Id = i.id,
                 Wrong_Word = i.wrong_word,
                 Correct_Word = i.correct_word,
+                Description = i.description
             }).FirstOrDefault();
         }
         public bool ExistsMorphologyId(int id)

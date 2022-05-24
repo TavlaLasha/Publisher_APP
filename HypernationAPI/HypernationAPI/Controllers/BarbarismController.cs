@@ -77,7 +77,7 @@ namespace HypernationAPI.Controllers
         {
             try
             {
-                if(bdt == null || bdt.Wrong_Word == string.Empty || bdt.Correct_Word == string.Empty)
+                if(bdt == null || bdt.Wrong_Word == string.Empty)
                     throw new HttpException("Model invalid or null");
 
                 bool dt = _barbManagement.AddBarbarism(bdt);

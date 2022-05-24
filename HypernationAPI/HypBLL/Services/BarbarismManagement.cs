@@ -16,7 +16,7 @@ namespace BLL.Services
         {
             UnitOfWork _unitOfWork = new UnitOfWork(new DAL.EF.GeoHypDBContext());
 
-            if (brbDTO == null || (brbDTO.Wrong_Word == string.Empty || brbDTO.Wrong_Word == null) || (brbDTO.Correct_Word == string.Empty || brbDTO.Correct_Word == null))
+            if (brbDTO == null || (brbDTO.Wrong_Word == string.Empty || brbDTO.Wrong_Word == null))
                 throw new HttpException("No valid model given");
 
             if (_unitOfWork.BarbarismRepo.ExistsBarbarism(brbDTO.Wrong_Word))

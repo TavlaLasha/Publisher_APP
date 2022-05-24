@@ -12,7 +12,6 @@ namespace Models.DataViewModels.WordManagement
         public int Id { set; get; }
         [Required]
         public string Correct_Word { set; get; }
-        [Required]
         public string Wrong_Word { set; get; }
         public string Description { set; get; }
     }

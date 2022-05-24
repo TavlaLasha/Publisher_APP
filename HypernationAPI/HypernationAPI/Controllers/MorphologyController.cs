@@ -114,7 +114,7 @@ namespace HypernationAPI.Controllers
                 if (id == string.Empty)
                     throw new HttpException("ID is important parameter");
 
-                if (bdt == null || bdt.Wrong_Word == string.Empty)
+                if (bdt == null || ((bdt.Wrong_Word == string.Empty || bdt.Wrong_Word == null) && (bdt.Correct_Word == string.Empty || bdt.Correct_Word == null)))
                     throw new HttpException("Model invalid or null");
 
                 bool dt = _morphManagement.EditMorphology(id, bdt);

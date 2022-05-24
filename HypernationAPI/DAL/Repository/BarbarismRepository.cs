@@ -28,7 +28,7 @@ namespace DAL.Repository
                     id = brbDTO.Id,
                     wrong_word = brbDTO.Wrong_Word,
                     correct_word = brbDTO.Correct_Word,
-                    decription = brbDTO.Description
+                    description = brbDTO.Description
                 };
                 _db.Barbarisms.Add(brb);
                 return true;
@@ -63,7 +63,7 @@ namespace DAL.Repository
                 if (brbDTO.Correct_Word != null)
                     brb.correct_word = brbDTO.Correct_Word;
                 if (brbDTO.Description != null)
-                    brb.decription = brbDTO.Description;
+                    brb.description = brbDTO.Description;
                 return true;
             }
             catch
@@ -88,7 +88,7 @@ namespace DAL.Repository
                 Id = i.id,
                 Wrong_Word = i.wrong_word,
                 Correct_Word = i.correct_word,
-                Description = i.decription
+                Description = i.description
             }).FirstOrDefault();
         }
 
@@ -99,7 +99,7 @@ namespace DAL.Repository
                 Id = i.id,
                 Wrong_Word = i.wrong_word,
                 Correct_Word = i.correct_word,
-                Description = i.decription
+                Description = i.description
             });
         }
 

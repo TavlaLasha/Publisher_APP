@@ -11,11 +11,10 @@ namespace DAL.EF
         public int id { get; set; }
 
         [Required]
-        [StringLength(60)]
         public string wrong_word { get; set; }
 
-        [Required]
-        [StringLength(60)]
         public string correct_word { get; set; }
+
+        public string description { get; set; }
     }
 }

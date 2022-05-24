@@ -17,13 +17,6 @@ namespace DAL.EF
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Barbarism>()
-                .Property(e => e.decription)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<Morphology>()
-                .Property(e => e.correct_word)
-                .IsFixedLength();
         }
     }
 }
