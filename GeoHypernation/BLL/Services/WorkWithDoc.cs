@@ -18,124 +18,84 @@ namespace BLL.Services
 {
     public class WorkWithDoc : IWorkWithDoc
     {
-        private readonly SynchronizationContext syncContext;
-        private bool stopRequested;
+        //private readonly SynchronizationContext syncContext;
+        //private bool stopRequested;
 
         readonly string exeDir = Path.GetDirectoryName((new System.Uri(Assembly.GetEntryAssembly().CodeBase)).AbsolutePath);
-        private object DocPath;
-        private object SaveDocPath;
-        private Application wordApp = new Application();
+        public object DocPath;
+        //private object SaveDocPath;
+        private Application WordApp = null;
+        private Document WordDoc = null;
 
 
         public WorkWithDoc(string docPath)
         {
-            syncContext = AsyncOperationManager.SynchronizationContext;
-            DocPath = docPath;
+            //syncContext = AsyncOperationManager.SynchronizationContext;
+            TakeDoc(docPath);
+            OpenDoc();
         }
 
-        //public void StartHypernation()
-        //{
-        //    stopRequested = false;
-        //    var thread = new Thread(HypernateDocument);
-        //    thread.IsBackground = true;
-        //    thread.Start();
-        //}
-
-        public void Stop()
+        public void TakeDoc(string fileName)
         {
-            stopRequested = true;
+            if (File.Exists(fileName))
+            {
+                string FileName = Path.GetFileName(fileName);
+                var contentType = Path.GetExtension(fileName);
+
+                if (contentType == ".docx" || contentType == ".doc" || contentType == ".rtf")
+                {
+                    Directory.CreateDirectory(Path.Combine(exeDir, $"TempDocs"));
+                    var FilePath = Path.Combine(exeDir, $"TempDocs\\{FileName}");
+                    if (File.Exists(FilePath))
+                    {
+                        FileName = $"{Path.GetFileNameWithoutExtension(FileName)}{DateTime.Now.Ticks}{contentType}";
+                        FilePath = Path.Combine(exeDir, $"TempDocs\\{FileName}");
+                    }
+                    File.Copy(fileName, FilePath);
+
+                    DocPath = FilePath;
+                }
+                else
+                    throw new Exception("Unsupported file type");
+            }
+            else
+                throw new Exception("File not specified or does not exist");
+
         }
         public bool HypernateDocument()
         {
-            if (!File.Exists((string)DocPath))
-                throw new Exception("File not specified or does not exist in temporary storage");
+            if (WordDoc == null)
+                throw new Exception("Document not open");
 
-            object missing = Missing.Value;
+            HYP hyp = new HYP(WordApp);
+            WordApp = hyp.HYPExecute();
+            WordDoc.Save();
 
-            Document WordDoc;
 
-            object readOnly = true;
-
-            object isVisible = false;
-
-            wordApp.Visible = false;
-            WordDoc = wordApp.Documents.Open(ref DocPath, ref missing, ref readOnly,
-                                                ref missing, ref missing, ref missing,
-                                                ref missing, ref missing, ref missing,
-                                                ref missing, ref missing, isVisible,
-                                                ref missing, ref missing, ref missing, ref missing);
-            WordDoc.Activate();
-
-            HYP hyp = new HYP(wordApp);
-            wordApp = hyp.HYPExecute();
-
-            WordDoc.SaveAs(ref SaveDocPath, ref missing, ref missing, ref missing,
-                                        ref missing, ref missing, ref missing,
-                                        ref missing, ref missing, ref missing,
-                                        ref missing, ref missing, ref missing,
-                                        ref missing, ref missing, ref missing);
-
-            WordDoc.Close();
             return true;
         }
         public bool CleanDocument(bool cl_splace, bool cl_newLines, bool cor_PDashStarts, bool cl_tabs)
         {
-            if (!File.Exists((string)DocPath))
-                throw new Exception("File not specified or does not exist in temporary storage");
+            if (WordDoc == null)
+                throw new Exception("Document not open");            
 
-            object missing = Missing.Value;
+            CleanDoc hyp = new CleanDoc(WordApp);
+            WordApp = hyp.Execute(cl_splace, cl_newLines, cor_PDashStarts, cl_tabs);
+            WordDoc.Save();
 
-            Document WordDoc;
-
-            object readOnly = true;
-
-            object isVisible = false;
-
-            wordApp.Visible = false;
-            WordDoc = wordApp.Documents.Open(ref DocPath, ref missing, ref readOnly,
-                                                ref missing, ref missing, ref missing,
-                                                ref missing, ref missing, ref missing,
-                                                ref missing, ref missing, isVisible,
-                                                ref missing, ref missing, ref missing, ref missing);
-            WordDoc.Activate();
-
-            CleanDoc hyp = new CleanDoc(wordApp);
-            wordApp = hyp.Execute(cl_splace, cl_newLines, cor_PDashStarts, cl_tabs);
-
-            WordDoc.SaveAs(ref SaveDocPath, ref missing, ref missing, ref missing,
-                                        ref missing, ref missing, ref missing,
-                                        ref missing, ref missing, ref missing,
-                                        ref missing, ref missing, ref missing,
-                                        ref missing, ref missing, ref missing);
-
-            WordDoc.Close();
             return true;
         }
         public DocDTO GetPages(int page = 1)
         {
-            if (!File.Exists((string)DocPath))
-                throw new Exception("File not specified or does not exist in temporary storage");
+            if (WordDoc == null)
+                throw new Exception("Document not open");
 
-            object missing = Missing.Value;
-
-            object readOnly = true;
-            object isVisible = false;
-            wordApp.Visible = false;
-
-            _Document WordDoc = wordApp.Documents.Open(ref DocPath, ref missing, ref readOnly,
-                                                ref missing, ref missing, ref missing,
-                                                ref missing, ref missing, ref missing,
-                                                ref missing, ref missing, ref isVisible,
-                                                ref missing, ref missing, ref missing, ref missing);
-            WordDoc.Activate();
 
             int PageCount = WordDoc.ComputeStatistics(WdStatistic.wdStatisticPages, false);
             if (page > PageCount || page < 1)
             {
                 throw new InvalidOperationException("Page number exceeded document length");
             }
-
-            string tempDirectory = Directory.CreateDirectory(Path.Combine(exeDir, $"TempDocs\\Temp\\{Path.GetFileNameWithoutExtension(DocPath.ToString())}")).FullName;
 
             int start = ((page - 2) > 0) ? page - 2 : 1;
             int end;
@@ -147,6 +107,12 @@ namespace BLL.Services
             {
                 end = ((page + 2) < PageCount) ? page + 2 : PageCount;
             }
+            string tempDirectory = Path.Combine(exeDir, $"TempDocs\\Temp\\{Path.GetFileNameWithoutExtension(DocPath.ToString())}");
+            if (Directory.Exists(tempDirectory))
+                Directory.Delete(tempDirectory, true);
+
+            tempDirectory = Directory.CreateDirectory(tempDirectory).FullName;
+
             List<int> Pages = new List<int>();
             Range range;
             for (int i = start; i <= end+1; i++)
@@ -166,6 +132,7 @@ namespace BLL.Services
                 {
                     range.End = WordDoc.GoTo(WdGoToItem.wdGoToPage, WdGoToDirection.wdGoToAbsolute, index).End - 1;
                 }
+
                 string tempPath = Path.Combine(tempDirectory, $"{index}.html");
                 if (!File.Exists(tempPath))
                 {
@@ -177,9 +144,6 @@ namespace BLL.Services
                 }
             }
 
-            WordDoc.Close(WdSaveOptions.wdDoNotSaveChanges);
-
-
             //HTMLConverter s = new HTMLConverter();
             //string data = s.ConvertToHtml((string)tempPath);
 
@@ -190,43 +154,61 @@ namespace BLL.Services
 
             return new DocDTO() { FileName = (string)DocPath, TempDirectory = tempDirectory, PageCount = PageCount, Pages = Pages };
         }
-        public bool ConvertToPDF(string input, string output, WdSaveFormat format)
+        public void OpenDoc()
         {
-            // Create an instance of Word.exe
-            _Application oWord = new Application
-            {
-                // Make this instance of word invisible (Can still see it in the taskmgr).
-                Visible = false
-            };
+            if (!File.Exists((string)DocPath))
+                throw new Exception("File not specified or does not exist in temporary storage");
+
+            WordApp = new Application() { Visible = false };
 
             // Interop requires objects.
-            object oMissing = Missing.Value;
-            object isVisible = true;
-            object readOnly = true;     // Does not cause any word dialog to show up
-                                        //object readOnly = false;  // Causes a word object dialog to show at the end of the conversion
-            object oInput = input;
+            object missing = Missing.Value;
+            object readOnly = false;
+            object isVisible = false;
+
+            WordDoc = WordApp.Documents.Open(ref DocPath, ref missing, ref readOnly,
+                                                ref missing, ref missing, ref missing,
+                                                ref missing, ref missing, ref missing,
+                                                ref missing, ref missing, isVisible,
+                                                ref missing, ref missing, ref missing, ref missing);
+            WordDoc.Activate();
+        }
+        public void SaveDoc(string output, string format = ".docx")
+        {
+            if (!File.Exists((string)DocPath))
+                throw new Exception("File not specified or does not exist in temporary storage");
+
+            WdSaveFormat WDFormat;
+
+            if (format.Equals(".doc"))
+                WDFormat = WdSaveFormat.wdFormatDocument97;
+            else if (format.Equals(".rtf"))
+                WDFormat = WdSaveFormat.wdFormatRTF;
+            else
+                WDFormat = WdSaveFormat.wdFormatDocumentDefault;
+
+            object missing = Missing.Value;
+            object oFormat = WDFormat;
             object oOutput = output;
-            object oFormat = format;
 
-            // Load a document into our instance of word.exe
-            _Document oDoc = oWord.Documents.Open(
-                ref oInput, ref oMissing, ref readOnly, ref oMissing, ref oMissing,
-                ref oMissing, ref oMissing, ref oMissing, ref oMissing, ref oMissing,
-                ref oMissing, ref isVisible, ref oMissing, ref oMissing, ref oMissing, ref oMissing
-                );
+            WordDoc.SaveAs(ref oOutput, ref oFormat, ref missing, ref missing,
+                                        ref missing, ref missing, ref missing,
+                                        ref missing, ref missing, ref missing,
+                                        ref missing, ref missing, ref missing,
+                                        ref missing, ref missing, ref missing);
 
-            // Make this document the active document.
-            oDoc.Activate();
-
-            // Save this document using Word
-            oDoc.SaveAs(ref oOutput, ref oFormat, ref oMissing, ref oMissing,
-                ref oMissing, ref oMissing, ref oMissing, ref oMissing, ref oMissing,
-                ref oMissing, ref oMissing, ref oMissing, ref oMissing, ref oMissing, ref oMissing, ref oMissing
-                );
-
-            // Always close Word.exe.
-            oWord.Quit(ref oMissing, ref oMissing, ref oMissing);
-            return true;
+            WordDoc.Close();
+            WordApp.Quit(WdSaveOptions.wdSaveChanges);
+            WordDoc = null;
+            WordApp = null;
+        }
+        public void CloseDoc()
+        {
+            if (WordDoc != null && WordApp != null)
+            {
+                WordDoc.Close(WdSaveOptions.wdDoNotSaveChanges);
+                WordApp.Quit(WdSaveOptions.wdDoNotSaveChanges);
+            }
         }
     }
 }

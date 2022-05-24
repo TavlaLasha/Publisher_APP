@@ -36,25 +36,29 @@ namespace BLL.Services
         }
         public Application CleanSpaces(Application wordApp)
         {
+            Console.WriteLine("CleanSpaces");
             wordApp = FindAndReplace(wordApp, " [ ]@([! ])", @" \1");
             return wordApp;
         }
 
         public Application CleanNewLines(Application wordApp)
         {
+            Console.WriteLine("CleanNewLines");
             wordApp = FindAndReplace(wordApp, "^11", "^13");
             return wordApp;
         }
         public Application CorrectPDashStarts(Application wordApp)
         {
-            wordApp = FindAndReplace(wordApp, "([-─])^13", @"—\1");
+            Console.WriteLine("CorrectPDashStarts");
+            wordApp = FindAndReplace(wordApp, "(^13)[-─]", @"\1— ");
             return wordApp;
         }
 
         //For InDesign
         public Application CleanTabs(Application wordApp)
         {
-            wordApp = FindAndReplace(wordApp, "^9(^13)", @"\1");
+            Console.WriteLine("CleanTabs");
+            wordApp = FindAndReplace(wordApp, "(^13)^9[^9]", @"\1");
             return wordApp;
         }
 

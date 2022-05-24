@@ -22,7 +22,8 @@ namespace GeoHypernation
         private string FileName = "";
         private int DocPageCount = 0;
         //private delegate void SafeCallDelegate(bool visibility);
-        private bool working = false;
+        private bool Working = false;
+        private bool IsSaved = true;
 
         private bool cl_splace = false;
         private bool cl_newLines = false;
@@ -30,8 +31,10 @@ namespace GeoHypernation
         private bool cl_tabs = false;
         private bool do_hyp = false;
 
-        private string workingDir;
-        private int CurrentPage=1;
+        private string WorkingDir;
+        private string WorkingDocPath;
+        private int CurrentPage=0;
+        private string RecommendedDocType = ".docx";
 
         WorkWithDoc wwd;
 
@@ -48,8 +51,8 @@ namespace GeoHypernation
             if (FileName != "")
             {
                 cl_splace = space_chkbx.Checked;
-                cl_newLines = tab_chkbx.Checked;
-                cor_PDashStarts = tab_chkbx.Checked;
+                cl_newLines = newline_chkbx.Checked;
+                cor_PDashStarts = pdashstart_chkbx.Checked;
                 cl_tabs = tab_chkbx.Checked;
                 do_hyp = hyp_chkbx.Checked;
 
@@ -77,8 +80,10 @@ namespace GeoHypernation
                             }
                             finally
                             {
+                                InitializeDocBox((string)wwd.DocPath);
                                 Change_working_state(false);
-                                MessageBox.Show($"ფაილი {Path.GetFileName(FileName)} წარმატებით დამუშავდა და შეინახა მითითებულ ადგილას.", "წარმატება", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                IsSaved = false;
+                                MessageBox.Show($"ფაილი {Path.GetFileName(FileName)} წარმატებით დამუშავდა.", "წარმატება", MessageBoxButtons.OK, MessageBoxIcon.Information);
                             }
                         });
                     thread.SetApartmentState(ApartmentState.STA);
@@ -95,7 +100,7 @@ namespace GeoHypernation
 
         private void MainForm_Click(object sender, EventArgs e)
         {
-            if (!working)
+            if (!Working)
             {
                 try
                 {
@@ -122,7 +127,7 @@ namespace GeoHypernation
 
         private void MainForm_DragDrop(object sender, DragEventArgs e)
         {
-            if (!working)
+            if (!Working)
             {
                 var files = (string[])e.Data.GetData(DataFormats.FileDrop);
                 if (files.Length == 1)
@@ -145,21 +150,28 @@ namespace GeoHypernation
         {
             if (File.Exists(FileName))
             {
+                int DefIndex = 1;
+                if (RecommendedDocType == ".doc")
+                    DefIndex = 2;
+                else if (RecommendedDocType == ".rtf")
+                    DefIndex = 3;
+
                 SaveFileDialog saveFileDialog = new SaveFileDialog
                 {
                     InitialDirectory = @"Documents",
                     Title = "სად შევინახოთ დამუშავებული ფაილი",
                     CheckFileExists = false,
                     CheckPathExists = false,
-                    DefaultExt = ".docx",
-                    Filter = "Word Document (*.docx)|*.docx|Word Document (*.doc)|*.doc|Rich Text Format (*.rtf)|*.rtf",
-                    FilterIndex = 0,
+                    //DefaultExt = RecommendedDocType.TrimStart('.'),
+                    Filter = "Word Document (*.docx)|*.docx |Word Document (*.doc)|*.doc |Rich Text Format (*.rtf)|*.rtf",
+                    FilterIndex = DefIndex,
                     RestoreDirectory = true,
-                    FileName = FileName
+                    FileName = $@"{Path.GetDirectoryName(FileName)}\{Path.GetFileNameWithoutExtension(FileName)}{RecommendedDocType}"
                 };
                 if (saveFileDialog.ShowDialog() == DialogResult.OK)
                 {
-
+                    wwd.SaveDoc(saveFileDialog.FileName, Path.GetExtension(saveFileDialog.FileName));
+                    IsSaved = true;
                 }
             }
             else
@@ -170,83 +182,86 @@ namespace GeoHypernation
 
         private void InitializeDocBox(string filename)
         {
-            size_lbl.Text = (new FileInfo(filename).Length / 1000.0).ToString() + " Kb";
-            type_lbl.Text = Path.GetExtension(filename);
-            filename_lbl.Text = new FileInfo(filename).Name;
-            docBox.Visible = true;
-            List<int> Pages = null;
-            Thread thread = new Thread
-                (delegate ()
-                    {
-                        try
-                        {
-                            Change_working_state(true);
-                            DocDTO result = wwd.GetPages(1);
-                            workingDir = result.TempDirectory;
-                            DocPageCount = result.PageCount;
-                            Pages = result.Pages;
-                        }
-                        catch
-                        {
-                            MessageBox.Show("მოხდა შეცდომა. ბოდიშს გიხდით", "შეცდომა", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        }
-                        finally
-                        {
-                            string FilePath = Path.Combine(workingDir, "1.html");
-                            if (File.Exists(FilePath) && Pages.Count > 0)
-                            {
-                                Navigate_WebBrowser(FilePath);
-
-                                CurrentPage = 1;
-                                Paginate(Pages, DocPageCount);
-                            }
-                            Change_working_state(false);
-                        }
-                    });
-            thread.SetApartmentState(ApartmentState.STA);
-            thread.Start();
+            size_lbl.SetText((new FileInfo(filename).Length / 1000.0).ToString() + " Kb");
+            type_lbl.SetText(Path.GetExtension(filename));
+            filename_lbl.SetText(new FileInfo(filename).Name);
+            docBox.SetVisible(true);
+            GetPages();
         }
 
         private void Close_btn_Click(object sender, EventArgs e)
         {
-            Close_Doc();
+            if (!IsSaved)
+            {
+                DialogResult dlgResult = MessageBox.Show("დარწმუნებული ხართ რომ არ გინდათ დამუშავებული ფაილის შენახვა?", "წაიშალოს ცვლილებები?", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                if(dlgResult == DialogResult.Yes)
+                    Close_Doc();
+            }
+            else
+                Close_Doc();
+        }
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (!IsSaved)
+            {
+                DialogResult dlgResult = MessageBox.Show("დარწმუნებული ხართ რომ არ გინდათ დამუშავებული ფაილის შენახვა?", "წაიშალოს ცვლილებები?", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                if (dlgResult == DialogResult.Yes)
+                    Close_Doc();
+
+                else
+                    e.Cancel = true;
+            }
+            else
+                Close_Doc();
         }
 
         private void Upload_Doc(string file)
         {
-            Change_working_state(true);
-            wwd = new WorkWithDoc(file);
-            Change_working_state(false);
-            InitializeDocBox(file);
+            try
+            {
+                Change_working_state(true);
+                wwd = new WorkWithDoc(file);
+                Change_working_state(false);
+                WorkingDocPath = (string)wwd.DocPath;
+                InitializeDocBox(file);
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show($"მოხდა შეცდომა. ბოდიშს გიხდით \n {ex.Message}", "შეცდომა", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void Change_working_state(bool working = false)
         {
-            this.working = working;
-            loading_img.SetVisible(working);
+            Working = working;
+            loading_img.SetVisible(Working);
         }
 
         private void Close_Doc()
         {
             docBox.SetVisible(false);
             FileName = string.Empty;
-            if (Directory.Exists(workingDir))
+            if (CurrentPage != 0)
             {
-                Directory.Delete(workingDir, true);
+                wwd.CloseDoc();
+                if (Directory.Exists(WorkingDir))
+                    Directory.Delete(WorkingDir, true);
+
+                if (File.Exists(WorkingDocPath))
+                    File.Delete(WorkingDocPath);
+
+                Navigate_WebBrowser(FileName);
+                Pagination_Box.Controls.Clear();
+                CurrentPage = 0;
+                IsSaved = true;
             }
-            Navigate_WebBrowser(FileName);
-            Pagination_Box.Controls.Clear();
         }
 
         private void Paginate(List<int> pages, int docPageCount)
         {
-            if (Directory.Exists(workingDir))
-            {
+            if (Directory.Exists(WorkingDir))
                 if(CurrentPage == 1)
-                {
                     Create_Pagination_Buttons(1, pages.Count-1, docPageCount);
-                }
-            }
         }
 
         private void Create_Pagination_Buttons(int start, int end, int final)
@@ -309,9 +324,64 @@ namespace GeoHypernation
             this.Controls.Find($"{CurrentPage}_btn", true).FirstOrDefault().Enabled = true;
             CurrentPage = int.Parse(btnPager.Text);
             btnPager.Enabled = false;
-            string PagePath = Path.Combine(workingDir, $"{CurrentPage}.html");
+            if (CurrentPage > 3)
+            {
+
+            }
+            string PagePath = Path.Combine(WorkingDir, $"{CurrentPage}.html");
             if(File.Exists(PagePath))
                 webBrowser.Navigate(PagePath);
+        }
+
+        private void GetPages()
+        {
+            List<int> Pages = null;
+            Thread thread = new Thread
+                (delegate ()
+                {
+                    try
+                    {
+                        Change_working_state(true);
+                        CurrentPage = (CurrentPage == 0) ? 1 : CurrentPage;
+                        DocDTO result = wwd.GetPages(CurrentPage);
+                        WorkingDir = result.TempDirectory;
+                        DocPageCount = result.PageCount;
+                        Pages = result.Pages;
+                        
+                        string FilePath = Path.Combine(WorkingDir, $"{CurrentPage}.html");
+                        if (File.Exists(FilePath) && Pages.Count > 0)
+                        {
+                            Navigate_WebBrowser(FilePath);
+
+                            Paginate(Pages, DocPageCount);
+                        }
+                        Change_working_state(false);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("მოხდა შეცდომა. ბოდიშს გიხდით. \n\n Err_InitDocBox", "შეცდომა", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                });
+            thread.SetApartmentState(ApartmentState.STA);
+            thread.Start();
+        }
+
+        private void ForIndesign_chkbx_CheckedChanged(object sender, EventArgs e)
+        {
+            CheckBox chk = (sender as CheckBox);
+
+            newline_chkbx.SetChecked(chk.Checked);
+            newline_chkbx.SetEnabled(!(chk.Checked));
+
+            pdashstart_chkbx.SetChecked(chk.Checked);
+            pdashstart_chkbx.SetEnabled(!(chk.Checked));
+
+            space_chkbx.SetChecked(chk.Checked);
+            space_chkbx.SetEnabled(!(chk.Checked));
+
+            tab_chkbx.SetChecked(chk.Checked);
+            tab_chkbx.SetEnabled(!(chk.Checked));
+            RecommendedDocType = (chk.Checked) ? ".doc" : ".docx";
         }
 
         private void Navigate_WebBrowser(string uri)
@@ -345,9 +415,7 @@ namespace GeoHypernation
                 }));
             }
             else
-            {
                 Pagination_Box.Controls.Clear();
-            }
         }
     }
 }

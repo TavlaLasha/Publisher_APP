@@ -31,7 +31,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.docBox = new System.Windows.Forms.GroupBox();
             this.hyp_chkbx = new System.Windows.Forms.CheckBox();
-            this.checkBox2 = new System.Windows.Forms.CheckBox();
+            this.pdashstart_chkbx = new System.Windows.Forms.CheckBox();
             this.newline_chkbx = new System.Windows.Forms.CheckBox();
             this.tab_chkbx = new System.Windows.Forms.CheckBox();
             this.space_chkbx = new System.Windows.Forms.CheckBox();
@@ -50,6 +50,7 @@
             this.webBrowser = new System.Windows.Forms.WebBrowser();
             this.Save_btn = new System.Windows.Forms.Button();
             this.Pagination_Box = new System.Windows.Forms.GroupBox();
+            this.ForIndesign_chkbx = new System.Windows.Forms.CheckBox();
             this.docBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.loading_img)).BeginInit();
@@ -57,8 +58,9 @@
             // 
             // docBox
             // 
+            this.docBox.Controls.Add(this.ForIndesign_chkbx);
             this.docBox.Controls.Add(this.hyp_chkbx);
-            this.docBox.Controls.Add(this.checkBox2);
+            this.docBox.Controls.Add(this.pdashstart_chkbx);
             this.docBox.Controls.Add(this.newline_chkbx);
             this.docBox.Controls.Add(this.tab_chkbx);
             this.docBox.Controls.Add(this.space_chkbx);
@@ -74,7 +76,7 @@
             this.docBox.Controls.Add(this.pictureBox1);
             this.docBox.Location = new System.Drawing.Point(11, 4);
             this.docBox.Name = "docBox";
-            this.docBox.Size = new System.Drawing.Size(337, 232);
+            this.docBox.Size = new System.Drawing.Size(337, 284);
             this.docBox.TabIndex = 0;
             this.docBox.TabStop = false;
             this.docBox.Visible = false;
@@ -91,15 +93,15 @@
             this.hyp_chkbx.Text = "დამარცვლა";
             this.hyp_chkbx.UseVisualStyleBackColor = true;
             // 
-            // checkBox2
+            // pdashstart_chkbx
             // 
-            this.checkBox2.AutoSize = true;
-            this.checkBox2.Location = new System.Drawing.Point(6, 176);
-            this.checkBox2.Name = "checkBox2";
-            this.checkBox2.Size = new System.Drawing.Size(233, 17);
-            this.checkBox2.TabIndex = 5;
-            this.checkBox2.Text = "პარაგრაფების ტირეების მოწესრიგება";
-            this.checkBox2.UseVisualStyleBackColor = true;
+            this.pdashstart_chkbx.AutoSize = true;
+            this.pdashstart_chkbx.Location = new System.Drawing.Point(6, 176);
+            this.pdashstart_chkbx.Name = "pdashstart_chkbx";
+            this.pdashstart_chkbx.Size = new System.Drawing.Size(233, 17);
+            this.pdashstart_chkbx.TabIndex = 5;
+            this.pdashstart_chkbx.Text = "პარაგრაფების ტირეების მოწესრიგება";
+            this.pdashstart_chkbx.UseVisualStyleBackColor = true;
             // 
             // newline_chkbx
             // 
@@ -147,7 +149,7 @@
             // 
             // start_btn
             // 
-            this.start_btn.Location = new System.Drawing.Point(242, 191);
+            this.start_btn.Location = new System.Drawing.Point(242, 248);
             this.start_btn.Name = "start_btn";
             this.start_btn.Size = new System.Drawing.Size(85, 30);
             this.start_btn.TabIndex = 3;
@@ -254,6 +256,7 @@
             // 
             // webBrowser
             // 
+            this.webBrowser.AllowWebBrowserDrop = false;
             this.webBrowser.Location = new System.Drawing.Point(354, 4);
             this.webBrowser.MinimumSize = new System.Drawing.Size(20, 20);
             this.webBrowser.Name = "webBrowser";
@@ -278,13 +281,24 @@
             this.Pagination_Box.TabIndex = 7;
             this.Pagination_Box.TabStop = false;
             // 
+            // ForIndesign_chkbx
+            // 
+            this.ForIndesign_chkbx.AutoSize = true;
+            this.ForIndesign_chkbx.Location = new System.Drawing.Point(6, 222);
+            this.ForIndesign_chkbx.Name = "ForIndesign_chkbx";
+            this.ForIndesign_chkbx.Size = new System.Drawing.Size(256, 17);
+            this.ForIndesign_chkbx.TabIndex = 5;
+            this.ForIndesign_chkbx.Text = "დოკუმენტის ინდიზაინისთვის მომზადება";
+            this.ForIndesign_chkbx.UseVisualStyleBackColor = true;
+            this.ForIndesign_chkbx.CheckedChanged += new System.EventHandler(this.ForIndesign_chkbx_CheckedChanged);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(813, 391);
-            this.Controls.Add(this.Pagination_Box);
             this.Controls.Add(this.loading_img);
+            this.Controls.Add(this.Pagination_Box);
             this.Controls.Add(this.webBrowser);
             this.Controls.Add(this.Save_btn);
             this.Controls.Add(this.docBox);
@@ -292,6 +306,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MainForm";
             this.Text = "Georgian Hypernation";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.Click += new System.EventHandler(this.MainForm_Click);
             this.DragDrop += new System.Windows.Forms.DragEventHandler(this.MainForm_DragDrop);
             this.DragEnter += new System.Windows.Forms.DragEventHandler(this.MainForm_DragEnter);
@@ -323,10 +338,11 @@
         private System.Windows.Forms.CheckBox tab_chkbx;
         private System.Windows.Forms.CheckBox space_chkbx;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.CheckBox checkBox2;
+        private System.Windows.Forms.CheckBox pdashstart_chkbx;
         private System.Windows.Forms.CheckBox newline_chkbx;
         private System.Windows.Forms.Button Save_btn;
         private System.Windows.Forms.GroupBox Pagination_Box;
+        private System.Windows.Forms.CheckBox ForIndesign_chkbx;
     }
 }
 
