@@ -166,20 +166,20 @@ namespace BLL
                 Range range;
                 for (int i = start; i <= end; i++)
                 {
-                    range = WordDoc.Range();
-                    range.Start = WordDoc.GoTo(WdGoToItem.wdGoToPage, WdGoToDirection.wdGoToAbsolute, i).Start;
-
-                    if (i < PageCount)
-                    {
-                        range.End = WordDoc.GoTo(WdGoToItem.wdGoToPage, WdGoToDirection.wdGoToAbsolute, i + 1).End - 1;
-                    }
-                    else
-                    {
-                        range.End = WordDoc.GoTo(WdGoToItem.wdGoToPage, WdGoToDirection.wdGoToAbsolute, i).End - 1;
-                    }
                     string tempPath = Path.Combine(tempDirectory, $"{i}.html");
                     if (!File.Exists(tempPath))
                     {
+                        range = WordDoc.Range();
+                        range.Start = WordDoc.GoTo(WdGoToItem.wdGoToPage, WdGoToDirection.wdGoToAbsolute, i).Start;
+
+                        if (i < PageCount)
+                        {
+                            range.End = WordDoc.GoTo(WdGoToItem.wdGoToPage, WdGoToDirection.wdGoToAbsolute, i + 1).End - 1;
+                        }
+                        else
+                        {
+                            range.End = WordDoc.GoTo(WdGoToItem.wdGoToPage, WdGoToDirection.wdGoToAbsolute, i).End - 1;
+                        }
                         range.ExportFragment(tempPath, WdSaveFormat.wdFormatFilteredHTML);
                     }
                 }

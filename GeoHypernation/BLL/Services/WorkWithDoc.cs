@@ -85,62 +85,76 @@ namespace BLL.Services
 
             return true;
         }
-        public DocDTO GetPages(int page = 1)
+        public DocDTO GetPages(int page = 1, bool clean = false)
         {
             if (WordDoc == null)
                 throw new Exception("Document not open");
 
 
             int PageCount = WordDoc.ComputeStatistics(WdStatistic.wdStatisticPages, false);
-            if (page > PageCount || page < 1)
+            if (page < 1)
             {
-                throw new InvalidOperationException("Page number exceeded document length");
+                page = 1;
             }
-
-            int start = ((page - 2) > 0) ? page - 2 : 1;
+            else if (page > PageCount)
+            {
+                page = PageCount;
+            }
+            int maxPages = 5;
+            int start = ((page - 2) > 1) ? page - 2 : 1;
             int end;
+
             if (page <= 3)
             {
-                end = (5 < PageCount) ? 5 : PageCount;
+                end = (maxPages < PageCount) ? maxPages : PageCount;
             }
             else
             {
-                end = ((page + 2) < PageCount) ? page + 2 : PageCount;
+                if((page + 2) >= PageCount)
+                {
+                    start = PageCount - maxPages + 1;
+                    if (start < 1)
+                        start = 1;
+                    end = PageCount;
+                }
+                else
+                {
+                    end = page + 2;
+                }
             }
             string tempDirectory = Path.Combine(exeDir, $"TempDocs\\Temp\\{Path.GetFileNameWithoutExtension(DocPath.ToString())}");
-            if (Directory.Exists(tempDirectory))
+            if (Directory.Exists(tempDirectory) && clean)
                 Directory.Delete(tempDirectory, true);
 
             tempDirectory = Directory.CreateDirectory(tempDirectory).FullName;
-
+            //TODO: will be out of bound at the end
             List<int> Pages = new List<int>();
             Range range;
             for (int i = start; i <= end+1; i++)
             {
-                range = WordDoc.Range();
                 int index = i;
                 if (index == end + 1)
+                {
+                    if (end == PageCount)
+                        break;
                     index = PageCount;
-
-                range.Start = WordDoc.GoTo(WdGoToItem.wdGoToPage, WdGoToDirection.wdGoToAbsolute, index).Start;
-                
-                if (i < PageCount)
-                {
-                    range.End = WordDoc.GoTo(WdGoToItem.wdGoToPage, WdGoToDirection.wdGoToAbsolute, index + 1).End - 1;
-                }
-                else
-                {
-                    range.End = WordDoc.GoTo(WdGoToItem.wdGoToPage, WdGoToDirection.wdGoToAbsolute, index).End - 1;
                 }
 
                 string tempPath = Path.Combine(tempDirectory, $"{index}.html");
                 if (!File.Exists(tempPath))
                 {
+                    range = WordDoc.Range();
+                    range.Start = WordDoc.GoTo(WdGoToItem.wdGoToPage, WdGoToDirection.wdGoToAbsolute, index).Start;
+
+                    if (index < PageCount)
+                    {
+                        range.End = WordDoc.GoTo(WdGoToItem.wdGoToPage, WdGoToDirection.wdGoToAbsolute, index + 1).End - 1;
+                    }
                     range.ExportFragment(tempPath, WdSaveFormat.wdFormatFilteredHTML);
                 }
                 if (File.Exists(tempPath))
                 {
-                    Pages.Add(i);
+                    Pages.Add(index);
                 }
             }
 

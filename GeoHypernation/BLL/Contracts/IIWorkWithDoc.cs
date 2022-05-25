@@ -11,6 +11,6 @@ namespace BLL.Contracts
     {
         bool HypernateDocument();
         bool CleanDocument(bool cl_splace, bool cl_newLines, bool cor_PDashStarts, bool cl_tabs);
-        DocDTO GetPages(int page);
+        DocDTO GetPages(int page, bool clean);
     }
 }

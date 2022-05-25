@@ -34,6 +34,7 @@ namespace GeoHypernation
         private string WorkingDir;
         private string WorkingDocPath;
         private int CurrentPage=0;
+        List<int> Pages = null;
         private string RecommendedDocType = ".docx";
 
         WorkWithDoc wwd;
@@ -77,13 +78,15 @@ namespace GeoHypernation
                                         MessageBox.Show("დოკუმენტის დამარცვლის დროს მოხდა შეცდომა. ბოდიშს გიხდით", "შეცდომა", MessageBoxButtons.OK, MessageBoxIcon.Error);
                                     }
                                 }
-                            }
-                            finally
-                            {
+
                                 InitializeDocBox((string)wwd.DocPath);
                                 Change_working_state(false);
                                 IsSaved = false;
                                 MessageBox.Show($"ფაილი {Path.GetFileName(FileName)} წარმატებით დამუშავდა.", "წარმატება", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            }
+                            catch
+                            {
+                                MessageBox.Show("დოკუმენტის დამუშავების დროს მოხდა შეცდომა. ბოდიშს გიხდით", "შეცდომა", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             }
                         });
                     thread.SetApartmentState(ApartmentState.STA);
@@ -180,13 +183,15 @@ namespace GeoHypernation
             }
         }
 
+        //Calling this method when document has changed.
         private void InitializeDocBox(string filename)
         {
+            CurrentPage = 1;
             size_lbl.SetText((new FileInfo(filename).Length / 1000.0).ToString() + " Kb");
             type_lbl.SetText(Path.GetExtension(filename));
             filename_lbl.SetText(new FileInfo(filename).Name);
             docBox.SetVisible(true);
-            GetPages();
+            GetPages(true);
         }
 
         private void Close_btn_Click(object sender, EventArgs e)
@@ -227,7 +232,7 @@ namespace GeoHypernation
             }
             catch(Exception ex)
             {
-                MessageBox.Show($"მოხდა შეცდომა. ბოდიშს გიხდით \n {ex.Message}", "შეცდომა", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"მოხდა შეცდომა. ბოდიშს გიხდით \n\n Err_UpDoc", "შეცდომა", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -239,103 +244,101 @@ namespace GeoHypernation
 
         private void Close_Doc()
         {
-            docBox.SetVisible(false);
-            FileName = string.Empty;
-            if (CurrentPage != 0)
+            try
             {
-                wwd.CloseDoc();
-                if (Directory.Exists(WorkingDir))
-                    Directory.Delete(WorkingDir, true);
+                docBox.SetVisible(false);
+                FileName = string.Empty;
+                if (CurrentPage != 0)
+                {
+                    wwd.CloseDoc();
+                    if (Directory.Exists(WorkingDir))
+                        Directory.Delete(WorkingDir, true);
 
-                if (File.Exists(WorkingDocPath))
-                    File.Delete(WorkingDocPath);
+                    if (File.Exists(WorkingDocPath))
+                        File.Delete(WorkingDocPath);
 
-                Navigate_WebBrowser(FileName);
-                Pagination_Box.Controls.Clear();
-                CurrentPage = 0;
-                IsSaved = true;
+                    Navigate_WebBrowser(FileName);
+                    Pagination_Box.Controls.Clear();
+                    CurrentPage = 0;
+                    IsSaved = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"მოხდა შეცდომა. ბოდიშს გიხდით \n\n Err_CloseApp", "შეცდომა", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                this.Close();
             }
         }
 
-        private void Paginate(List<int> pages, int docPageCount)
+        private void Create_Pagination_Buttons(List<int> pages, int pageCount)
         {
-            if (Directory.Exists(WorkingDir))
-                if(CurrentPage == 1)
-                    Create_Pagination_Buttons(1, pages.Count-1, docPageCount);
-        }
-
-        private void Create_Pagination_Buttons(int start, int end, int final)
-        {
-            Clear_Pagination();
-
-            for (int i = start; i <= end; i++)
+            if (CurrentPage == 1 || CurrentPage > 3 || CurrentPage >= Pages[0])
             {
-                Button btnPage = new Button
+                Clear_Pagination();
+                int end = (pages.Count>5 && pages.Last() == pageCount) ? 5 : pages.Count;
+                for (int i = 1; i <= end; i++)
                 {
-                    Location = new System.Drawing.Point(38 * i, 10),
-                    Size = new System.Drawing.Size(30, 20),
-                    Name = i.ToString() + "_btn",
-                    Text = i.ToString(),
-                    Enabled = !(CurrentPage == i)
-                };
-                btnPage.Click += new System.EventHandler(this.Page_btn_Click);
+                    Button btnPage = new Button
+                    {
+                        Location = new System.Drawing.Point(38 * i, 10),
+                        Size = new System.Drawing.Size(33, 20),
+                        Name = pages[i-1].ToString() + "_btn",
+                        Text = pages[i-1].ToString(),
+                        Enabled = !(CurrentPage == pages[i - 1])
+                    };
+                    btnPage.Click += new System.EventHandler(this.Page_btn_Click);
 
-                Pagination_Box.AddControl(btnPage);
-            }
-            if (!(end == final))
-            {
-                Label sepLbl = new Label
+                    Pagination_Box.AddControl(btnPage);
+                }
+                if (pages.Count > 5 && end < pageCount)
                 {
-                    Location = new System.Drawing.Point(38 * (end + 1), 10),
-                    Size = new System.Drawing.Size(20, 20),
-                    Name = "sep_lbl",
-                    Text = "..."
-                };
-                Pagination_Box.AddControl(sepLbl);
-                Button btnFinalPage = new Button
-                {
-                    Location = new System.Drawing.Point(36 * (end + 2), 10),
-                    Size = new System.Drawing.Size(35, 20),
-                    Name = "final_btn",
-                    Text = final.ToString(),
-                    Enabled = !(CurrentPage == final)
-                };
-                btnFinalPage.Click += new System.EventHandler(this.Page_btn_Click);
-                Pagination_Box.AddControl(btnFinalPage);
+                    Label sepLbl = new Label
+                    {
+                        Location = new System.Drawing.Point(38 * (end + 1), 10),
+                        Size = new System.Drawing.Size(20, 20),
+                        Name = "sep_lbl",
+                        Text = "..."
+                    };
+                    Pagination_Box.AddControl(sepLbl);
+                    Button btnFinalPage = new Button
+                    {
+                        Location = new System.Drawing.Point(36 * (end + 2), 10),
+                        Size = new System.Drawing.Size(33, 20),
+                        Name = $"{pages.Last()}_btn",
+                        Text = pages.Last().ToString(),
+                        Enabled = !(CurrentPage == pages.Last())
+                    };
+                    btnFinalPage.Click += new System.EventHandler(this.Page_btn_Click);
+                    Pagination_Box.AddControl(btnFinalPage);
+                }
             }
-            //else
-            //{
-            //    Button btnFinalPage = new Button
-            //    {
-            //        Location = new System.Drawing.Point(38 * end, 5),
-            //        Size = new System.Drawing.Size(35, 20),
-            //        Name = "final_btn",
-            //        Text = end.ToString(),
-            //        Enabled = !(CurrentPage == end)
-            //    };
-            //    btnFinalPage.Click += new System.EventHandler(this.Page_btn_Click);
-            //    Pagination_Box.Controls.Add(btnFinalPage);
-            //}
         }
 
         private void Page_btn_Click(object sender, EventArgs e)
         {
-            Button btnPager = (sender as Button);
-            this.Controls.Find($"{CurrentPage}_btn", true).FirstOrDefault().Enabled = true;
-            CurrentPage = int.Parse(btnPager.Text);
-            btnPager.Enabled = false;
-            if (CurrentPage > 3)
+            try
             {
-
+                Button btnPager = (sender as Button);
+                if (this.Controls.Find($"{CurrentPage}_btn", true).Length > 0)
+                    this.Controls.Find($"{CurrentPage}_btn", true).FirstOrDefault().Enabled = true;
+                CurrentPage = int.Parse(btnPager.Text);
+                btnPager.Enabled = false;
+                if (CurrentPage > 3 || (Pages != null && CurrentPage == Pages[0]))
+                {
+                    GetPages();
+                }
+                string PagePath = Path.Combine(WorkingDir, $"{CurrentPage}.html");
+                if (File.Exists(PagePath))
+                    webBrowser.Navigate(PagePath);
             }
-            string PagePath = Path.Combine(WorkingDir, $"{CurrentPage}.html");
-            if(File.Exists(PagePath))
-                webBrowser.Navigate(PagePath);
+            catch (Exception ex)
+            {
+                MessageBox.Show($"მოხდა შეცდომა. ბოდიშს გიხდით \n {ex.Message}", "შეცდომა", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
-        private void GetPages()
+        private void GetPages(bool clean = false)
         {
-            List<int> Pages = null;
             Thread thread = new Thread
                 (delegate ()
                 {
@@ -343,23 +346,27 @@ namespace GeoHypernation
                     {
                         Change_working_state(true);
                         CurrentPage = (CurrentPage == 0) ? 1 : CurrentPage;
-                        DocDTO result = wwd.GetPages(CurrentPage);
-                        WorkingDir = result.TempDirectory;
-                        DocPageCount = result.PageCount;
-                        Pages = result.Pages;
-                        
-                        string FilePath = Path.Combine(WorkingDir, $"{CurrentPage}.html");
-                        if (File.Exists(FilePath) && Pages.Count > 0)
-                        {
-                            Navigate_WebBrowser(FilePath);
 
-                            Paginate(Pages, DocPageCount);
+                        if (Pages == null || !Pages.Intersect(new List<int> { CurrentPage + 1, CurrentPage + 2 }).Any() || CurrentPage == Pages[0])
+                        {
+                            DocDTO result = wwd.GetPages(CurrentPage, clean);
+                            WorkingDir = result.TempDirectory;
+                            DocPageCount = result.PageCount;
+                            Pages = result.Pages;
+
+                            string FilePath = Path.Combine(WorkingDir, $"{CurrentPage}.html");
+                            if (File.Exists(FilePath) && Pages.Count > 0)
+                            {
+                                Navigate_WebBrowser(FilePath);
+
+                                Create_Pagination_Buttons(Pages, DocPageCount);
+                            }
                         }
                         Change_working_state(false);
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show("მოხდა შეცდომა. ბოდიშს გიხდით. \n\n Err_InitDocBox", "შეცდომა", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show("მოხდა შეცდომა. ბოდიშს გიხდით. \n\n Err_GetPage", "შეცდომა", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 });
             thread.SetApartmentState(ApartmentState.STA);
