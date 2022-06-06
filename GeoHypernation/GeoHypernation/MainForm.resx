@@ -117,7 +117,771 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="loading_img.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="loading_img.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 16</value>
+  </data>
+  <data name="loading_img.Size" type="System.Drawing.Size, System.Drawing">
+    <value>441, 322</value>
+  </data>
+  <data name="loading_img.SizeMode" type="System.Windows.Forms.PictureBoxSizeMode, System.Windows.Forms">
+    <value>Zoom</value>
+  </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="loading_img.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
+  </data>
+  <data name="loading_img.WaitOnLoad" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="&gt;&gt;loading_img.Name" xml:space="preserve">
+    <value>loading_img</value>
+  </data>
+  <data name="&gt;&gt;loading_img.Type" xml:space="preserve">
+    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;loading_img.Parent" xml:space="preserve">
+    <value>progress_groupBox</value>
+  </data>
+  <data name="&gt;&gt;loading_img.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="label4.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label4.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 12pt</value>
+  </data>
+  <data name="label4.Location" type="System.Drawing.Point, System.Drawing">
+    <value>44, 73</value>
+  </data>
+  <data name="label4.MaximumSize" type="System.Drawing.Size, System.Drawing">
+    <value>140, 0</value>
+  </data>
+  <data name="label4.Size" type="System.Drawing.Size, System.Drawing">
+    <value>140, 40</value>
+  </data>
+  <data name="label4.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="label4.Text" xml:space="preserve">
+    <value>Drag and Drop Or Browse Document</value>
+  </data>
+  <data name="&gt;&gt;label4.Name" xml:space="preserve">
+    <value>label4</value>
+  </data>
+  <data name="&gt;&gt;label4.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label4.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;label4.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="webBrowser.Location" type="System.Drawing.Point, System.Drawing">
+    <value>354, 4</value>
+  </data>
+  <data name="webBrowser.MinimumSize" type="System.Drawing.Size, System.Drawing">
+    <value>20, 20</value>
+  </data>
+  <data name="webBrowser.Size" type="System.Drawing.Size, System.Drawing">
+    <value>447, 341</value>
+  </data>
+  <data name="webBrowser.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;webBrowser.Name" xml:space="preserve">
+    <value>webBrowser</value>
+  </data>
+  <data name="&gt;&gt;webBrowser.Type" xml:space="preserve">
+    <value>System.Windows.Forms.WebBrowser, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;webBrowser.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;webBrowser.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="Save_btn.Location" type="System.Drawing.Point, System.Drawing">
+    <value>698, 355</value>
+  </data>
+  <data name="Save_btn.Size" type="System.Drawing.Size, System.Drawing">
+    <value>85, 30</value>
+  </data>
+  <data name="Save_btn.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="Save_btn.Text" xml:space="preserve">
+    <value>შენახვა</value>
+  </data>
+  <data name="&gt;&gt;Save_btn.Name" xml:space="preserve">
+    <value>Save_btn</value>
+  </data>
+  <data name="&gt;&gt;Save_btn.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Save_btn.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;Save_btn.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="Pagination_Box.Location" type="System.Drawing.Point, System.Drawing">
+    <value>354, 347</value>
+  </data>
+  <data name="Pagination_Box.Size" type="System.Drawing.Size, System.Drawing">
+    <value>334, 39</value>
+  </data>
+  <data name="Pagination_Box.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
+  <data name="&gt;&gt;Pagination_Box.Name" xml:space="preserve">
+    <value>Pagination_Box</value>
+  </data>
+  <data name="&gt;&gt;Pagination_Box.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Pagination_Box.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;Pagination_Box.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="pictureBox1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 8</value>
+  </data>
+  <data name="pictureBox1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>94, 90</value>
+  </data>
+  <data name="pictureBox1.SizeMode" type="System.Windows.Forms.PictureBoxSizeMode, System.Windows.Forms">
+    <value>Zoom</value>
+  </data>
+  <data name="pictureBox1.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;pictureBox1.Name" xml:space="preserve">
+    <value>pictureBox1</value>
+  </data>
+  <data name="&gt;&gt;pictureBox1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;pictureBox1.Parent" xml:space="preserve">
+    <value>docBox</value>
+  </data>
+  <data name="&gt;&gt;pictureBox1.ZOrder" xml:space="preserve">
+    <value>19</value>
+  </data>
+  <data name="label1.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>104, 29</value>
+  </data>
+  <data name="label1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>35, 13</value>
+  </data>
+  <data name="label1.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="label1.Text" xml:space="preserve">
+    <value>ტიპი:</value>
+  </data>
+  <data name="&gt;&gt;label1.Name" xml:space="preserve">
+    <value>label1</value>
+  </data>
+  <data name="&gt;&gt;label1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label1.Parent" xml:space="preserve">
+    <value>docBox</value>
+  </data>
+  <data name="&gt;&gt;label1.ZOrder" xml:space="preserve">
+    <value>18</value>
+  </data>
+  <data name="label5.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label5.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 10pt</value>
+  </data>
+  <data name="label5.Location" type="System.Drawing.Point, System.Drawing">
+    <value>123, 9</value>
+  </data>
+  <data name="label5.Size" type="System.Drawing.Size, System.Drawing">
+    <value>87, 17</value>
+  </data>
+  <data name="label5.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="label5.Text" xml:space="preserve">
+    <value>მონაცემები</value>
+  </data>
+  <data name="&gt;&gt;label5.Name" xml:space="preserve">
+    <value>label5</value>
+  </data>
+  <data name="&gt;&gt;label5.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label5.Parent" xml:space="preserve">
+    <value>docBox</value>
+  </data>
+  <data name="&gt;&gt;label5.ZOrder" xml:space="preserve">
+    <value>17</value>
+  </data>
+  <data name="label2.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>104, 47</value>
+  </data>
+  <data name="label2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>64, 13</value>
+  </data>
+  <data name="label2.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="label2.Text" xml:space="preserve">
+    <value>გვერდები:</value>
+  </data>
+  <data name="&gt;&gt;label2.Name" xml:space="preserve">
+    <value>label2</value>
+  </data>
+  <data name="&gt;&gt;label2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label2.Parent" xml:space="preserve">
+    <value>docBox</value>
+  </data>
+  <data name="&gt;&gt;label2.ZOrder" xml:space="preserve">
+    <value>16</value>
+  </data>
+  <data name="type_lbl.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="type_lbl.Location" type="System.Drawing.Point, System.Drawing">
+    <value>176, 29</value>
+  </data>
+  <data name="type_lbl.Size" type="System.Drawing.Size, System.Drawing">
+    <value>19, 13</value>
+  </data>
+  <data name="type_lbl.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="type_lbl.Text" xml:space="preserve">
+    <value>----</value>
+  </data>
+  <data name="&gt;&gt;type_lbl.Name" xml:space="preserve">
+    <value>type_lbl</value>
+  </data>
+  <data name="&gt;&gt;type_lbl.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;type_lbl.Parent" xml:space="preserve">
+    <value>docBox</value>
+  </data>
+  <data name="&gt;&gt;type_lbl.ZOrder" xml:space="preserve">
+    <value>15</value>
+  </data>
+  <data name="label6.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label6.Location" type="System.Drawing.Point, System.Drawing">
+    <value>104, 66</value>
+  </data>
+  <data name="label6.Size" type="System.Drawing.Size, System.Drawing">
+    <value>70, 13</value>
+  </data>
+  <data name="label6.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="label6.Text" xml:space="preserve">
+    <value>მოცულობა:</value>
+  </data>
+  <data name="&gt;&gt;label6.Name" xml:space="preserve">
+    <value>label6</value>
+  </data>
+  <data name="&gt;&gt;label6.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label6.Parent" xml:space="preserve">
+    <value>docBox</value>
+  </data>
+  <data name="&gt;&gt;label6.ZOrder" xml:space="preserve">
+    <value>14</value>
+  </data>
+  <data name="label3.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label3.Location" type="System.Drawing.Point, System.Drawing">
+    <value>105, 83</value>
+  </data>
+  <data name="label3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>50, 13</value>
+  </data>
+  <data name="label3.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="label3.Text" xml:space="preserve">
+    <value>ფაილი:</value>
+  </data>
+  <data name="&gt;&gt;label3.Name" xml:space="preserve">
+    <value>label3</value>
+  </data>
+  <data name="&gt;&gt;label3.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label3.Parent" xml:space="preserve">
+    <value>docBox</value>
+  </data>
+  <data name="&gt;&gt;label3.ZOrder" xml:space="preserve">
+    <value>13</value>
+  </data>
+  <data name="page_lbl.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="page_lbl.Location" type="System.Drawing.Point, System.Drawing">
+    <value>176, 47</value>
+  </data>
+  <data name="page_lbl.Size" type="System.Drawing.Size, System.Drawing">
+    <value>19, 13</value>
+  </data>
+  <data name="page_lbl.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="page_lbl.Text" xml:space="preserve">
+    <value>----</value>
+  </data>
+  <data name="&gt;&gt;page_lbl.Name" xml:space="preserve">
+    <value>page_lbl</value>
+  </data>
+  <data name="&gt;&gt;page_lbl.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;page_lbl.Parent" xml:space="preserve">
+    <value>docBox</value>
+  </data>
+  <data name="&gt;&gt;page_lbl.ZOrder" xml:space="preserve">
+    <value>12</value>
+  </data>
+  <data name="size_lbl.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="size_lbl.Location" type="System.Drawing.Point, System.Drawing">
+    <value>176, 66</value>
+  </data>
+  <data name="size_lbl.Size" type="System.Drawing.Size, System.Drawing">
+    <value>19, 13</value>
+  </data>
+  <data name="size_lbl.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="size_lbl.Text" xml:space="preserve">
+    <value>----</value>
+  </data>
+  <data name="&gt;&gt;size_lbl.Name" xml:space="preserve">
+    <value>size_lbl</value>
+  </data>
+  <data name="&gt;&gt;size_lbl.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;size_lbl.Parent" xml:space="preserve">
+    <value>docBox</value>
+  </data>
+  <data name="&gt;&gt;size_lbl.ZOrder" xml:space="preserve">
+    <value>11</value>
+  </data>
+  <data name="filename_lbl.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="filename_lbl.Location" type="System.Drawing.Point, System.Drawing">
+    <value>177, 83</value>
+  </data>
+  <data name="filename_lbl.MaximumSize" type="System.Drawing.Size, System.Drawing">
+    <value>120, 95</value>
+  </data>
+  <data name="filename_lbl.Size" type="System.Drawing.Size, System.Drawing">
+    <value>19, 13</value>
+  </data>
+  <data name="filename_lbl.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="filename_lbl.Text" xml:space="preserve">
+    <value>----</value>
+  </data>
+  <data name="&gt;&gt;filename_lbl.Name" xml:space="preserve">
+    <value>filename_lbl</value>
+  </data>
+  <data name="&gt;&gt;filename_lbl.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;filename_lbl.Parent" xml:space="preserve">
+    <value>docBox</value>
+  </data>
+  <data name="&gt;&gt;filename_lbl.ZOrder" xml:space="preserve">
+    <value>10</value>
+  </data>
+  <data name="start_btn.Location" type="System.Drawing.Point, System.Drawing">
+    <value>246, 343</value>
+  </data>
+  <data name="start_btn.Size" type="System.Drawing.Size, System.Drawing">
+    <value>85, 30</value>
+  </data>
+  <data name="start_btn.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="start_btn.Text" xml:space="preserve">
+    <value>დაწყება</value>
+  </data>
+  <data name="&gt;&gt;start_btn.Name" xml:space="preserve">
+    <value>start_btn</value>
+  </data>
+  <data name="&gt;&gt;start_btn.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;start_btn.Parent" xml:space="preserve">
+    <value>docBox</value>
+  </data>
+  <data name="&gt;&gt;start_btn.ZOrder" xml:space="preserve">
+    <value>9</value>
+  </data>
+  <data name="close_btn.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="close_btn.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 13pt, style=Bold</value>
+  </data>
+  <data name="close_btn.Location" type="System.Drawing.Point, System.Drawing">
+    <value>304, 11</value>
+  </data>
+  <data name="close_btn.Size" type="System.Drawing.Size, System.Drawing">
+    <value>23, 22</value>
+  </data>
+  <data name="close_btn.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
+  </data>
+  <data name="close_btn.Text" xml:space="preserve">
+    <value>X</value>
+  </data>
+  <data name="&gt;&gt;close_btn.Name" xml:space="preserve">
+    <value>close_btn</value>
+  </data>
+  <data name="&gt;&gt;close_btn.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;close_btn.Parent" xml:space="preserve">
+    <value>docBox</value>
+  </data>
+  <data name="&gt;&gt;close_btn.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="space_chkbx.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="space_chkbx.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 112</value>
+  </data>
+  <data name="space_chkbx.Size" type="System.Drawing.Size, System.Drawing">
+    <value>201, 17</value>
+  </data>
+  <data name="space_chkbx.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
+  </data>
+  <data name="space_chkbx.Text" xml:space="preserve">
+    <value>ზედმეტი ჰარების გასუფთავება</value>
+  </data>
+  <data name="&gt;&gt;space_chkbx.Name" xml:space="preserve">
+    <value>space_chkbx</value>
+  </data>
+  <data name="&gt;&gt;space_chkbx.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;space_chkbx.Parent" xml:space="preserve">
+    <value>docBox</value>
+  </data>
+  <data name="&gt;&gt;space_chkbx.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="hypcl_chkbx.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="hypcl_chkbx.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 133</value>
+  </data>
+  <data name="hypcl_chkbx.Size" type="System.Drawing.Size, System.Drawing">
+    <value>177, 17</value>
+  </data>
+  <data name="hypcl_chkbx.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
+  </data>
+  <data name="hypcl_chkbx.Text" xml:space="preserve">
+    <value>გადატანების გასუფთავება</value>
+  </data>
+  <data name="&gt;&gt;hypcl_chkbx.Name" xml:space="preserve">
+    <value>hypcl_chkbx</value>
+  </data>
+  <data name="&gt;&gt;hypcl_chkbx.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;hypcl_chkbx.Parent" xml:space="preserve">
+    <value>docBox</value>
+  </data>
+  <data name="&gt;&gt;hypcl_chkbx.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="par_chkbx.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="par_chkbx.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 156</value>
+  </data>
+  <data name="par_chkbx.Size" type="System.Drawing.Size, System.Drawing">
+    <value>237, 17</value>
+  </data>
+  <data name="par_chkbx.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
+  </data>
+  <data name="par_chkbx.Text" xml:space="preserve">
+    <value>ზედმეტი პარაგრაფების გასუფთავება</value>
+  </data>
+  <data name="&gt;&gt;par_chkbx.Name" xml:space="preserve">
+    <value>par_chkbx</value>
+  </data>
+  <data name="&gt;&gt;par_chkbx.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;par_chkbx.Parent" xml:space="preserve">
+    <value>docBox</value>
+  </data>
+  <data name="&gt;&gt;par_chkbx.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="tab_chkbx.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="tab_chkbx.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 179</value>
+  </data>
+  <data name="tab_chkbx.Size" type="System.Drawing.Size, System.Drawing">
+    <value>151, 17</value>
+  </data>
+  <data name="tab_chkbx.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
+  </data>
+  <data name="tab_chkbx.Text" xml:space="preserve">
+    <value>Tab-ების გასუფთავება</value>
+  </data>
+  <data name="&gt;&gt;tab_chkbx.Name" xml:space="preserve">
+    <value>tab_chkbx</value>
+  </data>
+  <data name="&gt;&gt;tab_chkbx.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tab_chkbx.Parent" xml:space="preserve">
+    <value>docBox</value>
+  </data>
+  <data name="&gt;&gt;tab_chkbx.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="newline_chkbx.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="newline_chkbx.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 202</value>
+  </data>
+  <data name="newline_chkbx.Size" type="System.Drawing.Size, System.Drawing">
+    <value>65, 17</value>
+  </data>
+  <data name="newline_chkbx.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
+  </data>
+  <data name="newline_chkbx.Text" xml:space="preserve">
+    <value>^n -&gt; ^p</value>
+  </data>
+  <data name="&gt;&gt;newline_chkbx.Name" xml:space="preserve">
+    <value>newline_chkbx</value>
+  </data>
+  <data name="&gt;&gt;newline_chkbx.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;newline_chkbx.Parent" xml:space="preserve">
+    <value>docBox</value>
+  </data>
+  <data name="&gt;&gt;newline_chkbx.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="pdashstart_chkbx.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="pdashstart_chkbx.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 225</value>
+  </data>
+  <data name="pdashstart_chkbx.Size" type="System.Drawing.Size, System.Drawing">
+    <value>233, 17</value>
+  </data>
+  <data name="pdashstart_chkbx.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
+  </data>
+  <data name="pdashstart_chkbx.Text" xml:space="preserve">
+    <value>პარაგრაფების ტირეების მოწესრიგება</value>
+  </data>
+  <data name="&gt;&gt;pdashstart_chkbx.Name" xml:space="preserve">
+    <value>pdashstart_chkbx</value>
+  </data>
+  <data name="&gt;&gt;pdashstart_chkbx.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;pdashstart_chkbx.Parent" xml:space="preserve">
+    <value>docBox</value>
+  </data>
+  <data name="&gt;&gt;pdashstart_chkbx.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="hyp_chkbx.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="hyp_chkbx.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 248</value>
+  </data>
+  <data name="hyp_chkbx.Size" type="System.Drawing.Size, System.Drawing">
+    <value>92, 17</value>
+  </data>
+  <data name="hyp_chkbx.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
+  </data>
+  <data name="hyp_chkbx.Text" xml:space="preserve">
+    <value>დამარცვლა</value>
+  </data>
+  <data name="&gt;&gt;hyp_chkbx.Name" xml:space="preserve">
+    <value>hyp_chkbx</value>
+  </data>
+  <data name="&gt;&gt;hyp_chkbx.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;hyp_chkbx.Parent" xml:space="preserve">
+    <value>docBox</value>
+  </data>
+  <data name="&gt;&gt;hyp_chkbx.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="ForIndesign_chkbx.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="ForIndesign_chkbx.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 271</value>
+  </data>
+  <data name="ForIndesign_chkbx.Size" type="System.Drawing.Size, System.Drawing">
+    <value>256, 17</value>
+  </data>
+  <data name="ForIndesign_chkbx.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
+  </data>
+  <data name="ForIndesign_chkbx.Text" xml:space="preserve">
+    <value>დოკუმენტის ინდიზაინისთვის მომზადება</value>
+  </data>
+  <data name="&gt;&gt;ForIndesign_chkbx.Name" xml:space="preserve">
+    <value>ForIndesign_chkbx</value>
+  </data>
+  <data name="&gt;&gt;ForIndesign_chkbx.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;ForIndesign_chkbx.Parent" xml:space="preserve">
+    <value>docBox</value>
+  </data>
+  <data name="&gt;&gt;ForIndesign_chkbx.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="progress_lbl.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="progress_lbl.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 12pt</value>
+  </data>
+  <data name="progress_lbl.Location" type="System.Drawing.Point, System.Drawing">
+    <value>137, 271</value>
+  </data>
+  <data name="progress_lbl.Size" type="System.Drawing.Size, System.Drawing">
+    <value>179, 20</value>
+  </data>
+  <data name="progress_lbl.TabIndex" type="System.Int32, mscorlib">
+    <value>8</value>
+  </data>
+  <data name="progress_lbl.Text" xml:space="preserve">
+    <value>გთხოვთ მოიცადოთ...</value>
+  </data>
+  <data name="&gt;&gt;progress_lbl.Name" xml:space="preserve">
+    <value>progress_lbl</value>
+  </data>
+  <data name="&gt;&gt;progress_lbl.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;progress_lbl.Parent" xml:space="preserve">
+    <value>progress_groupBox</value>
+  </data>
+  <data name="&gt;&gt;progress_lbl.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="docBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>11, 4</value>
+  </data>
+  <data name="docBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>337, 381</value>
+  </data>
+  <data name="docBox.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="docBox.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="&gt;&gt;docBox.Name" xml:space="preserve">
+    <value>docBox</value>
+  </data>
+  <data name="&gt;&gt;docBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;docBox.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;docBox.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="progress_groupBox.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
+    <value>Center</value>
+  </data>
+  <data name="progress_groupBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>354, 4</value>
+  </data>
+  <data name="progress_groupBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>447, 341</value>
+  </data>
+  <data name="progress_groupBox.TabIndex" type="System.Int32, mscorlib">
+    <value>8</value>
+  </data>
+  <data name="progress_groupBox.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="&gt;&gt;progress_groupBox.Name" xml:space="preserve">
+    <value>progress_groupBox</value>
+  </data>
+  <data name="&gt;&gt;progress_groupBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;progress_groupBox.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;progress_groupBox.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
+    <value>813, 391</value>
+  </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         AAABAAUAEBAAAAEAIABoBAAAVgAAABgYAAABACAAiAkAAL4EAAAgIAAAAQAgAKgQAABGDgAAMDAAAAEA
@@ -453,5 +1217,14 @@
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQ2r8BoCWv
         x1XxZgoAAAAASUVORK5CYII=
 </value>
+  </data>
+  <data name="$this.Text" xml:space="preserve">
+    <value>Georgian Hypernation</value>
+  </data>
+  <data name="&gt;&gt;$this.Name" xml:space="preserve">
+    <value>MainForm</value>
+  </data>
+  <data name="&gt;&gt;$this.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Form, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
 </root>

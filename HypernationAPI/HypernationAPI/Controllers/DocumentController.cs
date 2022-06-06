@@ -45,11 +45,13 @@ namespace HypernationAPI.Controllers
                     if (contentType == ".docx" || contentType == ".doc" || contentType == ".rtf")
                     {
                         FileName = postedFile.FileName;
-                        var filePath = HttpContext.Current.Server.MapPath($"~/TempDocs/{FileName}");
+                        var workingDir = Directory.CreateDirectory(HttpContext.Current.Server.MapPath($"~/TempDocs/{Path.GetFileNameWithoutExtension(FileName)}")).FullName;
+                        Directory.CreateDirectory(Path.Combine(workingDir, "Modified"));
+                        var filePath = Path.Combine(workingDir, FileName);
                         if (File.Exists(filePath))
                         {
                             FileName = $"{Path.GetFileNameWithoutExtension(FileName)}{DateTime.Now.Ticks}{contentType}";
-                            filePath = HttpContext.Current.Server.MapPath($"~/TempDocs/{FileName}");
+                            filePath = Path.Combine(workingDir, FileName);
                         }
                         postedFile.SaveAs(filePath);
 
@@ -85,25 +87,27 @@ namespace HypernationAPI.Controllers
 
         [HttpGet]
         [Route("api/GetDocPages/{fileName}")]
-        public HttpResponseMessage GetDocPages(string fileName, int page = 1)
+        public HttpResponseMessage GetDocPages(string fileName, int page = 1, bool clean=true)
         {
             try
             {
-                if (fileName == "" || fileName == " ")
+                if (string.IsNullOrEmpty(fileName))
                     throw new HttpException("File Name is Required Parameter");
 
                 HttpResponseMessage result;
-                var filePath = HttpContext.Current.Server.MapPath($"~/TempDocs/Modified/{fileName}");
+                string Folder = Path.GetFileNameWithoutExtension(fileName);
+
+                var filePath = HttpContext.Current.Server.MapPath($"~/TempDocs/{Folder}/Modified/{fileName}");
                 if (!File.Exists(filePath))
                 {
-                    filePath = HttpContext.Current.Server.MapPath($"~/TempDocs/{fileName}");
+                    filePath = HttpContext.Current.Server.MapPath($"~/TempDocs/{Folder}/{fileName}");
                     if (!File.Exists(filePath))
                         throw new HttpException("File does not exist in temporary storage");
                 }
-                var data = _docManagement.GetPages(filePath, page);
+                var data = _docManagement.GetPages(filePath, page, clean);
 
                 string zipFileName = $"{Path.GetFileNameWithoutExtension(fileName)}.zip";
-                string zipFilePath = HttpContext.Current.Server.MapPath($"~/TempDocs/Temp/{zipFileName}");
+                string zipFilePath = HttpContext.Current.Server.MapPath($"~/TempDocs/{Path.GetFileNameWithoutExtension(fileName)}/{zipFileName}");
 
                 if (!_docManagement.ZipUpFiles(data[0], zipFilePath))
                     throw new HttpException("Error when zipping up files");
@@ -141,29 +145,34 @@ namespace HypernationAPI.Controllers
         {
             try
             {
-                if (fileName == "" || fileName == " ")
+                if (string.IsNullOrEmpty(fileName))
                     throw new HttpException("File name is required parameter");
 
                 string FileName = fileName;
+                string FileFolder = Path.GetFileNameWithoutExtension(fileName);
                 HttpResponseMessage result;
-                string modifiedFilePath = HttpContext.Current.Server.MapPath($"~/TempDocs/Modified/{FileName}");
 
-                if (!File.Exists(modifiedFilePath))
-                    throw new HttpException("File does not exist in temporary storage");
+                var filePath = HttpContext.Current.Server.MapPath($"~/TempDocs/{FileFolder}/Modified/{fileName}");
+                if (!File.Exists(filePath))
+                {
+                    filePath = HttpContext.Current.Server.MapPath($"~/TempDocs/{FileFolder}/{fileName}");
+                    if (!File.Exists(filePath))
+                        throw new HttpException("File does not exist in temporary storage");
+                }
 
                 string OutputFilePath;
                 if (pdf)
                 {
-                    FileName = $"{ Path.GetFileNameWithoutExtension(fileName)}.pdf";
-                    OutputFilePath = HttpContext.Current.Server.MapPath($"~/TempDocs/Modified/{FileName}");
-                    if (!_docManagement.ConvertToPDF(modifiedFilePath, OutputFilePath, WdSaveFormat.wdFormatPDF))
+                    FileName = $"{FileFolder}.pdf";
+                    OutputFilePath = HttpContext.Current.Server.MapPath($"~/TempDocs/{FileFolder}/Modified/{FileName}");
+                    if (!_docManagement.ConvertToPDF(filePath, OutputFilePath, WdSaveFormat.wdFormatPDF))
                     {
                         throw new HttpException("Could not convert to PDF");
                     }
                 }
                 else
                 {
-                    OutputFilePath = modifiedFilePath;
+                    OutputFilePath = filePath;
                 }
                 result = new HttpResponseMessage(HttpStatusCode.OK)
                 {
@@ -177,6 +186,51 @@ namespace HypernationAPI.Controllers
                 string contentType = MimeMapping.GetMimeMapping(Path.GetExtension(OutputFilePath));
                 result.Content.Headers.ContentType = new MediaTypeHeaderValue(contentType);
                 return result;
+            }
+            catch (HttpException ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ex.Message);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return Request.CreateResponse(HttpStatusCode.InternalServerError);
+            }
+        }
+
+        [HttpDelete]
+        [Route("api/DeleteDoc/{fileName}")]
+        public HttpResponseMessage DeleteDoc(string fileName)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(fileName))
+                    throw new HttpException("File name is required parameter");
+
+                string FileName = fileName;
+
+                //string mFilePath = HttpContext.Current.Server.MapPath($"~/TempDocs/Modified/{fileName}");
+                //string filePath = HttpContext.Current.Server.MapPath($"~/TempDocs/{fileName}");
+                //string zipFilePath = HttpContext.Current.Server.MapPath($"~/TempDocs/{Path.GetFileNameWithoutExtension(fileName)}.zip");
+                //string pdfFilePath = HttpContext.Current.Server.MapPath($"~/TempDocs/Modified/{Path.GetFileNameWithoutExtension(fileName)}.pdf");
+
+                string tempDirectory = HttpContext.Current.Server.MapPath($"~/TempDocs/{Path.GetFileNameWithoutExtension(fileName)}");
+                if (Directory.Exists(tempDirectory))
+                    Directory.Delete(tempDirectory, true);
+
+                //if (File.Exists(filePath))
+                //    File.Delete(filePath);
+
+                //if (File.Exists(zipFilePath))
+                //    File.Delete(zipFilePath);
+
+                //if (File.Exists(mFilePath))
+                //    File.Delete(mFilePath);
+
+                //if (File.Exists(mFilePath))
+                //    File.Delete(mFilePath);
+
+                return new HttpResponseMessage(HttpStatusCode.OK);
             }
             catch (HttpException ex)
             {

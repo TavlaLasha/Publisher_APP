@@ -73,6 +73,7 @@ namespace GeoHypernation
                             {
                                 if (dcdm.cl_splace || dcdm.cl_hyp || dcdm.cl_par || dcdm.cl_newLines || dcdm.cor_PDashStarts || dcdm.cl_tabs)
                                 {
+                                    progress_lbl.SetText("მიმდინარეობს გასუფთავება...");
                                     if (!wwd.CleanDocument(dcdm))
                                     {
                                         MessageBox.Show("დოკუმენტის გასუფთავების დროს მოხდა შეცდომა. ბოდიშს გიხდით", "შეცდომა", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -80,6 +81,7 @@ namespace GeoHypernation
                                 }
                                 if (do_hyp)
                                 {
+                                    progress_lbl.SetText("მიმდინარეობს დამარცვლა...");
                                     if (!wwd.HypernateDocument())
                                     {
                                         MessageBox.Show("დოკუმენტის დამარცვლის დროს მოხდა შეცდომა. ბოდიშს გიხდით", "შეცდომა", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -89,7 +91,7 @@ namespace GeoHypernation
                                 InitializeDocBox((string)wwd.DocPath);
                                 Change_working_state(false);
                                 IsSaved = false;
-                                MessageBox.Show($"ფაილი {Path.GetFileName(FileName)} წარმატებით დამუშავდა.", "წარმატება", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                //MessageBox.Show($"ფაილი {Path.GetFileName(FileName)} წარმატებით დამუშავდა.", "წარმატება", MessageBoxButtons.OK, MessageBoxIcon.Information);
                             }
                             catch
                             {
@@ -246,14 +248,15 @@ namespace GeoHypernation
         private void Change_working_state(bool working = false)
         {
             Working = working;
-            loading_img.SetVisible(Working);
+            progress_groupBox.SetVisible(Working);
+
             List<Button> btn = Pagination_Box.Controls.OfType<Button>().ToList();
             foreach (var b in btn)
             {
                 b.SetEnabled(!working);
             }
-            //if(!working)
-
+            if(!working)
+                progress_lbl.SetText("გთხოვთ მოიცადოთ...");
         }
 
         private void Close_Doc()

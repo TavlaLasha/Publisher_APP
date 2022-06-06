@@ -53,7 +53,7 @@ namespace BLL
                 wordApp.Quit();
                 return true;
             }
-            catch
+            catch(Exception ex)
             {
                 wordApp.Quit(WdSaveOptions.wdDoNotSaveChanges);
                 return false;
@@ -121,7 +121,7 @@ namespace BLL
             return hyp.ExecuteTxt(docclDTo);
         }
 
-        public string[] GetPages(object filename, int page = 1)
+        public string[] GetPages(object filename, int page = 1, bool clean = false)
         {
             if (!File.Exists((string)filename))
                 throw new HttpException("File does not exist in temporary storage");
@@ -148,8 +148,6 @@ namespace BLL
                     throw new InvalidOperationException("Page number exceeded document length");
                 }
 
-                string tempDirectory = Directory.CreateDirectory(HttpContext.Current.Server.MapPath($"~/TempDocs/Temp/{Path.GetFileNameWithoutExtension(filename.ToString())}")).FullName;
-
                 int start = ((page - 2) > 0) ? page - 2 : 1;
                 int end;
                 if (page <= 3)
@@ -160,6 +158,12 @@ namespace BLL
                 {
                     end = ((page + 2) < PageCount) ? page + 2 : PageCount;
                 }
+
+                string tempDirectory = HttpContext.Current.Server.MapPath($"~/TempDocs/{Path.GetFileNameWithoutExtension(filename.ToString())}/HTML");
+                if (Directory.Exists(tempDirectory) && clean)
+                    Directory.Delete(tempDirectory, true);
+
+                tempDirectory = Directory.CreateDirectory(tempDirectory).FullName;
 
                 Range range;
                 for (int i = start; i <= end; i++)

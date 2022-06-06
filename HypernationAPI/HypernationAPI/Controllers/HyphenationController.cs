@@ -37,12 +37,13 @@ namespace HypernationAPI.Controllers
                     throw new HttpException("File Name is Required Parameter");
 
                 HttpResponseMessage result;
-                string filePath = HttpContext.Current.Server.MapPath($"~/TempDocs/{fileName}");
+                string FileFolder = Path.GetFileNameWithoutExtension(fileName);
+                string filePath = HttpContext.Current.Server.MapPath($"~/TempDocs/{FileFolder}/{fileName}");
 
                 if (!File.Exists(filePath))
                     throw new HttpException("File does not exist in temporary storage");
 
-                string modifiedFilePath = HttpContext.Current.Server.MapPath("~/TempDocs/Modified/" + fileName);
+                string modifiedFilePath = HttpContext.Current.Server.MapPath($"~/TempDocs/{FileFolder}/Modified/{fileName}");
 
                 if (!_docManagement.HyphenateDocument(filePath, modifiedFilePath))
                 {

@@ -29,36 +29,198 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            this.docBox = new System.Windows.Forms.GroupBox();
-            this.hyp_chkbx = new System.Windows.Forms.CheckBox();
-            this.pdashstart_chkbx = new System.Windows.Forms.CheckBox();
-            this.newline_chkbx = new System.Windows.Forms.CheckBox();
-            this.tab_chkbx = new System.Windows.Forms.CheckBox();
-            this.space_chkbx = new System.Windows.Forms.CheckBox();
-            this.close_btn = new System.Windows.Forms.Label();
-            this.start_btn = new System.Windows.Forms.Button();
-            this.filename_lbl = new System.Windows.Forms.Label();
-            this.page_lbl = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.type_lbl = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.loading_img = new System.Windows.Forms.PictureBox();
             this.label4 = new System.Windows.Forms.Label();
             this.webBrowser = new System.Windows.Forms.WebBrowser();
             this.Save_btn = new System.Windows.Forms.Button();
             this.Pagination_Box = new System.Windows.Forms.GroupBox();
-            this.ForIndesign_chkbx = new System.Windows.Forms.CheckBox();
-            this.hypcl_chkbx = new System.Windows.Forms.CheckBox();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.type_lbl = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.page_lbl = new System.Windows.Forms.Label();
             this.size_lbl = new System.Windows.Forms.Label();
+            this.filename_lbl = new System.Windows.Forms.Label();
+            this.start_btn = new System.Windows.Forms.Button();
+            this.close_btn = new System.Windows.Forms.Label();
+            this.space_chkbx = new System.Windows.Forms.CheckBox();
+            this.hypcl_chkbx = new System.Windows.Forms.CheckBox();
             this.par_chkbx = new System.Windows.Forms.CheckBox();
-            this.docBox.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.tab_chkbx = new System.Windows.Forms.CheckBox();
+            this.newline_chkbx = new System.Windows.Forms.CheckBox();
+            this.pdashstart_chkbx = new System.Windows.Forms.CheckBox();
+            this.hyp_chkbx = new System.Windows.Forms.CheckBox();
+            this.ForIndesign_chkbx = new System.Windows.Forms.CheckBox();
+            this.progress_lbl = new System.Windows.Forms.Label();
+            this.docBox = new System.Windows.Forms.GroupBox();
+            this.progress_groupBox = new System.Windows.Forms.GroupBox();
             ((System.ComponentModel.ISupportInitialize)(this.loading_img)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.docBox.SuspendLayout();
+            this.progress_groupBox.SuspendLayout();
             this.SuspendLayout();
+            // 
+            // loading_img
+            // 
+            resources.ApplyResources(this.loading_img, "loading_img");
+            this.loading_img.Image = global::GeoHypernation.Properties.Resources._200;
+            this.loading_img.Name = "loading_img";
+            this.loading_img.TabStop = false;
+            this.loading_img.UseWaitCursor = true;
+            // 
+            // label4
+            // 
+            resources.ApplyResources(this.label4, "label4");
+            this.label4.Name = "label4";
+            // 
+            // webBrowser
+            // 
+            this.webBrowser.AllowWebBrowserDrop = false;
+            resources.ApplyResources(this.webBrowser, "webBrowser");
+            this.webBrowser.Name = "webBrowser";
+            // 
+            // Save_btn
+            // 
+            resources.ApplyResources(this.Save_btn, "Save_btn");
+            this.Save_btn.Name = "Save_btn";
+            this.Save_btn.UseVisualStyleBackColor = true;
+            this.Save_btn.Click += new System.EventHandler(this.Save_btn_Click);
+            // 
+            // Pagination_Box
+            // 
+            resources.ApplyResources(this.Pagination_Box, "Pagination_Box");
+            this.Pagination_Box.Name = "Pagination_Box";
+            this.Pagination_Box.TabStop = false;
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = global::GeoHypernation.Properties.Resources.microsoft_word_document_icon;
+            resources.ApplyResources(this.pictureBox1, "pictureBox1");
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.TabStop = false;
+            // 
+            // label1
+            // 
+            resources.ApplyResources(this.label1, "label1");
+            this.label1.Name = "label1";
+            // 
+            // label5
+            // 
+            resources.ApplyResources(this.label5, "label5");
+            this.label5.Name = "label5";
+            // 
+            // label2
+            // 
+            resources.ApplyResources(this.label2, "label2");
+            this.label2.Name = "label2";
+            // 
+            // type_lbl
+            // 
+            resources.ApplyResources(this.type_lbl, "type_lbl");
+            this.type_lbl.Name = "type_lbl";
+            // 
+            // label6
+            // 
+            resources.ApplyResources(this.label6, "label6");
+            this.label6.Name = "label6";
+            // 
+            // label3
+            // 
+            resources.ApplyResources(this.label3, "label3");
+            this.label3.Name = "label3";
+            // 
+            // page_lbl
+            // 
+            resources.ApplyResources(this.page_lbl, "page_lbl");
+            this.page_lbl.Name = "page_lbl";
+            // 
+            // size_lbl
+            // 
+            resources.ApplyResources(this.size_lbl, "size_lbl");
+            this.size_lbl.Name = "size_lbl";
+            // 
+            // filename_lbl
+            // 
+            resources.ApplyResources(this.filename_lbl, "filename_lbl");
+            this.filename_lbl.Name = "filename_lbl";
+            // 
+            // start_btn
+            // 
+            resources.ApplyResources(this.start_btn, "start_btn");
+            this.start_btn.Name = "start_btn";
+            this.start_btn.UseVisualStyleBackColor = true;
+            this.start_btn.Click += new System.EventHandler(this.Start_btn_Click);
+            // 
+            // close_btn
+            // 
+            resources.ApplyResources(this.close_btn, "close_btn");
+            this.close_btn.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.close_btn.Name = "close_btn";
+            this.close_btn.Click += new System.EventHandler(this.Close_btn_Click);
+            // 
+            // space_chkbx
+            // 
+            resources.ApplyResources(this.space_chkbx, "space_chkbx");
+            this.space_chkbx.Checked = true;
+            this.space_chkbx.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.space_chkbx.Name = "space_chkbx";
+            this.space_chkbx.UseVisualStyleBackColor = true;
+            // 
+            // hypcl_chkbx
+            // 
+            resources.ApplyResources(this.hypcl_chkbx, "hypcl_chkbx");
+            this.hypcl_chkbx.Name = "hypcl_chkbx";
+            this.hypcl_chkbx.UseVisualStyleBackColor = true;
+            // 
+            // par_chkbx
+            // 
+            resources.ApplyResources(this.par_chkbx, "par_chkbx");
+            this.par_chkbx.Name = "par_chkbx";
+            this.par_chkbx.UseVisualStyleBackColor = true;
+            // 
+            // tab_chkbx
+            // 
+            resources.ApplyResources(this.tab_chkbx, "tab_chkbx");
+            this.tab_chkbx.Name = "tab_chkbx";
+            this.tab_chkbx.UseVisualStyleBackColor = true;
+            // 
+            // newline_chkbx
+            // 
+            resources.ApplyResources(this.newline_chkbx, "newline_chkbx");
+            this.newline_chkbx.Name = "newline_chkbx";
+            this.newline_chkbx.UseVisualStyleBackColor = true;
+            // 
+            // pdashstart_chkbx
+            // 
+            resources.ApplyResources(this.pdashstart_chkbx, "pdashstart_chkbx");
+            this.pdashstart_chkbx.Name = "pdashstart_chkbx";
+            this.pdashstart_chkbx.UseVisualStyleBackColor = true;
+            // 
+            // hyp_chkbx
+            // 
+            resources.ApplyResources(this.hyp_chkbx, "hyp_chkbx");
+            this.hyp_chkbx.Checked = true;
+            this.hyp_chkbx.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.hyp_chkbx.Name = "hyp_chkbx";
+            this.hyp_chkbx.UseVisualStyleBackColor = true;
+            // 
+            // ForIndesign_chkbx
+            // 
+            resources.ApplyResources(this.ForIndesign_chkbx, "ForIndesign_chkbx");
+            this.ForIndesign_chkbx.Name = "ForIndesign_chkbx";
+            this.ForIndesign_chkbx.UseVisualStyleBackColor = true;
+            this.ForIndesign_chkbx.CheckedChanged += new System.EventHandler(this.ForIndesign_chkbx_CheckedChanged);
+            // 
+            // progress_lbl
+            // 
+            resources.ApplyResources(this.progress_lbl, "progress_lbl");
+            this.progress_lbl.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(44)))), ((int)(((byte)(43)))), ((int)(((byte)(34)))));
+            this.progress_lbl.ForeColor = System.Drawing.SystemColors.Info;
+            this.progress_lbl.Name = "progress_lbl";
+            this.progress_lbl.UseWaitCursor = true;
             // 
             // docBox
             // 
@@ -82,317 +244,74 @@
             this.docBox.Controls.Add(this.label5);
             this.docBox.Controls.Add(this.label1);
             this.docBox.Controls.Add(this.pictureBox1);
-            this.docBox.Location = new System.Drawing.Point(11, 4);
+            resources.ApplyResources(this.docBox, "docBox");
             this.docBox.Name = "docBox";
-            this.docBox.Size = new System.Drawing.Size(337, 381);
-            this.docBox.TabIndex = 0;
             this.docBox.TabStop = false;
-            this.docBox.Visible = false;
             // 
-            // hyp_chkbx
+            // progress_groupBox
             // 
-            this.hyp_chkbx.AutoSize = true;
-            this.hyp_chkbx.Checked = true;
-            this.hyp_chkbx.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.hyp_chkbx.Location = new System.Drawing.Point(6, 248);
-            this.hyp_chkbx.Name = "hyp_chkbx";
-            this.hyp_chkbx.Size = new System.Drawing.Size(92, 17);
-            this.hyp_chkbx.TabIndex = 5;
-            this.hyp_chkbx.Text = "დამარცვლა";
-            this.hyp_chkbx.UseVisualStyleBackColor = true;
-            // 
-            // pdashstart_chkbx
-            // 
-            this.pdashstart_chkbx.AutoSize = true;
-            this.pdashstart_chkbx.Location = new System.Drawing.Point(6, 225);
-            this.pdashstart_chkbx.Name = "pdashstart_chkbx";
-            this.pdashstart_chkbx.Size = new System.Drawing.Size(233, 17);
-            this.pdashstart_chkbx.TabIndex = 5;
-            this.pdashstart_chkbx.Text = "პარაგრაფების ტირეების მოწესრიგება";
-            this.pdashstart_chkbx.UseVisualStyleBackColor = true;
-            // 
-            // newline_chkbx
-            // 
-            this.newline_chkbx.AutoSize = true;
-            this.newline_chkbx.Location = new System.Drawing.Point(6, 202);
-            this.newline_chkbx.Name = "newline_chkbx";
-            this.newline_chkbx.Size = new System.Drawing.Size(65, 17);
-            this.newline_chkbx.TabIndex = 5;
-            this.newline_chkbx.Text = "^n -> ^p";
-            this.newline_chkbx.UseVisualStyleBackColor = true;
-            // 
-            // tab_chkbx
-            // 
-            this.tab_chkbx.AutoSize = true;
-            this.tab_chkbx.Location = new System.Drawing.Point(6, 179);
-            this.tab_chkbx.Name = "tab_chkbx";
-            this.tab_chkbx.Size = new System.Drawing.Size(151, 17);
-            this.tab_chkbx.TabIndex = 5;
-            this.tab_chkbx.Text = "Tab-ების გასუფთავება";
-            this.tab_chkbx.UseVisualStyleBackColor = true;
-            // 
-            // space_chkbx
-            // 
-            this.space_chkbx.AutoSize = true;
-            this.space_chkbx.Checked = true;
-            this.space_chkbx.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.space_chkbx.Location = new System.Drawing.Point(6, 112);
-            this.space_chkbx.Name = "space_chkbx";
-            this.space_chkbx.Size = new System.Drawing.Size(201, 17);
-            this.space_chkbx.TabIndex = 5;
-            this.space_chkbx.Text = "ზედმეტი ჰარების გასუფთავება";
-            this.space_chkbx.UseVisualStyleBackColor = true;
-            // 
-            // close_btn
-            // 
-            this.close_btn.AutoSize = true;
-            this.close_btn.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.close_btn.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.close_btn.Location = new System.Drawing.Point(304, 11);
-            this.close_btn.Name = "close_btn";
-            this.close_btn.Size = new System.Drawing.Size(23, 22);
-            this.close_btn.TabIndex = 4;
-            this.close_btn.Text = "X";
-            this.close_btn.Click += new System.EventHandler(this.Close_btn_Click);
-            // 
-            // start_btn
-            // 
-            this.start_btn.Location = new System.Drawing.Point(246, 343);
-            this.start_btn.Name = "start_btn";
-            this.start_btn.Size = new System.Drawing.Size(85, 30);
-            this.start_btn.TabIndex = 3;
-            this.start_btn.Text = "დაწყება";
-            this.start_btn.UseVisualStyleBackColor = true;
-            this.start_btn.Click += new System.EventHandler(this.Start_btn_Click);
-            // 
-            // filename_lbl
-            // 
-            this.filename_lbl.AutoSize = true;
-            this.filename_lbl.Location = new System.Drawing.Point(177, 83);
-            this.filename_lbl.MaximumSize = new System.Drawing.Size(120, 95);
-            this.filename_lbl.Name = "filename_lbl";
-            this.filename_lbl.Size = new System.Drawing.Size(19, 13);
-            this.filename_lbl.TabIndex = 2;
-            this.filename_lbl.Text = "----";
-            // 
-            // page_lbl
-            // 
-            this.page_lbl.AutoSize = true;
-            this.page_lbl.Location = new System.Drawing.Point(176, 47);
-            this.page_lbl.Name = "page_lbl";
-            this.page_lbl.Size = new System.Drawing.Size(19, 13);
-            this.page_lbl.TabIndex = 2;
-            this.page_lbl.Text = "----";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(105, 83);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(50, 13);
-            this.label3.TabIndex = 1;
-            this.label3.Text = "ფაილი:";
-            // 
-            // type_lbl
-            // 
-            this.type_lbl.AutoSize = true;
-            this.type_lbl.Location = new System.Drawing.Point(176, 29);
-            this.type_lbl.Name = "type_lbl";
-            this.type_lbl.Size = new System.Drawing.Size(19, 13);
-            this.type_lbl.TabIndex = 2;
-            this.type_lbl.Text = "----";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(104, 47);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(64, 13);
-            this.label2.TabIndex = 1;
-            this.label2.Text = "გვერდები:";
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(123, 9);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(87, 17);
-            this.label5.TabIndex = 1;
-            this.label5.Text = "მონაცემები";
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(104, 29);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(35, 13);
-            this.label1.TabIndex = 1;
-            this.label1.Text = "ტიპი:";
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Image = global::GeoHypernation.Properties.Resources.microsoft_word_document_icon;
-            this.pictureBox1.Location = new System.Drawing.Point(6, 8);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(94, 90);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox1.TabIndex = 0;
-            this.pictureBox1.TabStop = false;
-            // 
-            // loading_img
-            // 
-            this.loading_img.Image = global::GeoHypernation.Properties.Resources._200;
-            this.loading_img.Location = new System.Drawing.Point(354, 4);
-            this.loading_img.Name = "loading_img";
-            this.loading_img.Size = new System.Drawing.Size(456, 341);
-            this.loading_img.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.loading_img.TabIndex = 5;
-            this.loading_img.TabStop = false;
-            this.loading_img.Visible = false;
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(44, 73);
-            this.label4.MaximumSize = new System.Drawing.Size(140, 0);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(140, 40);
-            this.label4.TabIndex = 2;
-            this.label4.Text = "Drag and Drop Or Browse Document";
-            // 
-            // webBrowser
-            // 
-            this.webBrowser.AllowWebBrowserDrop = false;
-            this.webBrowser.Location = new System.Drawing.Point(354, 4);
-            this.webBrowser.MinimumSize = new System.Drawing.Size(20, 20);
-            this.webBrowser.Name = "webBrowser";
-            this.webBrowser.Size = new System.Drawing.Size(447, 341);
-            this.webBrowser.TabIndex = 3;
-            // 
-            // Save_btn
-            // 
-            this.Save_btn.Location = new System.Drawing.Point(698, 355);
-            this.Save_btn.Name = "Save_btn";
-            this.Save_btn.Size = new System.Drawing.Size(85, 30);
-            this.Save_btn.TabIndex = 3;
-            this.Save_btn.Text = "შენახვა";
-            this.Save_btn.UseVisualStyleBackColor = true;
-            this.Save_btn.Click += new System.EventHandler(this.Save_btn_Click);
-            // 
-            // Pagination_Box
-            // 
-            this.Pagination_Box.Location = new System.Drawing.Point(354, 347);
-            this.Pagination_Box.Name = "Pagination_Box";
-            this.Pagination_Box.Size = new System.Drawing.Size(334, 39);
-            this.Pagination_Box.TabIndex = 7;
-            this.Pagination_Box.TabStop = false;
-            // 
-            // ForIndesign_chkbx
-            // 
-            this.ForIndesign_chkbx.AutoSize = true;
-            this.ForIndesign_chkbx.Location = new System.Drawing.Point(6, 271);
-            this.ForIndesign_chkbx.Name = "ForIndesign_chkbx";
-            this.ForIndesign_chkbx.Size = new System.Drawing.Size(256, 17);
-            this.ForIndesign_chkbx.TabIndex = 5;
-            this.ForIndesign_chkbx.Text = "დოკუმენტის ინდიზაინისთვის მომზადება";
-            this.ForIndesign_chkbx.UseVisualStyleBackColor = true;
-            this.ForIndesign_chkbx.CheckedChanged += new System.EventHandler(this.ForIndesign_chkbx_CheckedChanged);
-            // 
-            // hypcl_chkbx
-            // 
-            this.hypcl_chkbx.AutoSize = true;
-            this.hypcl_chkbx.Location = new System.Drawing.Point(6, 133);
-            this.hypcl_chkbx.Name = "hypcl_chkbx";
-            this.hypcl_chkbx.Size = new System.Drawing.Size(177, 17);
-            this.hypcl_chkbx.TabIndex = 5;
-            this.hypcl_chkbx.Text = "გადატანების გასუფთავება";
-            this.hypcl_chkbx.UseVisualStyleBackColor = true;
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(104, 66);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(70, 13);
-            this.label6.TabIndex = 1;
-            this.label6.Text = "მოცულობა:";
-            // 
-            // size_lbl
-            // 
-            this.size_lbl.AutoSize = true;
-            this.size_lbl.Location = new System.Drawing.Point(176, 66);
-            this.size_lbl.Name = "size_lbl";
-            this.size_lbl.Size = new System.Drawing.Size(19, 13);
-            this.size_lbl.TabIndex = 2;
-            this.size_lbl.Text = "----";
-            // 
-            // par_chkbx
-            // 
-            this.par_chkbx.AutoSize = true;
-            this.par_chkbx.Location = new System.Drawing.Point(6, 156);
-            this.par_chkbx.Name = "par_chkbx";
-            this.par_chkbx.Size = new System.Drawing.Size(237, 17);
-            this.par_chkbx.TabIndex = 5;
-            this.par_chkbx.Text = "ზედმეტი პარაგრაფების გასუფთავება";
-            this.par_chkbx.UseVisualStyleBackColor = true;
+            resources.ApplyResources(this.progress_groupBox, "progress_groupBox");
+            this.progress_groupBox.Controls.Add(this.progress_lbl);
+            this.progress_groupBox.Controls.Add(this.loading_img);
+            this.progress_groupBox.Name = "progress_groupBox";
+            this.progress_groupBox.TabStop = false;
+            this.progress_groupBox.UseWaitCursor = true;
             // 
             // MainForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(813, 391);
-            this.Controls.Add(this.loading_img);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
+            resources.ApplyResources(this, "$this");
+            this.Controls.Add(this.progress_groupBox);
             this.Controls.Add(this.Pagination_Box);
             this.Controls.Add(this.webBrowser);
             this.Controls.Add(this.Save_btn);
             this.Controls.Add(this.docBox);
             this.Controls.Add(this.label4);
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MainForm";
-            this.Text = "Georgian Hypernation";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.Click += new System.EventHandler(this.MainForm_Click);
             this.DragDrop += new System.Windows.Forms.DragEventHandler(this.MainForm_DragDrop);
             this.DragEnter += new System.Windows.Forms.DragEventHandler(this.MainForm_DragEnter);
+            ((System.ComponentModel.ISupportInitialize)(this.loading_img)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.docBox.ResumeLayout(false);
             this.docBox.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.loading_img)).EndInit();
+            this.progress_groupBox.ResumeLayout(false);
+            this.progress_groupBox.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-
-        private System.Windows.Forms.GroupBox docBox;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.Label filename_lbl;
-        private System.Windows.Forms.Label page_lbl;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label type_lbl;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Button start_btn;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label close_btn;
         private System.Windows.Forms.PictureBox loading_img;
         private System.Windows.Forms.WebBrowser webBrowser;
-        private System.Windows.Forms.CheckBox hyp_chkbx;
-        private System.Windows.Forms.CheckBox tab_chkbx;
-        private System.Windows.Forms.CheckBox space_chkbx;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.CheckBox pdashstart_chkbx;
-        private System.Windows.Forms.CheckBox newline_chkbx;
         private System.Windows.Forms.Button Save_btn;
         private System.Windows.Forms.GroupBox Pagination_Box;
-        private System.Windows.Forms.CheckBox ForIndesign_chkbx;
-        private System.Windows.Forms.CheckBox hypcl_chkbx;
-        private System.Windows.Forms.Label size_lbl;
+        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label type_lbl;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label page_lbl;
+        private System.Windows.Forms.Label size_lbl;
+        private System.Windows.Forms.Label filename_lbl;
+        private System.Windows.Forms.Button start_btn;
+        private System.Windows.Forms.Label close_btn;
+        private System.Windows.Forms.CheckBox space_chkbx;
+        private System.Windows.Forms.CheckBox hypcl_chkbx;
         private System.Windows.Forms.CheckBox par_chkbx;
+        private System.Windows.Forms.CheckBox tab_chkbx;
+        private System.Windows.Forms.CheckBox newline_chkbx;
+        private System.Windows.Forms.CheckBox pdashstart_chkbx;
+        private System.Windows.Forms.CheckBox hyp_chkbx;
+        private System.Windows.Forms.CheckBox ForIndesign_chkbx;
+        private System.Windows.Forms.Label progress_lbl;
+        private System.Windows.Forms.GroupBox docBox;
+        private System.Windows.Forms.GroupBox progress_groupBox;
     }
 }
 
