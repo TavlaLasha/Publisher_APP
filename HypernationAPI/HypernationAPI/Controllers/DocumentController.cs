@@ -164,7 +164,7 @@ namespace HypernationAPI.Controllers
                 if (pdf)
                 {
                     FileName = $"{FileFolder}.pdf";
-                    OutputFilePath = HttpContext.Current.Server.MapPath($"~/TempDocs/{FileFolder}/Modified/{FileName}");
+                    OutputFilePath = HttpContext.Current.Server.MapPath($"~/TempDocs/{FileFolder}/{FileName}");
                     if (!_docManagement.ConvertToPDF(filePath, OutputFilePath, WdSaveFormat.wdFormatPDF))
                     {
                         throw new HttpException("Could not convert to PDF");
@@ -208,27 +208,9 @@ namespace HypernationAPI.Controllers
                     throw new HttpException("File name is required parameter");
 
                 string FileName = fileName;
-
-                //string mFilePath = HttpContext.Current.Server.MapPath($"~/TempDocs/Modified/{fileName}");
-                //string filePath = HttpContext.Current.Server.MapPath($"~/TempDocs/{fileName}");
-                //string zipFilePath = HttpContext.Current.Server.MapPath($"~/TempDocs/{Path.GetFileNameWithoutExtension(fileName)}.zip");
-                //string pdfFilePath = HttpContext.Current.Server.MapPath($"~/TempDocs/Modified/{Path.GetFileNameWithoutExtension(fileName)}.pdf");
-
                 string tempDirectory = HttpContext.Current.Server.MapPath($"~/TempDocs/{Path.GetFileNameWithoutExtension(fileName)}");
                 if (Directory.Exists(tempDirectory))
                     Directory.Delete(tempDirectory, true);
-
-                //if (File.Exists(filePath))
-                //    File.Delete(filePath);
-
-                //if (File.Exists(zipFilePath))
-                //    File.Delete(zipFilePath);
-
-                //if (File.Exists(mFilePath))
-                //    File.Delete(mFilePath);
-
-                //if (File.Exists(mFilePath))
-                //    File.Delete(mFilePath);
 
                 return new HttpResponseMessage(HttpStatusCode.OK);
             }
