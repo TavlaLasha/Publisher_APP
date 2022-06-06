@@ -1,4 +1,5 @@
 ﻿using Microsoft.Office.Interop.Word;
+using Models.DataControlModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace BLL.Contracts
 {
     public interface ICleanDoc
     {
-        Application Execute(bool cl_splace, bool cl_newLines, bool cor_PDashStarts, bool cl_tabs);
+        Application Execute(DocCleanDCM docClean);
         Application CleanSpaces(Application wordApp);
         Application CleanNewLines(Application wordApp);
         Application CleanTabs(Application wordApp);

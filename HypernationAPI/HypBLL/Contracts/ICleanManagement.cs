@@ -1,4 +1,5 @@
 ﻿using Microsoft.Office.Interop.Word;
+using Models.DataViewModels.DocManagement;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace BLL.Contracts
 {
     public interface ICleanManagement
     {
-        Application ExecuteAll(Application wordApp);
+        Application Execute(DocCleanDTO docClean);
         Application CleanSpaces(Application wordApp);
         Application CleanNewLines(Application wordApp);
         Application CleanTabs(Application wordApp);

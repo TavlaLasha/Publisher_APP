@@ -38,7 +38,7 @@
             this.close_btn = new System.Windows.Forms.Label();
             this.start_btn = new System.Windows.Forms.Button();
             this.filename_lbl = new System.Windows.Forms.Label();
-            this.size_lbl = new System.Windows.Forms.Label();
+            this.page_lbl = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.type_lbl = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -51,6 +51,10 @@
             this.Save_btn = new System.Windows.Forms.Button();
             this.Pagination_Box = new System.Windows.Forms.GroupBox();
             this.ForIndesign_chkbx = new System.Windows.Forms.CheckBox();
+            this.hypcl_chkbx = new System.Windows.Forms.CheckBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.size_lbl = new System.Windows.Forms.Label();
+            this.par_chkbx = new System.Windows.Forms.CheckBox();
             this.docBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.loading_img)).BeginInit();
@@ -63,12 +67,16 @@
             this.docBox.Controls.Add(this.pdashstart_chkbx);
             this.docBox.Controls.Add(this.newline_chkbx);
             this.docBox.Controls.Add(this.tab_chkbx);
+            this.docBox.Controls.Add(this.par_chkbx);
+            this.docBox.Controls.Add(this.hypcl_chkbx);
             this.docBox.Controls.Add(this.space_chkbx);
             this.docBox.Controls.Add(this.close_btn);
             this.docBox.Controls.Add(this.start_btn);
             this.docBox.Controls.Add(this.filename_lbl);
             this.docBox.Controls.Add(this.size_lbl);
+            this.docBox.Controls.Add(this.page_lbl);
             this.docBox.Controls.Add(this.label3);
+            this.docBox.Controls.Add(this.label6);
             this.docBox.Controls.Add(this.type_lbl);
             this.docBox.Controls.Add(this.label2);
             this.docBox.Controls.Add(this.label5);
@@ -76,7 +84,7 @@
             this.docBox.Controls.Add(this.pictureBox1);
             this.docBox.Location = new System.Drawing.Point(11, 4);
             this.docBox.Name = "docBox";
-            this.docBox.Size = new System.Drawing.Size(337, 284);
+            this.docBox.Size = new System.Drawing.Size(337, 381);
             this.docBox.TabIndex = 0;
             this.docBox.TabStop = false;
             this.docBox.Visible = false;
@@ -86,7 +94,7 @@
             this.hyp_chkbx.AutoSize = true;
             this.hyp_chkbx.Checked = true;
             this.hyp_chkbx.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.hyp_chkbx.Location = new System.Drawing.Point(6, 199);
+            this.hyp_chkbx.Location = new System.Drawing.Point(6, 248);
             this.hyp_chkbx.Name = "hyp_chkbx";
             this.hyp_chkbx.Size = new System.Drawing.Size(92, 17);
             this.hyp_chkbx.TabIndex = 5;
@@ -96,7 +104,7 @@
             // pdashstart_chkbx
             // 
             this.pdashstart_chkbx.AutoSize = true;
-            this.pdashstart_chkbx.Location = new System.Drawing.Point(6, 176);
+            this.pdashstart_chkbx.Location = new System.Drawing.Point(6, 225);
             this.pdashstart_chkbx.Name = "pdashstart_chkbx";
             this.pdashstart_chkbx.Size = new System.Drawing.Size(233, 17);
             this.pdashstart_chkbx.TabIndex = 5;
@@ -106,7 +114,7 @@
             // newline_chkbx
             // 
             this.newline_chkbx.AutoSize = true;
-            this.newline_chkbx.Location = new System.Drawing.Point(6, 153);
+            this.newline_chkbx.Location = new System.Drawing.Point(6, 202);
             this.newline_chkbx.Name = "newline_chkbx";
             this.newline_chkbx.Size = new System.Drawing.Size(65, 17);
             this.newline_chkbx.TabIndex = 5;
@@ -116,7 +124,7 @@
             // tab_chkbx
             // 
             this.tab_chkbx.AutoSize = true;
-            this.tab_chkbx.Location = new System.Drawing.Point(6, 130);
+            this.tab_chkbx.Location = new System.Drawing.Point(6, 179);
             this.tab_chkbx.Name = "tab_chkbx";
             this.tab_chkbx.Size = new System.Drawing.Size(151, 17);
             this.tab_chkbx.TabIndex = 5;
@@ -128,7 +136,7 @@
             this.space_chkbx.AutoSize = true;
             this.space_chkbx.Checked = true;
             this.space_chkbx.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.space_chkbx.Location = new System.Drawing.Point(6, 107);
+            this.space_chkbx.Location = new System.Drawing.Point(6, 112);
             this.space_chkbx.Name = "space_chkbx";
             this.space_chkbx.Size = new System.Drawing.Size(201, 17);
             this.space_chkbx.TabIndex = 5;
@@ -149,7 +157,7 @@
             // 
             // start_btn
             // 
-            this.start_btn.Location = new System.Drawing.Point(242, 248);
+            this.start_btn.Location = new System.Drawing.Point(246, 343);
             this.start_btn.Name = "start_btn";
             this.start_btn.Size = new System.Drawing.Size(85, 30);
             this.start_btn.TabIndex = 3;
@@ -160,26 +168,26 @@
             // filename_lbl
             // 
             this.filename_lbl.AutoSize = true;
-            this.filename_lbl.Location = new System.Drawing.Point(176, 65);
-            this.filename_lbl.MaximumSize = new System.Drawing.Size(75, 95);
+            this.filename_lbl.Location = new System.Drawing.Point(177, 83);
+            this.filename_lbl.MaximumSize = new System.Drawing.Size(120, 95);
             this.filename_lbl.Name = "filename_lbl";
             this.filename_lbl.Size = new System.Drawing.Size(19, 13);
             this.filename_lbl.TabIndex = 2;
             this.filename_lbl.Text = "----";
             // 
-            // size_lbl
+            // page_lbl
             // 
-            this.size_lbl.AutoSize = true;
-            this.size_lbl.Location = new System.Drawing.Point(176, 47);
-            this.size_lbl.Name = "size_lbl";
-            this.size_lbl.Size = new System.Drawing.Size(19, 13);
-            this.size_lbl.TabIndex = 2;
-            this.size_lbl.Text = "----";
+            this.page_lbl.AutoSize = true;
+            this.page_lbl.Location = new System.Drawing.Point(176, 47);
+            this.page_lbl.Name = "page_lbl";
+            this.page_lbl.Size = new System.Drawing.Size(19, 13);
+            this.page_lbl.TabIndex = 2;
+            this.page_lbl.Text = "----";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(104, 65);
+            this.label3.Location = new System.Drawing.Point(105, 83);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(50, 13);
             this.label3.TabIndex = 1;
@@ -199,9 +207,9 @@
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(104, 47);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(70, 13);
+            this.label2.Size = new System.Drawing.Size(64, 13);
             this.label2.TabIndex = 1;
-            this.label2.Text = "მოცულობა:";
+            this.label2.Text = "გვერდები:";
             // 
             // label5
             // 
@@ -216,7 +224,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(103, 29);
+            this.label1.Location = new System.Drawing.Point(104, 29);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(35, 13);
             this.label1.TabIndex = 1;
@@ -284,13 +292,51 @@
             // ForIndesign_chkbx
             // 
             this.ForIndesign_chkbx.AutoSize = true;
-            this.ForIndesign_chkbx.Location = new System.Drawing.Point(6, 222);
+            this.ForIndesign_chkbx.Location = new System.Drawing.Point(6, 271);
             this.ForIndesign_chkbx.Name = "ForIndesign_chkbx";
             this.ForIndesign_chkbx.Size = new System.Drawing.Size(256, 17);
             this.ForIndesign_chkbx.TabIndex = 5;
             this.ForIndesign_chkbx.Text = "დოკუმენტის ინდიზაინისთვის მომზადება";
             this.ForIndesign_chkbx.UseVisualStyleBackColor = true;
             this.ForIndesign_chkbx.CheckedChanged += new System.EventHandler(this.ForIndesign_chkbx_CheckedChanged);
+            // 
+            // hypcl_chkbx
+            // 
+            this.hypcl_chkbx.AutoSize = true;
+            this.hypcl_chkbx.Location = new System.Drawing.Point(6, 133);
+            this.hypcl_chkbx.Name = "hypcl_chkbx";
+            this.hypcl_chkbx.Size = new System.Drawing.Size(177, 17);
+            this.hypcl_chkbx.TabIndex = 5;
+            this.hypcl_chkbx.Text = "გადატანების გასუფთავება";
+            this.hypcl_chkbx.UseVisualStyleBackColor = true;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(104, 66);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(70, 13);
+            this.label6.TabIndex = 1;
+            this.label6.Text = "მოცულობა:";
+            // 
+            // size_lbl
+            // 
+            this.size_lbl.AutoSize = true;
+            this.size_lbl.Location = new System.Drawing.Point(176, 66);
+            this.size_lbl.Name = "size_lbl";
+            this.size_lbl.Size = new System.Drawing.Size(19, 13);
+            this.size_lbl.TabIndex = 2;
+            this.size_lbl.Text = "----";
+            // 
+            // par_chkbx
+            // 
+            this.par_chkbx.AutoSize = true;
+            this.par_chkbx.Location = new System.Drawing.Point(6, 156);
+            this.par_chkbx.Name = "par_chkbx";
+            this.par_chkbx.Size = new System.Drawing.Size(237, 17);
+            this.par_chkbx.TabIndex = 5;
+            this.par_chkbx.Text = "ზედმეტი პარაგრაფების გასუფთავება";
+            this.par_chkbx.UseVisualStyleBackColor = true;
             // 
             // MainForm
             // 
@@ -325,7 +371,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Label filename_lbl;
-        private System.Windows.Forms.Label size_lbl;
+        private System.Windows.Forms.Label page_lbl;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label type_lbl;
         private System.Windows.Forms.Label label2;
@@ -343,6 +389,10 @@
         private System.Windows.Forms.Button Save_btn;
         private System.Windows.Forms.GroupBox Pagination_Box;
         private System.Windows.Forms.CheckBox ForIndesign_chkbx;
+        private System.Windows.Forms.CheckBox hypcl_chkbx;
+        private System.Windows.Forms.Label size_lbl;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.CheckBox par_chkbx;
     }
 }
 

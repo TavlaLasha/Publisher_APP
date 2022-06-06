@@ -4,22 +4,29 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace BLL
 {
     public class HYPManagement : IHYPManagement
     {
         private Application wordApp;
+        private string Text;
         public HYPManagement(Application wordApp)
         {
             this.wordApp = wordApp;
         }
+        public HYPManagement(string text)
+        {
+            Text = text;
+        }
         public Application HYPExecute()
         {
             if (wordApp == null)
-                throw new Exception("No Document Given");
-            
+                throw new HttpException("No Document Given");
+
             wordApp = HYPWovels(wordApp);
             wordApp = HYPConsonants(wordApp);
             wordApp = CleanFirst(wordApp);
@@ -30,77 +37,130 @@ namespace BLL
 
             return wordApp;
         }
+        public string HYPExecuteTxt()
+        {
+            if (Text == string.Empty || Text.Length < 3)
+                throw new HttpException("No Text Given");
+
+            Text = HYPWovels(Text);
+            Text = HYPConsonants(Text);
+            Text = CleanFirst(Text);
+            Text = CleanLast(Text);
+            Text = CleanConstr(Text);
+            Text = CleanLastConpunct(Text);
+            Text = CleanHarmonics(Text);
+
+            return Text;
+        }
         public Application HYPConsonants(Application wordApp)
         {
-            Console.WriteLine("st_cons");
-
             wordApp = FindAndReplace(wordApp, "([ბ-დვ-თკ-ნპ-ტფ-ჰ])([ბ-დვ-თკ-ნპ-ტფ-ჰ][აეიოუ])", "" + $@"\1{((char)31).ToString()}\2");
-
-            Console.WriteLine("end_cons");
-
             return wordApp;
         }
 
         public Application HYPWovels(Application wordApp)
         {
-            Console.WriteLine("st_vow");
-
             wordApp = FindAndReplace(wordApp, "([აეიოუ])", $@"\1{((char)31).ToString()}");
-
-            Console.WriteLine("end_vow");
             return wordApp;
         }
 
         public Application CleanFirst(Application wordApp)
         {
-            Console.WriteLine("st_cleanFirst");
-
-            wordApp = FindAndReplace(wordApp, @"([\ \«\-\—\─\(\„\”])([ა-ჰ])" + ((char)31).ToString(), @"\1\2");
-
-            Console.WriteLine("end_cleanFirst");
+            wordApp = FindAndReplace(wordApp, @"([\ \«\-\—\─\(\„\”][ა-ჰ])" + ((char)31).ToString(), @"\1");
             return wordApp;
         }
 
         public Application CleanLast(Application wordApp)
         {
-            Console.WriteLine("st_cllast");
-
             wordApp = FindAndReplace(wordApp, @"([ა-ჰ])" + ((char)31).ToString() + @"([\ \.\,\!\?\)\-\;\:\»\“^13])", @"\1\2");
-            wordApp = FindAndReplace(wordApp, ((char)31).ToString() + @"([ა-ჰ])" + @"([\ \.\,\!\?\)\-\;\:\»\“^13])", @"\1\2");
-
-            Console.WriteLine("end_cllast");
-
+            wordApp = FindAndReplace(wordApp, ((char)31).ToString() + @"([ა-ჰ][\ \.\,\!\?\)\-\;\:\»\“^13])", @"\1");
             return wordApp;
         }
         public Application CleanHarmonics(Application wordApp)
         {
-            Console.WriteLine("st_CleanHarmonics");
-
             wordApp = FindAndReplace(wordApp, $@"([ბდზთპტფღყჩცწჭხჯ]){((char)31).ToString()}([ბდზთპტფღყჩცწჭხჯ])", @"\1\2");
-
-            Console.WriteLine("end_CleanHarmonics");
             return wordApp;
         }
         public Application CleanConstr(Application wordApp)
         {
-            Console.WriteLine("st_clconstr");
-
             wordApp = FindAndReplace(wordApp, ((char)31).ToString() + $@"([ბ-დვ-თკ-ნპ-ტფ-ჰ]{((char)31).ToString()})", @"\1");
-
-            Console.WriteLine("end_clconstr");
-
             return wordApp;
         }
 
         public Application CleanLastConpunct(Application wordApp)
         {
-            Console.WriteLine("st_cllastcomp");
-
-            wordApp = FindAndReplace(wordApp, $@"{((char)31).ToString()}(ი)([სხნ])([\ \.\,\!\?\)\-\;\:\“^13])", @"\1\2\3");
-
-            Console.WriteLine("end_cllastcomp");
-
+            wordApp = FindAndReplace(wordApp, $@"{((char)31).ToString()}(ი[სხნ][\ \.\,\!\?\)\-\;\:\“^13])", @"\1");
             return wordApp;
+        }
+
+        //For Palin Text
+        public string HYPConsonants(string text)
+        {
+            var pattern = @"([ბ-დვ-თკ-ნპ-ტფ-ჰ])([ბ-დვ-თკ-ნპ-ტფ-ჰ][აეიოუ])";
+            var regex = new Regex(pattern);
+            text = regex.Replace(text, "$1\xad$2");
+
+            return text;
+        }
+
+        public string HYPWovels(string text)
+        {
+            var pattern = "([აეიოუ])";
+            var regex = new Regex(pattern);
+            text = regex.Replace(text, "$1\xad");
+
+            return text;
+        }
+
+        public string CleanFirst(string text)
+        {
+            var pattern = $@"([\ \«\-\—\─\(\„\”][ა-ჰ]){"\xad"}";
+            var regex = new Regex(pattern);
+            text = regex.Replace(text, "$1");
+
+            return text;
+        }
+
+        public string CleanLast(string text)
+        {
+            //var pattern = $@"^(([ა-ჰ]){"\xad"}([\ \.\,\!\?\)\-\;\:\»\“^13])|{"\xad"}([ა-ჰ])([\ \.\,\!\?\)\-\;\:\»\“^13]))$";
+            //var regex = new Regex(pattern);
+            //text = regex.Replace(text, "$1$2");
+            //return text;
+
+            var pattern = $@"([ა-ჰ]){"\xad"}([\ \.\,\!\?\)\-\;\:\»\“^13])";
+            var pattern2 = $@"{"\xad"}([ა-ჰ][\ \.\,\!\?\)\-\;\:\»\“^13])";
+            var regex = new Regex(pattern);
+            var regex2 = new Regex(pattern2);
+
+            text = regex.Replace(text, "$1$2");
+            text = regex2.Replace(text, "$1");
+            return text;
+        }
+        public string CleanHarmonics(string text)
+        {
+            var pattern = $@"([ბდზთპტფღყჩცწჭხჯ]){"\xad"}([ბდზთპტფღყჩცწჭხჯ])";
+            var regex = new Regex(pattern);
+            text = regex.Replace(text, "$1$2");
+
+            return text;
+        }
+        public string CleanConstr(string text)
+        {
+            var pattern = $@"{"\xad"}([ბ-დვ-თკ-ნპ-ტფ-ჰ]{"\xad"})";
+            var regex = new Regex(pattern);
+            text = regex.Replace(text, "$1");
+
+            return text;
+        }
+
+        public string CleanLastConpunct(string text)
+        {
+            var pattern = $@"{"\xad"}(ი[სხნ][\ \.\,\!\?\)\-\;\:\“^13])";
+            var regex = new Regex(pattern);
+            text = regex.Replace(text, "$1");
+
+            return text;
         }
 
         public Application FindAndReplace(Application wordApp, object toFindText, object replaceWithText)

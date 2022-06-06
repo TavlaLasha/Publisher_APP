@@ -1,6 +1,7 @@
 ﻿using BLL.Contracts;
 using BLL.Services;
 using Microsoft.Office.Interop.Word;
+using Models.DataControlModels;
 using Models.DataViewModels;
 using System;
 using System.Collections.Generic;
@@ -74,13 +75,13 @@ namespace BLL.Services
 
             return true;
         }
-        public bool CleanDocument(bool cl_splace, bool cl_newLines, bool cor_PDashStarts, bool cl_tabs)
+        public bool CleanDocument(DocCleanDCM docClean)
         {
             if (WordDoc == null)
                 throw new Exception("Document not open");            
 
             CleanDoc hyp = new CleanDoc(WordApp);
-            WordApp = hyp.Execute(cl_splace, cl_newLines, cor_PDashStarts, cl_tabs);
+            WordApp = hyp.Execute(docClean);
             WordDoc.Save();
 
             return true;
@@ -122,7 +123,7 @@ namespace BLL.Services
                     end = page + 2;
                 }
             }
-            string tempDirectory = Path.Combine(exeDir, $"TempDocs\\Temp\\{Path.GetFileNameWithoutExtension(DocPath.ToString())}");
+            string tempDirectory = Path.Combine(exeDir, $"TempDocs\\{Path.GetFileNameWithoutExtension(DocPath.ToString())}");
             if (Directory.Exists(tempDirectory) && clean)
                 Directory.Delete(tempDirectory, true);
 

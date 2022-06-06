@@ -1,5 +1,6 @@
 ﻿using BLL.Contracts;
 using Microsoft.Office.Interop.Word;
+using Models.DataControlModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,25 +16,49 @@ namespace BLL.Services
         {
             this.wordApp = wordApp;
         }
-        public Application Execute(bool cl_splace, bool cl_newLines, bool cor_PDashStarts, bool cl_tabs)
+        public Application Execute(DocCleanDCM docClean)
         {
             if (wordApp == null)
                 throw new Exception("No Document Given");
 
-            if (cl_splace)
+            if (docClean == null)
+                throw new Exception("Invalid request: No instructions given.");
+
+            if (docClean.cl_splace)
                 wordApp = CleanSpaces(wordApp);
 
-            if (cl_newLines)
+            if (docClean.cl_hyp)
+                wordApp = CleanOldHyp(wordApp);
+
+            if (docClean.cl_newLines)
                 wordApp = CleanNewLines(wordApp);
 
-            if (cor_PDashStarts)
+            if (docClean.cl_par)
+                wordApp = CleanExcParagraphs(wordApp);
+
+            if (docClean.cor_PDashStarts)
                 wordApp = CorrectPDashStarts(wordApp);
 
-            if (cl_tabs)
+            if (docClean.cl_tabs)
                 wordApp = CleanTabs(wordApp);
 
             return wordApp;
         }
+
+        public Application CleanOldHyp(Application wordApp)
+        {
+            Console.WriteLine("CleanOldHyp");
+            wordApp = FindAndReplace(wordApp, "^-", "");
+            return wordApp;
+        }
+
+        public Application CleanExcParagraphs(Application wordApp)
+        {
+            Console.WriteLine("CleanSpaces");
+            wordApp = FindAndReplace(wordApp, "^13{2}[^13]@([!^13])", @"^13\1");
+            return wordApp;
+        }
+
         public Application CleanSpaces(Application wordApp)
         {
             Console.WriteLine("CleanSpaces");

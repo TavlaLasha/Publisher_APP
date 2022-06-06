@@ -1,4 +1,5 @@
 ﻿using BLL.Contracts;
+using Models.DataViewModels.DocManagement;
 using Models.DataViewModels.WordManagement;
 using Newtonsoft.Json;
 using System;
@@ -19,6 +20,31 @@ namespace HypernationAPI.Controllers
         {
             _barbManagement = barbManagement;
         }
+
+        [Route("api/Barbarism/FindBarbarisms")]
+        [HttpPost]
+        public HttpResponseMessage FindBarbarisms(TextDTO textDTO)
+        {
+            try
+            {
+                FoundBarbarismsDTO fbdt = new FoundBarbarismsDTO();
+                fbdt = _barbManagement.FindBarbarisms(textDTO.Text);
+
+                string jObject = JsonConvert.SerializeObject(fbdt);
+
+                HttpResponseMessage result = new HttpResponseMessage(HttpStatusCode.OK)
+                {
+                    Content = new StringContent(jObject, Encoding.UTF8, "application/json")
+                };
+                return result;
+
+            }
+            catch
+            {
+                return Request.CreateResponse(HttpStatusCode.InternalServerError);
+            }
+        }
+
         [Route("api/Barbarism/GetAllBarbarisms")]
         [HttpGet]
         public HttpResponseMessage GetAllBarbarisms()

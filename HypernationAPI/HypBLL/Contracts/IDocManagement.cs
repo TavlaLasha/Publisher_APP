@@ -10,8 +10,10 @@ namespace BLL.Contracts
 {
     public interface IDocManagement
     {
-        bool HypernateDocument(object filename, object saveAs);
+        bool HyphenateDocument(object filename, object saveAs);
+        string HyphenateText(string text);
         bool CleanDocument(object filename, object saveAs, DocCleanDTO docclDTo);
+        string CleanText(string text, DocCleanDTO docclDTo);
         string[] GetPages(object filename, int page);
         bool ConvertToPDF(string input, string output, WdSaveFormat format);
         bool ZipUpFiles(string dirPath, string outputPath);

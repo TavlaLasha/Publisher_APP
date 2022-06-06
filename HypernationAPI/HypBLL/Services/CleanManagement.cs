@@ -1,62 +1,179 @@
 ﻿using BLL.Contracts;
 using Microsoft.Office.Interop.Word;
+using Models.DataViewModels.DocManagement;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace BLL.Services
 {
     public class CleanManagement : ICleanManagement
     {
-        public Application ExecuteAll(Application wordApp)
+        private Application wordApp;
+        private string Text;
+        public CleanManagement(Application wordApp)
+        {
+            this.wordApp = wordApp;
+        }
+        public CleanManagement(string text)
+        {
+            Text = text;
+        }
+        public Application Execute(DocCleanDTO docClean)
         {
             if (wordApp == null)
-                throw new Exception("No Document Given");
+                throw new HttpException("Invalid request: No Document Given");
 
-            wordApp = CleanSpaces(wordApp);
-            wordApp = CleanNewLines(wordApp);
-            wordApp = CleanTabs(wordApp);
-            wordApp = CorrectPDashStarts(wordApp);
+            if (docClean == null)
+                throw new HttpException("Invalid request: No instructions given.");
+
+            if (docClean.CleanSpaces)
+                wordApp = CleanSpaces(wordApp);
+
+            if (docClean.CleanOldHyphenation)
+                wordApp = CleanOldHyp(wordApp);
+
+            if (docClean.CleanNewLines)
+                wordApp = CleanNewLines(wordApp);
+
+            if (docClean.CleanExcessParagraphs)
+                wordApp = CleanExcParagraphs(wordApp);
+
+            if (docClean.CorrectPDashStarts)
+                wordApp = CorrectPDashStarts(wordApp);
+
+            if (docClean.CleanTabs)
+                wordApp = CleanTabs(wordApp);
 
             return wordApp;
         }
+
+        public string ExecuteTxt(DocCleanDTO docClean)
+        {
+            if (Text == string.Empty || Text.Length < 3)
+                throw new HttpException("Invalid request: No Text Given");
+
+            if (docClean == null)
+                throw new Exception("Invalid request: No instructions given.");
+
+            if (docClean.CleanSpaces)
+                Text = CleanSpaces(Text);
+
+            if (docClean.CleanOldHyphenation)
+                Text = CleanOldHyp(Text);
+
+            //if (docClean.CleanNewLines)
+            //    Text = CleanNewLines(Text);
+
+            //if (docClean.CleanExcessParagraphs)
+            //    Text = CleanExcParagraphs(Text);
+
+            //if (docClean.CorrectPDashStarts)
+            //    Text = CorrectPDashStarts(Text);
+
+            //if (docClean.CleanTabs)
+            //    Text = CleanTabs(Text);
+
+            return Text;
+        }
+
+        public Application CleanOldHyp(Application wordApp)
+        {
+            Console.WriteLine("CleanOldHyp");
+            wordApp = FindAndReplace(wordApp, "^-", "");
+            return wordApp;
+        }
+
+        public Application CleanExcParagraphs(Application wordApp)
+        {
+            Console.WriteLine("CleanSpaces");
+            wordApp = FindAndReplace(wordApp, "^13{2}[^13]@([!^13])", @"^13\1");
+            return wordApp;
+        }
+
         public Application CleanSpaces(Application wordApp)
         {
-            if (wordApp == null)
-                throw new Exception("No Document Given");
-
+            Console.WriteLine("CleanSpaces");
             wordApp = FindAndReplace(wordApp, " [ ]@([! ])", @" \1");
             return wordApp;
         }
 
         public Application CleanNewLines(Application wordApp)
         {
-            if (wordApp == null)
-                throw new Exception("No Document Given");
-
+            Console.WriteLine("CleanNewLines");
             wordApp = FindAndReplace(wordApp, "^11", "^13");
             return wordApp;
         }
         public Application CorrectPDashStarts(Application wordApp)
         {
-            if (wordApp == null)
-                throw new Exception("No Document Given");
-
-            wordApp = FindAndReplace(wordApp, "([-─])^13", @"—\1");
+            Console.WriteLine("CorrectPDashStarts");
+            wordApp = FindAndReplace(wordApp, "(^13)[-─]", @"\1— ");
             return wordApp;
         }
 
-        //For InDesign call CorrectPDashStarts and CleanTabs
+        //For InDesign
         public Application CleanTabs(Application wordApp)
         {
-            if (wordApp == null)
-                throw new Exception("No Document Given");
-
-            wordApp = FindAndReplace(wordApp, "^9(^13)", @"\1");
+            Console.WriteLine("CleanTabs");
+            wordApp = FindAndReplace(wordApp, "(^13)^9[^9]", @"\1");
             return wordApp;
         }
+
+
+        //For Plain Text
+        public string CleanOldHyp(string text)
+        {
+            var pattern = "\xad";
+            var regex = new Regex(pattern);
+            text = regex.Replace(text, "");
+
+            return text;
+        }
+
+        //public string CleanExcParagraphs(string text)
+        //{
+        //    var pattern = "^13{2}[^13]@([!^13])";
+        //    var regex = new Regex(pattern);
+        //    text = regex.Replace(text, "");
+
+        //    Console.WriteLine("CleanSpaces");
+        //    text = FindAndReplace(text, "^13{2}[^13]@([!^13])", @"^13\1");
+        //    return text;
+        //}
+
+        public string CleanSpaces(string text)
+        {
+            var pattern = @"\s+";
+            var regex = new Regex(pattern);
+            text = regex.Replace(text, @" ");
+
+            return text;
+        }
+
+        //public string CleanNewLines(string text)
+        //{
+        //    Console.WriteLine("CleanNewLines");
+        //    text = FindAndReplace(text, "^11", "^13");
+        //    return text;
+        //}
+        //public string CorrectPDashStarts(string text)
+        //{
+        //    Console.WriteLine("CorrectPDashStarts");
+        //    text = FindAndReplace(text, "(^13)[-─]", @"\1— ");
+        //    return text;
+        //}
+
+        ////For InDesign
+        //public string CleanTabs(string text)
+        //{
+        //    Console.WriteLine("CleanTabs");
+        //    text = FindAndReplace(text, "(^13)^9[^9]", @"\1");
+        //    return text;
+        //}
 
         private Application FindAndReplace(Application wordApp, object toFindText, object replaceWithText)
         {

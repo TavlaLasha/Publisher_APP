@@ -1,4 +1,6 @@
-﻿using BLL.Contracts;
+﻿using BLL;
+using BLL.Contracts;
+using Microsoft.Office.Interop.Word;
 using Models.DataViewModels;
 using Models.DataViewModels.DocManagement;
 using Newtonsoft.Json;
@@ -8,26 +10,30 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
+using System.Web.Http.Cors;
 
 namespace HypernationAPI.Controllers
 {
-    public class CleaningController : ApiController
+    public class HyphenationController : ApiController
     {
         readonly IDocManagement _docManagement;
-        public CleaningController(IDocManagement docManagement)
+        public HyphenationController(IDocManagement docManagement)
         {
             _docManagement = docManagement;
-        }
-        [HttpPost]
-        [Route("api/CleanDoc/{fileName}")]
-        public HttpResponseMessage CleanDoc(string fileName, DocCleanDTO dCl)
+        }        
+
+        [HttpGet]
+        [Route("api/HypDoc/{fileName}")]
+        public HttpResponseMessage HyphenateDoc(string fileName)
         {
             try
             {
-                if (fileName == "" || fileName == " ")
+                if(fileName == "" || fileName == " ")
                     throw new HttpException("File Name is Required Parameter");
 
                 HttpResponseMessage result;
@@ -38,10 +44,10 @@ namespace HypernationAPI.Controllers
 
                 string modifiedFilePath = HttpContext.Current.Server.MapPath("~/TempDocs/Modified/" + fileName);
 
-                if (!_docManagement.CleanDocument(filePath, modifiedFilePath, dCl))
+                if (!_docManagement.HyphenateDocument(filePath, modifiedFilePath))
                 {
                     result = Request.CreateResponse(HttpStatusCode.InternalServerError);
-                    result.Content = new StringContent("API Failed To Clean Given File");
+                    result.Content = new StringContent("API Failed To Hyphenate Given File");
                     return result;
                 }
                 FileInfo fs = new FileInfo(filePath);
@@ -70,27 +76,24 @@ namespace HypernationAPI.Controllers
         }
 
         [HttpPost]
-        [Route("api/CleanText")]
-        public HttpResponseMessage CleanText(CleanTextDTO dCl)
+        [Route("api/HypText")]
+        public HttpResponseMessage HyphenateText(TextDTO text)
         {
             try
             {
-                string text = dCl.textDTO.Text;
-                if (string.IsNullOrEmpty(text))
-                    throw new HttpException("File Name is Required Parameter");
+                if (string.IsNullOrEmpty(text.Text) || text.Text.Length < 3)
+                    throw new HttpException("Text length should be minimum 3 characters");
 
                 HttpResponseMessage result;
-
-                text = _docManagement.CleanText(text, dCl.docCleanDTO);
-
-                if (string.IsNullOrEmpty(text))
+                text.Text = _docManagement.HyphenateText(text.Text);
+                if (string.IsNullOrEmpty(text.Text))
                 {
                     result = Request.CreateResponse(HttpStatusCode.InternalServerError);
-                    result.Content = new StringContent("API Failed To Clean Given Text");
+                    result.Content = new StringContent("API Failed To Hyphenate Given Text");
                     return result;
                 }
-                dCl.textDTO.Text = text;
-                string jObject = JsonConvert.SerializeObject(dCl.textDTO);
+
+                string jObject = JsonConvert.SerializeObject(text);
 
                 result = new HttpResponseMessage(HttpStatusCode.OK)
                 {
@@ -111,5 +114,15 @@ namespace HypernationAPI.Controllers
                 return Request.CreateResponse(HttpStatusCode.InternalServerError);
             }
         }
+
+        [HttpGet]
+        [Route("api/Test")]
+        public HttpResponseMessage Test()
+        {
+            HttpResponseMessage result = Request.CreateResponse((HttpStatusCode)418);
+            result.Content = new StringContent("You are the best! Keep on going!");
+            return result;
+        }
+
     }
 }

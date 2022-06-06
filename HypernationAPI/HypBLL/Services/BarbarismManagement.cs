@@ -1,10 +1,12 @@
 ﻿using BLL.Contracts;
 using DAL;
+using Models.DataViewModels.DocManagement;
 using Models.DataViewModels.WordManagement;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web;
 
@@ -78,6 +80,57 @@ namespace BLL.Services
         {
             UnitOfWork _unitOfWork = new UnitOfWork(new DAL.EF.GeoHypDBContext());
             return _unitOfWork.BarbarismRepo.GetAllBarbarisms();
+        }
+
+        public FoundBarbarismsDTO FindBarbarisms(string text)
+        {
+            IEnumerable<BarbarismDTO> Barbarisms = GetAllBarbarisms();
+            List<string> wrongs = Barbarisms.Select(i => i.Wrong_Word).ToList();
+            FoundBarbarismsDTO fbdt = new FoundBarbarismsDTO();
+            fbdt.occurrences = new Dictionary<string, int>();
+            for (int i=0; i < wrongs.Count(); i++)
+            {
+                var pattern = $@"({wrongs[i]})";
+                var regex = new Regex(pattern);
+                int counter = 0;
+                text = regex.Replace(text, delegate (Match m) 
+                {
+                    //int index = m.Index;
+                    //int len = m.Length;
+                    string correct = Barbarisms.Where(j => j.Wrong_Word == wrongs[i]).Select(j => j.Correct_Word).FirstOrDefault();
+                    counter++;
+                    string str = m.ToString();
+                    return $"<span style='color:red' title='სწორია: {correct}'>{str}</span>";
+                });
+                if(counter>0)
+                    fbdt.occurrences.Add(wrongs[i], counter);
+
+                //Match match = Regex.Match(text, pattern);
+                //if (match.Captures.Count > 0)
+                //{
+                //    string correct = Barbarisms.Where(j => j.Wrong_Word == wrongs[i]).Select(j => j.Correct_Word).FirstOrDefault();
+                //    while (match.Success)
+                //    {
+                //        int index = match.Index;
+                //        int len = match.Length;
+                //        string replacement = $"<span style='color:red' title='{correct} {index}'>{wrongs[i]}</span>";
+                //        text = Replace(text, index, len, replacement);
+
+                //        match = match.NextMatch();
+                //    }
+                //}
+            }
+            fbdt.textDTO = new TextDTO() { Text = text };
+            return fbdt;
+        }
+
+        public string Replace(string s, int index, int length, string replacement)
+        {
+            var builder = new StringBuilder();
+            builder.Append(s.Substring(0, index));
+            builder.Append(replacement);
+            builder.Append(s.Substring(index + length));
+            return builder.ToString();
         }
     }
 }

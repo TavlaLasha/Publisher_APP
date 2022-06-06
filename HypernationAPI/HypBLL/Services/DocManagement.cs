@@ -17,7 +17,7 @@ namespace BLL
 {
     public class DocManagement : IDocManagement
     {
-        public bool HypernateDocument(object filename, object saveAs)
+        public bool HyphenateDocument(object filename, object saveAs)
         {
             if (!File.Exists((string)filename))
                 throw new HttpException("File does not exist in temporary storage");
@@ -59,14 +59,19 @@ namespace BLL
                 return false;
             }
         }
+
+        public string HyphenateText(string text)
+        {
+            HYPManagement hyp = new HYPManagement(text);
+            return hyp.HYPExecuteTxt();
+        }
+
         public bool CleanDocument(object filename, object saveAs, DocCleanDTO docclDTo = null)
         {
             if (!File.Exists((string)filename))
                 throw new HttpException("File does not exist in temporary storage");
-            if (docclDTo != null && (!docclDTo.CleanNewLines && !docclDTo.CleanSpaces && !docclDTo.CleanTabs && !docclDTo.CorrectPDashStarts))
-            {
-                throw new HttpException("Nothing to do");
-            }
+            if (docclDTo == null)
+                throw new HttpException("Doc cleaning model is null. Operation aborted as there will be nothing to do.");
 
             Application wordApp = new Application();
             object missing = Missing.Value;
@@ -87,25 +92,8 @@ namespace BLL
                                                     ref missing, ref missing, ref missing, ref missing);
                 WordDoc.Activate();
 
-                CleanManagement hyp = new CleanManagement();
-                if (docclDTo == null || (docclDTo.CleanNewLines && docclDTo.CleanSpaces && docclDTo.CleanTabs && docclDTo.CorrectPDashStarts))
-                {
-                    wordApp = hyp.ExecuteAll(wordApp);
-                }
-                else if (docclDTo != null)
-                {
-                    if (docclDTo.CleanSpaces)
-                        wordApp = hyp.CleanSpaces(wordApp);
-
-                    if (docclDTo.CleanNewLines)
-                        wordApp = hyp.CleanNewLines(wordApp);
-
-                    if (docclDTo.CleanTabs)
-                        wordApp = hyp.CleanTabs(wordApp);
-
-                    if (docclDTo.CorrectPDashStarts)
-                        wordApp = hyp.CorrectPDashStarts(wordApp);
-                }
+                CleanManagement hyp = new CleanManagement(wordApp);
+                wordApp = hyp.Execute(docclDTo);
 
                 WordDoc.SaveAs(ref saveAs, ref missing, ref missing, ref missing,
                                             ref missing, ref missing, ref missing,
@@ -123,6 +111,16 @@ namespace BLL
                 return false;
             }
         }
+
+        public string CleanText(string text, DocCleanDTO docclDTo = null)
+        {
+            if (docclDTo == null)
+                throw new HttpException("Doc cleaning model is null. Operation aborted as there will be nothing to do.");
+
+            CleanManagement hyp = new CleanManagement(text);
+            return hyp.ExecuteTxt(docclDTo);
+        }
+
         public string[] GetPages(object filename, int page = 1)
         {
             if (!File.Exists((string)filename))
@@ -202,6 +200,7 @@ namespace BLL
                 return new string[0];
             }
         }
+
         public bool ConvertToPDF(string input, string output, WdSaveFormat format)
         {
             // Create an instance of Word.exe
