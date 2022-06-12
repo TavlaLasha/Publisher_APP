@@ -11,6 +11,7 @@ using System.Net.Http;
 using System.Text;
 using System.Web;
 using System.Web.Http;
+using System.Web.Http.Cors;
 
 namespace HypernationAPI.Controllers
 {
@@ -21,14 +22,24 @@ namespace HypernationAPI.Controllers
         {
             _docManagement = docManagement;
         }
-        [HttpPost]
+        [HttpGet]
         [Route("api/CleanDoc/{fileName}")]
-        public HttpResponseMessage CleanDoc(string fileName, [FromBody] DocCleanDTO dCl)
+        public HttpResponseMessage CleanDoc(string fileName, bool CleanSpaces=false, bool CleanOldHyphenation = false, bool CleanExcessParagraphs = false, bool CleanNewLines = false, bool CleanTabs = false, bool CorrectPDashStarts = false)
         {
             try
             {
                 if (fileName == "" || fileName == " ")
                     throw new HttpException("File Name is Required Parameter");
+
+                DocCleanDTO dCl = new DocCleanDTO()
+                {
+                    CleanSpaces = CleanSpaces,
+                    CleanOldHyphenation = CleanOldHyphenation,
+                    CleanExcessParagraphs = CleanExcessParagraphs,
+                    CleanNewLines = CleanNewLines,
+                    CleanTabs = CleanTabs,
+                    CorrectPDashStarts = CorrectPDashStarts
+                };
 
                 HttpResponseMessage result;
                 string FileFolder = Path.GetFileNameWithoutExtension(fileName);

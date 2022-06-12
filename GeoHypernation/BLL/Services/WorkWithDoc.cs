@@ -128,7 +128,7 @@ namespace BLL.Services
                 Directory.Delete(tempDirectory, true);
 
             tempDirectory = Directory.CreateDirectory(tempDirectory).FullName;
-            //TODO: will be out of bound at the end
+            
             List<int> Pages = new List<int>();
             Range range;
             for (int i = start; i <= end+1; i++)

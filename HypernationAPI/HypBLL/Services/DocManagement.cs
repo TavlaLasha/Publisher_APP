@@ -10,6 +10,7 @@ using System.IO.Compression;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web;
 
@@ -121,7 +122,7 @@ namespace BLL
             return hyp.ExecuteTxt(docclDTo);
         }
 
-        public string[] GetPages(object filename, int page = 1, bool clean = false)
+        public object[] GetPages(object filename, int page = 1, bool clean = false)
         {
             if (!File.Exists((string)filename))
                 throw new HttpException("File does not exist in temporary storage");
@@ -143,20 +144,35 @@ namespace BLL
                 WordDoc.Activate();
 
                 int PageCount = WordDoc.ComputeStatistics(WdStatistic.wdStatisticPages, false);
-                if (page > PageCount || page < 1)
+                if (page < 1)
                 {
-                    throw new InvalidOperationException("Page number exceeded document length");
+                    page = 1;
                 }
-
-                int start = ((page - 2) > 0) ? page - 2 : 1;
+                else if (page > PageCount)
+                {
+                    page = PageCount;
+                }
+                int maxPages = 5;
+                int start = ((page - 2) > 1) ? page - 2 : 1;
                 int end;
+
                 if (page <= 3)
                 {
-                    end = (5 < PageCount) ? 5 : PageCount;
+                    end = (maxPages < PageCount) ? maxPages : PageCount;
                 }
                 else
                 {
-                    end = ((page + 2) < PageCount) ? page + 2 : PageCount;
+                    if ((page + 2) >= PageCount)
+                    {
+                        start = PageCount - maxPages + 1;
+                        if (start < 1)
+                            start = 1;
+                        end = PageCount;
+                    }
+                    else
+                    {
+                        end = page + 2;
+                    }
                 }
 
                 string tempDirectory = HttpContext.Current.Server.MapPath($"~/TempDocs/{Path.GetFileNameWithoutExtension(filename.ToString())}/HTML");
@@ -165,6 +181,7 @@ namespace BLL
 
                 tempDirectory = Directory.CreateDirectory(tempDirectory).FullName;
 
+                Dictionary<int, string> pages = new Dictionary<int, string>();
                 Range range;
                 for (int i = start; i <= end; i++)
                 {
@@ -183,6 +200,26 @@ namespace BLL
                             range.End = WordDoc.GoTo(WdGoToItem.wdGoToPage, WdGoToDirection.wdGoToAbsolute, i).End - 1;
                         }
                         range.ExportFragment(tempPath, WdSaveFormat.wdFormatFilteredHTML);
+                        if (File.Exists(tempPath))
+                        {
+                            //using (StreamReader template = new StreamReader(tempPath))
+                            //{
+                            //    string text = ConvertHtmlToString(template, false);
+
+                            //    template.Close();
+                            //}
+                            //var enc = Encoding.GetEncoding("ISO-8859-1");
+                            //using (TextReader streamReader = new TextReader(tempPath, enc, true))
+                            //{
+                            //    string text = streamReader.ReadToEnd();
+                            //    text = text.Replace("\n", " ");
+                            //    text = text.Replace("\r", " ");
+                            //    // Remove tab spaces
+                            //    text = text.Replace("\t", " ");
+                            //    pages.Add(i, text);
+                            //}
+
+                        }
                     }
                 }
                 WordDoc.Close(WdSaveOptions.wdDoNotSaveChanges);
@@ -196,7 +233,7 @@ namespace BLL
                 //    File.Delete((string)tempPath);
                 //}
 
-                return new string[2] { tempDirectory, PageCount.ToString() };
+                return new object[2] { pages, PageCount.ToString() };
             }
             catch
             {
@@ -262,5 +299,78 @@ namespace BLL
 
             return true;
         }
+
+        public string HTMLToText(string HTMLCode)
+        {
+            // Remove new lines since they are not visible in HTML
+            HTMLCode = HTMLCode.Replace(@"\n", " ");
+            // Remove tab spaces
+            HTMLCode = HTMLCode.Replace(@"\t", " ");
+            // Remove multiple white spaces from HTML
+            //HTMLCode = Regex.Replace(HTMLCode, "\\s+", " ");
+            // Remove HEAD tag
+            //HTMLCode = Regex.Replace(HTMLCode, "<head.*?</head>", ""
+            //                    , RegexOptions.IgnoreCase | RegexOptions.Singleline);
+            // Remove any JavaScript
+            //HTMLCode = Regex.Replace(HTMLCode, "<script.*?</script>", ""
+            //  , RegexOptions.IgnoreCase | RegexOptions.Singleline);
+            // Replace special characters like &, <, >, " etc.
+            StringBuilder sbHTML = new StringBuilder(HTMLCode);
+            // Note: There are many more special characters, these are just
+            // most common. You can add new characters in this arrays if needed
+    //        string[] OldWords = {"&nbsp;", "&amp;", "&quot;", "&lt;",
+    //"&gt;", "&reg;", "&copy;", "&bull;", "&trade;","&#39;"};
+    //        string[] NewWords = { " ", "&", "\"", "<", ">", "Â®", "Â©", "â€¢", "â„¢", "\'" };
+    //        for (int i = 0; i < OldWords.Length; i++)
+    //        {
+    //            sbHTML.Replace(OldWords[i], NewWords[i]);
+    //        }
+            // Check if there are line breaks (<br>) or paragraph (<p>)
+            //sbHTML.Replace("<br>", "\n<br>");
+            //sbHTML.Replace("<br ", "\n<br ");
+            //sbHTML.Replace("<p ", "\n<p ");
+            // Finally, remove all HTML tags and return plain text
+            return Regex.Replace(
+              sbHTML.ToString(), "<[^>]*>", "");
+        }
+
+        //public string ConvertHtmlToString(TextReader streamToRead, bool isHtml)
+        //{
+        //    StringBuilder body = new StringBuilder();
+        //    StringBuilder nextTag = new StringBuilder();
+        //    bool inTag = false;
+        //    char nextCharacter = char.MinValue;
+        //    char tagStart = '$';
+
+        //    while (streamToRead.Peek() >= 0)
+        //    {
+        //        nextCharacter = Convert.ToChar(streamToRead.Peek());
+        //        if (nextCharacter.Equals(tagStart)) inTag = !inTag;
+
+        //        if (inTag)
+        //        {
+        //            nextTag.Append(Convert.ToChar(streamToRead.Read()));
+        //            if (nextTag.Length >= 50)
+        //            {
+        //                body.Append(nextTag.ToString());
+        //                nextTag.Length = 0;
+        //                inTag = false;
+        //            }
+        //        }
+        //        else if (nextTag.Length > 0)
+        //        {
+        //            if (nextCharacter.Equals(tagStart)) nextTag.Append(Convert.ToChar(streamToRead.Read()));
+        //            body.Append(nextTag.ToString());
+        //            nextTag.Length = 0;
+        //        }
+        //        else
+        //        {
+        //            body.Append(Convert.ToChar(streamToRead.Read()));
+        //        }
+        //    }
+
+        //    return body.ToString();
+        //}
+
     }
 }

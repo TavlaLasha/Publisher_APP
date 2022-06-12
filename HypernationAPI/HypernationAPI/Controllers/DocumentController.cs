@@ -45,14 +45,14 @@ namespace HypernationAPI.Controllers
                     if (contentType == ".docx" || contentType == ".doc" || contentType == ".rtf")
                     {
                         FileName = postedFile.FileName;
-                        var workingDir = Directory.CreateDirectory(HttpContext.Current.Server.MapPath($"~/TempDocs/{Path.GetFileNameWithoutExtension(FileName)}")).FullName;
-                        Directory.CreateDirectory(Path.Combine(workingDir, "Modified"));
-                        var filePath = Path.Combine(workingDir, FileName);
-                        if (File.Exists(filePath))
+                        var workingDir = HttpContext.Current.Server.MapPath($"~/TempDocs/{Path.GetFileNameWithoutExtension(FileName)}");
+                        if (Directory.Exists(workingDir))
                         {
                             FileName = $"{Path.GetFileNameWithoutExtension(FileName)}{DateTime.Now.Ticks}{contentType}";
-                            filePath = Path.Combine(workingDir, FileName);
+                            workingDir = Directory.CreateDirectory(HttpContext.Current.Server.MapPath($"~/TempDocs/{Path.GetFileNameWithoutExtension(FileName)}")).FullName;
                         }
+                        Directory.CreateDirectory(Path.Combine(workingDir, "Modified"));
+                        var filePath = Path.Combine(workingDir, FileName);
                         postedFile.SaveAs(filePath);
 
                         FileInfo fs = new FileInfo(filePath);
@@ -106,24 +106,31 @@ namespace HypernationAPI.Controllers
                 }
                 var data = _docManagement.GetPages(filePath, page, clean);
 
-                string zipFileName = $"{Path.GetFileNameWithoutExtension(fileName)}.zip";
-                string zipFilePath = HttpContext.Current.Server.MapPath($"~/TempDocs/{Path.GetFileNameWithoutExtension(fileName)}/{zipFileName}");
+                //string zipFileName = $"{Path.GetFileNameWithoutExtension(fileName)}.zip";
+                //string zipFilePath = HttpContext.Current.Server.MapPath($"~/TempDocs/{Path.GetFileNameWithoutExtension(fileName)}/{zipFileName}");
 
-                if (!_docManagement.ZipUpFiles(data[0], zipFilePath))
-                    throw new HttpException("Error when zipping up files");
+                //if (!_docManagement.ZipUpFiles(data[0], zipFilePath))
+                //    throw new HttpException("Error when zipping up files");
+
+                //result = new HttpResponseMessage(HttpStatusCode.OK)
+                //{
+                //    Content = new StreamContent(File.OpenRead(zipFilePath))
+                //};
+                //result.Content.Headers.ContentDisposition =
+                //new ContentDispositionHeaderValue("attachment")
+                //{
+                //    FileName = zipFileName
+                //};
+                //string contentType = MimeMapping.GetMimeMapping(Path.GetExtension(zipFilePath));
+                //result.Content.Headers.ContentType = new MediaTypeHeaderValue(contentType);
+
+                var jObject = JsonConvert.SerializeObject(data[0]);
 
                 result = new HttpResponseMessage(HttpStatusCode.OK)
                 {
-                    Content = new StreamContent(File.OpenRead(zipFilePath))
+                    Content = new StringContent(jObject, Encoding.UTF8, "application/json")
                 };
-                result.Content.Headers.ContentDisposition =
-                new ContentDispositionHeaderValue("attachment")
-                {
-                    FileName = zipFileName
-                };
-                string contentType = MimeMapping.GetMimeMapping(Path.GetExtension(zipFilePath));
-                result.Content.Headers.ContentType = new MediaTypeHeaderValue(contentType);
-                result.Headers.Add("PageCount", data[1]);
+                result.Headers.Add("PageCount", data[1].ToString());
                 return result;
             }
             catch (HttpException ex)

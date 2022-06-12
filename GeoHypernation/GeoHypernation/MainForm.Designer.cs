@@ -57,10 +57,12 @@
             this.progress_lbl = new System.Windows.Forms.Label();
             this.docBox = new System.Windows.Forms.GroupBox();
             this.progress_groupBox = new System.Windows.Forms.GroupBox();
+            this.loading_picture = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.loading_img)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.docBox.SuspendLayout();
             this.progress_groupBox.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.loading_picture)).BeginInit();
             this.SuspendLayout();
             // 
             // loading_img
@@ -257,6 +259,12 @@
             this.progress_groupBox.TabStop = false;
             this.progress_groupBox.UseWaitCursor = true;
             // 
+            // loading_picture
+            // 
+            resources.ApplyResources(this.loading_picture, "loading_picture");
+            this.loading_picture.Name = "loading_picture";
+            this.loading_picture.TabStop = false;
+            // 
             // MainForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -267,6 +275,9 @@
             this.Controls.Add(this.Save_btn);
             this.Controls.Add(this.docBox);
             this.Controls.Add(this.label4);
+            this.Controls.Add(this.loading_picture);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
             this.Name = "MainForm";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.Click += new System.EventHandler(this.MainForm_Click);
@@ -278,6 +289,7 @@
             this.docBox.PerformLayout();
             this.progress_groupBox.ResumeLayout(false);
             this.progress_groupBox.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.loading_picture)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -312,6 +324,7 @@
         private System.Windows.Forms.Label progress_lbl;
         private System.Windows.Forms.GroupBox docBox;
         private System.Windows.Forms.GroupBox progress_groupBox;
+        private System.Windows.Forms.PictureBox loading_picture;
     }
 }
 
