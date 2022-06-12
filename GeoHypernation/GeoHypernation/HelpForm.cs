@@ -23,14 +23,7 @@ namespace GeoHypernation
 
         private void HelpForm_Load(object sender, EventArgs e)
         {
-            string data = File.ReadAllText(Path.Combine(exeDir,"sample.html"));
-            //string jsonString = File.ReadAllText(Path.Combine(exeDir,"info.json"));
-            //Dictionary<string, string> data = JsonConvert.DeserializeObject<Dictionary<string, string>>(jsonString);
-            //foreach (KeyValuePair<string, string> i in data)
-            //{
-            //    Info_listBox.Text+=($"{i.Key}: {i.Value}");
-            //}
-            Info_listBox.LoadFile(Path.Combine(exeDir, "test.rtf"));
+            Info_listBox.LoadFile(Path.Combine(exeDir, "info.rtf"));
         }
     }
 }

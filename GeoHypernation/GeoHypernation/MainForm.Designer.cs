@@ -32,6 +32,7 @@
             this.main_splitContainer = new System.Windows.Forms.SplitContainer();
             this.Help_btn = new System.Windows.Forms.Button();
             this.docBox = new System.Windows.Forms.GroupBox();
+            this.button1 = new System.Windows.Forms.Button();
             this.ForIndesign_chkbx = new System.Windows.Forms.CheckBox();
             this.hyp_chkbx = new System.Windows.Forms.CheckBox();
             this.pdashstart_chkbx = new System.Windows.Forms.CheckBox();
@@ -57,7 +58,6 @@
             this.webBrowser = new System.Windows.Forms.WebBrowser();
             this.Pagination_Box = new System.Windows.Forms.Panel();
             this.Save_btn = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
             this.Upload_picture = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.main_splitContainer)).BeginInit();
             this.main_splitContainer.Panel1.SuspendLayout();
@@ -125,6 +125,15 @@
             this.docBox.Name = "docBox";
             this.docBox.TabStop = false;
             // 
+            // button1
+            // 
+            this.button1.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.button1.FlatAppearance.BorderSize = 0;
+            resources.ApplyResources(this.button1, "button1");
+            this.button1.Name = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.Close_btn_Click);
+            // 
             // ForIndesign_chkbx
             // 
             resources.ApplyResources(this.ForIndesign_chkbx, "ForIndesign_chkbx");
@@ -174,6 +183,7 @@
             // 
             // start_btn
             // 
+            this.start_btn.Cursor = System.Windows.Forms.Cursors.Hand;
             resources.ApplyResources(this.start_btn, "start_btn");
             this.start_btn.Name = "start_btn";
             this.start_btn.UseVisualStyleBackColor = true;
@@ -292,19 +302,9 @@
             this.Save_btn.FlatAppearance.BorderSize = 3;
             this.Save_btn.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Gray;
             this.Save_btn.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(62)))), ((int)(((byte)(62)))));
-            this.Save_btn.ForeColor = System.Drawing.SystemColors.ControlText;
             this.Save_btn.Name = "Save_btn";
             this.Save_btn.UseVisualStyleBackColor = true;
             this.Save_btn.Click += new System.EventHandler(this.Save_btn_Click);
-            // 
-            // button1
-            // 
-            this.button1.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.button1.FlatAppearance.BorderSize = 0;
-            resources.ApplyResources(this.button1, "button1");
-            this.button1.Name = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.Close_btn_Click);
             // 
             // Upload_picture
             // 
