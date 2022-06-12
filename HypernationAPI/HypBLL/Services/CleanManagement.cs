@@ -34,9 +34,6 @@ namespace BLL.Services
             if (docClean.CleanSpaces)
                 wordApp = CleanSpaces(wordApp);
 
-            if (docClean.CleanOldHyphenation)
-                wordApp = CleanOldHyp(wordApp);
-
             if (docClean.CleanNewLines)
                 wordApp = CleanNewLines(wordApp);
 
@@ -63,9 +60,6 @@ namespace BLL.Services
             if (docClean.CleanSpaces)
                 Text = CleanSpaces(Text);
 
-            if (docClean.CleanOldHyphenation)
-                Text = CleanOldHyp(Text);
-
             //if (docClean.CleanNewLines)
             //    Text = CleanNewLines(Text);
 
@@ -83,34 +77,29 @@ namespace BLL.Services
 
         public Application CleanOldHyp(Application wordApp)
         {
-            Console.WriteLine("CleanOldHyp");
             wordApp = FindAndReplace(wordApp, "^-", "");
             return wordApp;
         }
 
         public Application CleanExcParagraphs(Application wordApp)
         {
-            Console.WriteLine("CleanSpaces");
             wordApp = FindAndReplace(wordApp, "^13{2}[^13]@([!^13])", @"^13\1");
             return wordApp;
         }
 
         public Application CleanSpaces(Application wordApp)
         {
-            Console.WriteLine("CleanSpaces");
             wordApp = FindAndReplace(wordApp, " [ ]@([! ])", @" \1");
             return wordApp;
         }
 
         public Application CleanNewLines(Application wordApp)
         {
-            Console.WriteLine("CleanNewLines");
             wordApp = FindAndReplace(wordApp, "^11", "^13");
             return wordApp;
         }
         public Application CorrectPDashStarts(Application wordApp)
         {
-            Console.WriteLine("CorrectPDashStarts");
             wordApp = FindAndReplace(wordApp, "(^13)[-─]", @"\1— ");
             return wordApp;
         }
@@ -118,21 +107,11 @@ namespace BLL.Services
         //For InDesign
         public Application CleanTabs(Application wordApp)
         {
-            Console.WriteLine("CleanTabs");
             wordApp = FindAndReplace(wordApp, "(^13)^9[^9]", @"\1");
             return wordApp;
         }
 
 
-        //For Plain Text
-        public string CleanOldHyp(string text)
-        {
-            var pattern = "\xad";
-            var regex = new Regex(pattern);
-            text = regex.Replace(text, "");
-
-            return text;
-        }
 
         //public string CleanExcParagraphs(string text)
         //{

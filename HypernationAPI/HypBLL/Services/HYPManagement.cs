@@ -1,4 +1,5 @@
 ﻿using BLL.Interfaces;
+using BLL.Services;
 using Microsoft.Office.Interop.Word;
 using System;
 using System.Collections.Generic;
@@ -27,6 +28,8 @@ namespace BLL
             if (wordApp == null)
                 throw new HttpException("No Document Given");
 
+            wordApp = CleanOldHyp(wordApp);
+
             wordApp = HYPWovels(wordApp);
             wordApp = HYPConsonants(wordApp);
             wordApp = CleanFirst(wordApp);
@@ -42,6 +45,8 @@ namespace BLL
             if (Text == string.Empty || Text.Length < 3)
                 throw new HttpException("No Text Given");
 
+            Text = CleanOldHyp(Text);
+
             Text = HYPWovels(Text);
             Text = HYPConsonants(Text);
             Text = CleanFirst(Text);
@@ -52,6 +57,13 @@ namespace BLL
 
             return Text;
         }
+
+        public Application CleanOldHyp(Application wordApp)
+        {
+            wordApp = FindAndReplace(wordApp, "^-", "");
+            return wordApp;
+        }
+
         public Application HYPConsonants(Application wordApp)
         {
             wordApp = FindAndReplace(wordApp, "([ბ-დვ-თკ-ნპ-ტფ-ჰ])([ბ-დვ-თკ-ნპ-ტფ-ჰ][აეიოუ])", "" + $@"\1{((char)31).ToString()}\2");
@@ -94,6 +106,14 @@ namespace BLL
         }
 
         //For Palin Text
+        public string CleanOldHyp(string text)
+        {
+            var pattern = "\xad";
+            var regex = new Regex(pattern);
+            text = regex.Replace(text, "");
+
+            return text;
+        }
         public string HYPConsonants(string text)
         {
             var pattern = @"([ბ-დვ-თკ-ნპ-ტფ-ჰ])([ბ-დვ-თკ-ნპ-ტფ-ჰ][აეიოუ])";

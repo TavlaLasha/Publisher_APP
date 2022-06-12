@@ -9,7 +9,6 @@ namespace Models.DataViewModels.DocManagement
     public class DocCleanDTO
     {
         public bool CleanSpaces { set; get; }
-        public bool CleanOldHyphenation { set; get; }
         public bool CleanExcessParagraphs { set; get; }
         public bool CleanNewLines { set; get; }
         public bool CleanTabs { set; get; }

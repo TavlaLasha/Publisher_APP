@@ -30,11 +30,10 @@ namespace HypernationAPI.Controllers
             {
                 if (fileName == "" || fileName == " ")
                     throw new HttpException("File Name is Required Parameter");
-
+                //POST request on this method caused CORS policy problem.
                 DocCleanDTO dCl = new DocCleanDTO()
                 {
                     CleanSpaces = CleanSpaces,
-                    CleanOldHyphenation = CleanOldHyphenation,
                     CleanExcessParagraphs = CleanExcessParagraphs,
                     CleanNewLines = CleanNewLines,
                     CleanTabs = CleanTabs,

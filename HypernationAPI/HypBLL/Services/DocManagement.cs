@@ -185,21 +185,26 @@ namespace BLL
                 Range range;
                 for (int i = start; i <= end; i++)
                 {
+                    int index = i;
+                    if (index == end + 1)
+                    {
+                        if (end == PageCount)
+                            break;
+                        index = PageCount;
+                    }
+
                     string tempPath = Path.Combine(tempDirectory, $"{i}.html");
                     if (!File.Exists(tempPath))
                     {
                         range = WordDoc.Range();
-                        range.Start = WordDoc.GoTo(WdGoToItem.wdGoToPage, WdGoToDirection.wdGoToAbsolute, i).Start;
+                        range.Start = WordDoc.GoTo(WdGoToItem.wdGoToPage, WdGoToDirection.wdGoToAbsolute, index).Start;
 
-                        if (i < PageCount)
+                        if (index < PageCount)
                         {
-                            range.End = WordDoc.GoTo(WdGoToItem.wdGoToPage, WdGoToDirection.wdGoToAbsolute, i + 1).End - 1;
-                        }
-                        else
-                        {
-                            range.End = WordDoc.GoTo(WdGoToItem.wdGoToPage, WdGoToDirection.wdGoToAbsolute, i).End - 1;
+                            range.End = WordDoc.GoTo(WdGoToItem.wdGoToPage, WdGoToDirection.wdGoToAbsolute, index + 1).End - 1;
                         }
                         range.ExportFragment(tempPath, WdSaveFormat.wdFormatFilteredHTML);
+
                         if (File.Exists(tempPath))
                         {
                             string text = File.ReadAllText(tempPath, Encoding.Default);
