@@ -43,11 +43,13 @@ namespace HypernationAPI.Controllers
                 HttpResponseMessage result;
                 string FileFolder = Path.GetFileNameWithoutExtension(fileName);
                 string filePath = HttpContext.Current.Server.MapPath($"~/TempDocs/{FileFolder}/{fileName}");
+                string modifiedFilePath = HttpContext.Current.Server.MapPath($"~/TempDocs/{FileFolder}/Modified/{fileName}");
 
                 if (!File.Exists(filePath))
                     throw new HttpException("File does not exist in temporary storage");
 
-                string modifiedFilePath = HttpContext.Current.Server.MapPath($"~/TempDocs/{FileFolder}/Modified/{fileName}");
+                if (File.Exists(modifiedFilePath))
+                    filePath = modifiedFilePath;
 
                 if (!_docManagement.CleanDocument(filePath, modifiedFilePath, dCl))
                 {

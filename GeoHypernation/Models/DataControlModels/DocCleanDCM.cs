@@ -8,11 +8,10 @@ namespace Models.DataControlModels
 {
     public class DocCleanDCM
     {
-        public bool cl_splace { set; get; }
-        public bool cl_hyp { set; get; }
-        public bool cl_par { set; get; }
-        public bool cl_newLines { set; get; }
-        public bool cor_PDashStarts { set; get; }
-        public bool cl_tabs { set; get; }
+        public bool CleanSpaces { set; get; }
+        public bool CleanExcessParagraphs { set; get; }
+        public bool CleanNewLines { set; get; }
+        public bool CleanTabs { set; get; }
+        public bool CorrectPDashStarts { set; get; }
     }
 }

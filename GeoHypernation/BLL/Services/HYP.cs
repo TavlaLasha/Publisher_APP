@@ -20,6 +20,8 @@ namespace BLL.Services
             if (wordApp == null)
                 throw new Exception("No Document Given");
 
+            wordApp = CleanOldHyp(wordApp);
+
             wordApp = HYPWovels(wordApp);
             wordApp = HYPConsonants(wordApp);
             wordApp = CleanFirst(wordApp);
@@ -30,6 +32,13 @@ namespace BLL.Services
 
             return wordApp;
         }
+        public Application CleanOldHyp(Application wordApp)
+        {
+            Console.WriteLine("CleanOldHyp");
+            wordApp = FindAndReplace(wordApp, "^-", "");
+            return wordApp;
+        }
+
         public Application HYPConsonants(Application wordApp)
         {
             Console.WriteLine("st_cons");

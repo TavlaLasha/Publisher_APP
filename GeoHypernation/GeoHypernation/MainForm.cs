@@ -56,12 +56,11 @@ namespace GeoHypernation
             {
                 bool do_hyp = false;
                 DocCleanDCM dcdm = new DocCleanDCM();
-                dcdm.cl_splace = space_chkbx.Checked;
-                dcdm.cl_hyp = hypcl_chkbx.Checked;
-                dcdm.cl_par = par_chkbx.Checked;
-                dcdm.cl_newLines = newline_chkbx.Checked;
-                dcdm.cor_PDashStarts = pdashstart_chkbx.Checked;
-                dcdm.cl_tabs = tab_chkbx.Checked;
+                dcdm.CleanSpaces = space_chkbx.Checked;
+                dcdm.CleanExcessParagraphs = par_chkbx.Checked;
+                dcdm.CleanNewLines = newline_chkbx.Checked;
+                dcdm.CorrectPDashStarts = pdashstart_chkbx.Checked;
+                dcdm.CleanTabs = tab_chkbx.Checked;
                 do_hyp = hyp_chkbx.Checked;
 
                 try
@@ -71,7 +70,7 @@ namespace GeoHypernation
                         {
                             try
                             {
-                                if (dcdm.cl_splace || dcdm.cl_hyp || dcdm.cl_par || dcdm.cl_newLines || dcdm.cor_PDashStarts || dcdm.cl_tabs)
+                                if (dcdm.CleanSpaces || dcdm.CleanExcessParagraphs || dcdm.CleanNewLines || dcdm.CorrectPDashStarts || dcdm.CleanTabs)
                                 {
                                     progress_lbl.SetText("მიმდინარეობს გასუფთავება...");
                                     if (!wwd.CleanDocument(dcdm))
@@ -500,5 +499,6 @@ namespace GeoHypernation
             else
                 Pagination_Box.Controls.Clear();
         }
+
     }
 }

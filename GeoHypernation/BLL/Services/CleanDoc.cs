@@ -24,31 +24,21 @@ namespace BLL.Services
             if (docClean == null)
                 throw new Exception("Invalid request: No instructions given.");
 
-            if (docClean.cl_splace)
+            if (docClean.CleanSpaces)
                 wordApp = CleanSpaces(wordApp);
 
-            if (docClean.cl_hyp)
-                wordApp = CleanOldHyp(wordApp);
-
-            if (docClean.cl_newLines)
+            if (docClean.CleanNewLines)
                 wordApp = CleanNewLines(wordApp);
 
-            if (docClean.cl_par)
+            if (docClean.CleanExcessParagraphs)
                 wordApp = CleanExcParagraphs(wordApp);
 
-            if (docClean.cor_PDashStarts)
+            if (docClean.CorrectPDashStarts)
                 wordApp = CorrectPDashStarts(wordApp);
 
-            if (docClean.cl_tabs)
+            if (docClean.CleanTabs)
                 wordApp = CleanTabs(wordApp);
 
-            return wordApp;
-        }
-
-        public Application CleanOldHyp(Application wordApp)
-        {
-            Console.WriteLine("CleanOldHyp");
-            wordApp = FindAndReplace(wordApp, "^-", "");
             return wordApp;
         }
 

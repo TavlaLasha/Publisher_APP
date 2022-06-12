@@ -47,7 +47,6 @@
             this.start_btn = new System.Windows.Forms.Button();
             this.close_btn = new System.Windows.Forms.Label();
             this.space_chkbx = new System.Windows.Forms.CheckBox();
-            this.hypcl_chkbx = new System.Windows.Forms.CheckBox();
             this.par_chkbx = new System.Windows.Forms.CheckBox();
             this.tab_chkbx = new System.Windows.Forms.CheckBox();
             this.newline_chkbx = new System.Windows.Forms.CheckBox();
@@ -58,11 +57,19 @@
             this.docBox = new System.Windows.Forms.GroupBox();
             this.progress_groupBox = new System.Windows.Forms.GroupBox();
             this.loading_picture = new System.Windows.Forms.PictureBox();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.helloToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.yesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             ((System.ComponentModel.ISupportInitialize)(this.loading_img)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.docBox.SuspendLayout();
             this.progress_groupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.loading_picture)).BeginInit();
+            this.menuStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
+            this.splitContainer1.Panel2.SuspendLayout();
+            this.splitContainer1.SuspendLayout();
             this.SuspendLayout();
             // 
             // loading_img
@@ -171,12 +178,6 @@
             this.space_chkbx.Name = "space_chkbx";
             this.space_chkbx.UseVisualStyleBackColor = true;
             // 
-            // hypcl_chkbx
-            // 
-            resources.ApplyResources(this.hypcl_chkbx, "hypcl_chkbx");
-            this.hypcl_chkbx.Name = "hypcl_chkbx";
-            this.hypcl_chkbx.UseVisualStyleBackColor = true;
-            // 
             // par_chkbx
             // 
             resources.ApplyResources(this.par_chkbx, "par_chkbx");
@@ -226,13 +227,13 @@
             // 
             // docBox
             // 
+            this.docBox.Controls.Add(this.progress_groupBox);
             this.docBox.Controls.Add(this.ForIndesign_chkbx);
             this.docBox.Controls.Add(this.hyp_chkbx);
             this.docBox.Controls.Add(this.pdashstart_chkbx);
             this.docBox.Controls.Add(this.newline_chkbx);
             this.docBox.Controls.Add(this.tab_chkbx);
             this.docBox.Controls.Add(this.par_chkbx);
-            this.docBox.Controls.Add(this.hypcl_chkbx);
             this.docBox.Controls.Add(this.space_chkbx);
             this.docBox.Controls.Add(this.close_btn);
             this.docBox.Controls.Add(this.start_btn);
@@ -265,19 +266,51 @@
             this.loading_picture.Name = "loading_picture";
             this.loading_picture.TabStop = false;
             // 
+            // menuStrip1
+            // 
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.helloToolStripMenuItem,
+            this.yesToolStripMenuItem});
+            resources.ApplyResources(this.menuStrip1, "menuStrip1");
+            this.menuStrip1.Name = "menuStrip1";
+            // 
+            // helloToolStripMenuItem
+            // 
+            this.helloToolStripMenuItem.Name = "helloToolStripMenuItem";
+            resources.ApplyResources(this.helloToolStripMenuItem, "helloToolStripMenuItem");
+            // 
+            // yesToolStripMenuItem
+            // 
+            this.yesToolStripMenuItem.Name = "yesToolStripMenuItem";
+            resources.ApplyResources(this.yesToolStripMenuItem, "yesToolStripMenuItem");
+            // 
+            // splitContainer1
+            // 
+            resources.ApplyResources(this.splitContainer1, "splitContainer1");
+            this.splitContainer1.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
+            this.splitContainer1.Name = "splitContainer1";
+            // 
+            // splitContainer1.Panel1
+            // 
+            this.splitContainer1.Panel1.BackColor = System.Drawing.SystemColors.ControlDark;
+            // 
+            // splitContainer1.Panel2
+            // 
+            this.splitContainer1.Panel2.Controls.Add(this.webBrowser);
+            // 
             // MainForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             resources.ApplyResources(this, "$this");
-            this.Controls.Add(this.progress_groupBox);
+            this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.Pagination_Box);
-            this.Controls.Add(this.webBrowser);
             this.Controls.Add(this.Save_btn);
             this.Controls.Add(this.docBox);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.loading_picture);
+            this.Controls.Add(this.menuStrip1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.MaximizeBox = false;
+            this.MainMenuStrip = this.menuStrip1;
             this.Name = "MainForm";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.Click += new System.EventHandler(this.MainForm_Click);
@@ -290,6 +323,11 @@
             this.progress_groupBox.ResumeLayout(false);
             this.progress_groupBox.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.loading_picture)).EndInit();
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
+            this.splitContainer1.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
+            this.splitContainer1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -314,7 +352,6 @@
         private System.Windows.Forms.Button start_btn;
         private System.Windows.Forms.Label close_btn;
         private System.Windows.Forms.CheckBox space_chkbx;
-        private System.Windows.Forms.CheckBox hypcl_chkbx;
         private System.Windows.Forms.CheckBox par_chkbx;
         private System.Windows.Forms.CheckBox tab_chkbx;
         private System.Windows.Forms.CheckBox newline_chkbx;
@@ -325,6 +362,10 @@
         private System.Windows.Forms.GroupBox docBox;
         private System.Windows.Forms.GroupBox progress_groupBox;
         private System.Windows.Forms.PictureBox loading_picture;
+        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem helloToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem yesToolStripMenuItem;
+        private System.Windows.Forms.SplitContainer splitContainer1;
     }
 }
 

@@ -9,6 +9,7 @@ namespace BLL.Contracts
 {
     public interface IHYP
     {
+        Application CleanOldHyp(Application wordApp);
         Application HYPConsonants(Application wordApp);
         Application HYPWovels(Application wordApp);
         Application CleanFirst(Application wordApp);

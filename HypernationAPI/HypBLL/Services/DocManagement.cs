@@ -29,7 +29,7 @@ namespace BLL
             Document WordDoc;
             try
             {
-                object readOnly = true;
+                object readOnly = !(filename.Equals(saveAs));
 
                 object isVisible = false;
 
@@ -79,7 +79,7 @@ namespace BLL
 
             Document WordDoc;
 
-            object readOnly = true;
+            object readOnly = !(filename.Equals(saveAs));
 
             object isVisible = false;
 
@@ -106,7 +106,7 @@ namespace BLL
                 wordApp.Quit();
                 return true;
             }
-            catch
+            catch(Exception ex)
             {
                 wordApp.Quit(WdSaveOptions.wdDoNotSaveChanges);
                 return false;
