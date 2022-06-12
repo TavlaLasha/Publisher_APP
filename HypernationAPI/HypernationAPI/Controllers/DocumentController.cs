@@ -106,6 +106,9 @@ namespace HypernationAPI.Controllers
                 }
                 var data = _docManagement.GetPages(filePath, page, clean);
 
+                if (data.Length < 2)
+                    throw new Exception("Err");
+
                 //string zipFileName = $"{Path.GetFileNameWithoutExtension(fileName)}.zip";
                 //string zipFilePath = HttpContext.Current.Server.MapPath($"~/TempDocs/{Path.GetFileNameWithoutExtension(fileName)}/{zipFileName}");
 

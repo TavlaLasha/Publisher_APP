@@ -202,23 +202,12 @@ namespace BLL
                         range.ExportFragment(tempPath, WdSaveFormat.wdFormatFilteredHTML);
                         if (File.Exists(tempPath))
                         {
-                            //using (StreamReader template = new StreamReader(tempPath))
-                            //{
-                            //    string text = ConvertHtmlToString(template, false);
-
-                            //    template.Close();
-                            //}
-                            //var enc = Encoding.GetEncoding("ISO-8859-1");
-                            //using (TextReader streamReader = new TextReader(tempPath, enc, true))
-                            //{
-                            //    string text = streamReader.ReadToEnd();
-                            //    text = text.Replace("\n", " ");
-                            //    text = text.Replace("\r", " ");
-                            //    // Remove tab spaces
-                            //    text = text.Replace("\t", " ");
-                            //    pages.Add(i, text);
-                            //}
-
+                            string text = File.ReadAllText(tempPath, Encoding.Default);
+                            text = text.Replace("\n", "");
+                            text = text.Replace("\r", "");
+                            // Remove tab spaces
+                            text = text.Replace("\t", " ");
+                            pages.Add(i, text);
                         }
                     }
                 }
@@ -228,10 +217,6 @@ namespace BLL
 
                 //HTMLConverter s = new HTMLConverter();
                 //string data = s.ConvertToHtml((string)tempPath);
-
-                //if (File.Exists((string)tempPath)) {
-                //    File.Delete((string)tempPath);
-                //}
 
                 return new object[2] { pages, PageCount.ToString() };
             }
