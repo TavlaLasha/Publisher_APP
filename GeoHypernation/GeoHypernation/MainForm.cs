@@ -46,8 +46,11 @@ namespace GeoHypernation
         {
             InitializeComponent();
             this.AllowDrop = true;
-            this.DragEnter += new DragEventHandler(MainForm_DragEnter);
-            this.DragDrop += new DragEventHandler(MainForm_DragDrop);
+            Upload_picture.Click += Upload_picture_Click;
+            this.DragEnter += new DragEventHandler(Upload_picture_DragEnter);
+            this.DragDrop += new DragEventHandler(Upload_picture_DragDrop);
+            Pagination_Box.Left = (preview_splitContainer.Panel2.Height - Pagination_Box.Left) / 2;
+            Save_btn.Left = ((preview_splitContainer.Panel2.Width + Pagination_Box.Left) / 2)+100;
         }
 
         private void Start_btn_Click(object sender, EventArgs e)
@@ -108,55 +111,6 @@ namespace GeoHypernation
                 }
             }
         }
-
-        private void MainForm_Click(object sender, EventArgs e)
-        {
-            if (!Working && FileName == string.Empty)
-            {
-                try
-                {
-                    OpenFileDialog ofd = new OpenFileDialog()
-                    {
-                        InitialDirectory = @"Documents",
-                        FileName = "აირჩიეთ MS Word დოკუმენტი",
-                        Filter = "Word Document (*.docx)|*.docx|Word Document (*.doc)|*.doc|Rich Text Format (*.rtf)|*.rtf",
-                        Title = "გახსენით MS Word დოკუმენტი"
-                    };
-                    DialogResult result = ofd.ShowDialog(); // Show the dialog.
-                    if (result == DialogResult.OK) // Test result.
-                    {
-                        FileName = ofd.FileName;
-                        Upload_Doc(FileName);
-                    }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("მოხდა შეცდომა. ბოდიშს გიხდით", "შეცდომა", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
-        }
-
-        private void MainForm_DragDrop(object sender, DragEventArgs e)
-        {
-            if (!Working && FileName == string.Empty)
-            {
-                var files = (string[])e.Data.GetData(DataFormats.FileDrop);
-                if (files.Length == 1)
-                {
-                    FileName = files.SingleOrDefault();
-                    Upload_Doc(FileName);
-                }
-                else
-                {
-                    MessageBox.Show("მოხდა შეცდომა. ბოდიშს გიხდით", "შეცდომა", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
-        }
-
-        private void MainForm_DragEnter(object sender, DragEventArgs e)
-        {
-            if (e.Data.GetDataPresent(DataFormats.FileDrop)) e.Effect = DragDropEffects.Copy;
-        }
         private void Save_btn_Click(object sender, EventArgs e)
         {
             if (File.Exists(FileName))
@@ -198,7 +152,6 @@ namespace GeoHypernation
             size_lbl.SetText((new FileInfo(filename).Length / 1000.0).ToString() + " Kb");
             type_lbl.SetText(Path.GetExtension(filename));
             filename_lbl.SetText(new FileInfo(filename).Name);
-            docBox.SetVisible(true);
             GetPages(true);
         }
 
@@ -232,6 +185,7 @@ namespace GeoHypernation
         {
             try
             {
+                Upload_picture.SetVisible(false);
                 Change_working_state(true);
                 wwd = new WorkWithDoc(file);
                 Change_working_state(false);
@@ -247,7 +201,7 @@ namespace GeoHypernation
         private void Change_working_state(bool working = false)
         {
             Working = working;
-            progress_groupBox.SetVisible(Working);
+            loading_box.SetVisible(Working);
 
             List<Button> btn = Pagination_Box.Controls.OfType<Button>().ToList();
             foreach (var b in btn)
@@ -262,7 +216,7 @@ namespace GeoHypernation
         {
             try
             {
-                docBox.SetVisible(false);
+                Upload_picture.SetVisible(true);
                 FileName = string.Empty;
                 if (CurrentPage != 0)
                 {
@@ -288,6 +242,8 @@ namespace GeoHypernation
 
         private void Create_Pagination_Buttons(List<int> pages, int pageCount)
         {
+            int btnHeight = Pagination_Box.Height;
+            var btnColor = Color.White;
             if (CurrentPage == 1 || CurrentPage > 3 || CurrentPage >= Pages[0])
             {
                 Clear_Pagination();
@@ -297,8 +253,10 @@ namespace GeoHypernation
                 {
                     Button btnFirstPage = new Button
                     {
-                        Location = new System.Drawing.Point(38, 10),
+                        Location = new System.Drawing.Point(38, 0),
                         Size = new System.Drawing.Size(33, 20),
+                        BackColor = btnColor,
+                        Cursor = Cursors.Hand,
                         Name = $"1_btn",
                         Text = "1",
                         Enabled = !(CurrentPage == pages.Last())
@@ -311,8 +269,10 @@ namespace GeoHypernation
                 {
                     Button btnFirstPage = new Button
                     {
-                        Location = new System.Drawing.Point(15, 10),
+                        Location = new System.Drawing.Point(15, 0),
                         Size = new System.Drawing.Size(33, 20),
+                        BackColor = btnColor,
+                        Cursor = Cursors.Hand,
                         Name = $"1_btn",
                         Text = "1",
                         Enabled = !(CurrentPage == pages.Last())
@@ -322,8 +282,8 @@ namespace GeoHypernation
 
                     Label sepLbl = new Label
                     {
-                        Location = new System.Drawing.Point(55, 10),
-                        Size = new System.Drawing.Size(20, 20),
+                        Location = new System.Drawing.Point(55, 1),
+                        Size = new System.Drawing.Size(20, btnHeight),
                         Name = "sep_lbl",
                         Text = "..."
                     };
@@ -334,8 +294,10 @@ namespace GeoHypernation
                 {
                     Button btnPage = new Button
                     {
-                        Location = new System.Drawing.Point(38 * (i+index), 10),
-                        Size = new System.Drawing.Size(33, 20),
+                        Location = new System.Drawing.Point(38 * (i+index), 0),
+                        Size = new System.Drawing.Size(33, btnHeight),
+                        BackColor = btnColor,
+                        Cursor = Cursors.Hand,
                         Name = pages[i-1].ToString() + "_btn",
                         Text = pages[i-1].ToString(),
                         Enabled = !(CurrentPage == pages[i - 1])
@@ -350,8 +312,10 @@ namespace GeoHypernation
                     {
                         Button btnFinalPage = new Button
                         {
-                            Location = new System.Drawing.Point(38 * (end + 1), 10),
+                            Location = new System.Drawing.Point(38 * (end + 1), 0),
                             Size = new System.Drawing.Size(33, 20),
+                            BackColor = btnColor,
+                            Cursor = Cursors.Hand,
                             Name = $"{pages.Last()}_btn",
                             Text = pages.Last().ToString(),
                             Enabled = !(CurrentPage == pages.Last())
@@ -363,16 +327,18 @@ namespace GeoHypernation
                     {
                         Label sepLbl = new Label
                         {
-                            Location = new System.Drawing.Point(38 * (end + 1 + index), 10),
-                            Size = new System.Drawing.Size(20, 20),
+                            Location = new System.Drawing.Point(38 * (end + 1 + index), 0),
+                            Size = new System.Drawing.Size(20, btnHeight),
                             Name = "sep_lbl",
                             Text = "..."
                         };
                         Pagination_Box.AddControl(sepLbl);
                         Button btnFinalPage = new Button
                         {
-                            Location = new System.Drawing.Point(36 * (end + 2 + index), 10),
+                            Location = new System.Drawing.Point(36 * (end + 2 + index), 0),
                             Size = new System.Drawing.Size(33, 20),
+                            BackColor = btnColor,
+                            Cursor = Cursors.Hand,
                             Name = $"{pages.Last()}_btn",
                             Text = pages.Last().ToString(),
                             Enabled = !(CurrentPage == pages.Last())
@@ -500,5 +466,61 @@ namespace GeoHypernation
                 Pagination_Box.Controls.Clear();
         }
 
+        private void Help_btn_Click(object sender, EventArgs e)
+        {
+            HelpForm hpf = new HelpForm();
+            hpf.ShowDialog();
+        }
+
+
+        //File Upload
+        private void Upload_picture_Click(object sender, EventArgs e)
+        {
+            if (!Working && FileName == string.Empty)
+            {
+                try
+                {
+                    OpenFileDialog ofd = new OpenFileDialog()
+                    {
+                        InitialDirectory = @"Documents",
+                        FileName = "აირჩიეთ MS Word დოკუმენტი",
+                        Filter = "Word Document (*.docx)|*.docx|Word Document (*.doc)|*.doc|Rich Text Format (*.rtf)|*.rtf",
+                        Title = "გახსენით MS Word დოკუმენტი"
+                    };
+                    DialogResult result = ofd.ShowDialog(); // Show the dialog.
+                    if (result == DialogResult.OK) // Test result.
+                    {
+                        FileName = ofd.FileName;
+                        Upload_Doc(FileName);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("მოხდა შეცდომა. ბოდიშს გიხდით", "შეცდომა", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        private void Upload_picture_DragEnter(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop)) e.Effect = DragDropEffects.Copy;
+        }
+
+        private void Upload_picture_DragDrop(object sender, DragEventArgs e)
+        {
+            if (!Working && FileName == string.Empty)
+            {
+                var files = (string[])e.Data.GetData(DataFormats.FileDrop);
+                if (files.Length == 1)
+                {
+                    FileName = files.SingleOrDefault();
+                    Upload_Doc(FileName);
+                }
+                else
+                {
+                    MessageBox.Show("მოხდა შეცდომა. ბოდიშს გიხდით", "შეცდომა", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
     }
 }
