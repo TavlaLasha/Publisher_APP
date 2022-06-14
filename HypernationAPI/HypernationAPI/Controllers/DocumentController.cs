@@ -106,9 +106,10 @@ namespace HypernationAPI.Controllers
                 }
                 var data = _docManagement.GetPages(filePath, page, clean);
 
-                if (data.Length < 2)
+                if (data == null)
                     throw new Exception("Err");
 
+                #region archiving code
                 //string zipFileName = $"{Path.GetFileNameWithoutExtension(fileName)}.zip";
                 //string zipFilePath = HttpContext.Current.Server.MapPath($"~/TempDocs/{Path.GetFileNameWithoutExtension(fileName)}/{zipFileName}");
 
@@ -126,14 +127,15 @@ namespace HypernationAPI.Controllers
                 //};
                 //string contentType = MimeMapping.GetMimeMapping(Path.GetExtension(zipFilePath));
                 //result.Content.Headers.ContentType = new MediaTypeHeaderValue(contentType);
+                #endregion
 
-                var jObject = JsonConvert.SerializeObject(data[0]);
+                var jObject = JsonConvert.SerializeObject(data);
 
                 result = new HttpResponseMessage(HttpStatusCode.OK)
                 {
                     Content = new StringContent(jObject, Encoding.UTF8, "application/json")
                 };
-                result.Headers.Add("PageCount", data[1].ToString());
+
                 return result;
             }
             catch (HttpException ex)

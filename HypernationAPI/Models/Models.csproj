@@ -44,6 +44,7 @@
   <ItemGroup>
     <Compile Include="DataViewModels\DocManagement\CleanTextDTO.cs" />
     <Compile Include="DataViewModels\DocManagement\DocCleanDTO.cs" />
+    <Compile Include="DataViewModels\DocManagement\DocPagesDTO.cs" />
     <Compile Include="DataViewModels\DocManagement\TextDTO.cs" />
     <Compile Include="DataViewModels\WordManagement\BarbarismDTO.cs" />
     <Compile Include="DataViewModels\DocManagement\DocDTO.cs" />

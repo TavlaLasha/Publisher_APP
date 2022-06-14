@@ -14,17 +14,13 @@ C:\Users\lasha\Desktop\Project\Publisher_APP\GeoHypernation\GeoHypernation\bin\D
 C:\Users\lasha\Desktop\Project\Publisher_APP\GeoHypernation\GeoHypernation\bin\Debug\GeoHypernation.pdb
 C:\Users\lasha\Desktop\Project\Publisher_APP\GeoHypernation\GeoHypernation\bin\Debug\BLL.dll
 C:\Users\lasha\Desktop\Project\Publisher_APP\GeoHypernation\GeoHypernation\bin\Debug\Models.dll
-C:\Users\lasha\Desktop\Project\Publisher_APP\GeoHypernation\GeoHypernation\bin\Debug\Spire.Doc.dll
-C:\Users\lasha\Desktop\Project\Publisher_APP\GeoHypernation\GeoHypernation\bin\Debug\Spire.License.dll
-C:\Users\lasha\Desktop\Project\Publisher_APP\GeoHypernation\GeoHypernation\bin\Debug\Spire.Pdf.dll
+C:\Users\lasha\Desktop\Project\Publisher_APP\GeoHypernation\GeoHypernation\bin\Debug\Newtonsoft.Json.dll
 C:\Users\lasha\Desktop\Project\Publisher_APP\GeoHypernation\GeoHypernation\bin\Debug\WindowsFormsExtension.dll
-C:\Users\lasha\Desktop\Project\Publisher_APP\GeoHypernation\GeoHypernation\bin\Debug\Microsoft.mshtml.dll
 C:\Users\lasha\Desktop\Project\Publisher_APP\GeoHypernation\GeoHypernation\bin\Debug\BLL.pdb
 C:\Users\lasha\Desktop\Project\Publisher_APP\GeoHypernation\GeoHypernation\bin\Debug\Models.pdb
-C:\Users\lasha\Desktop\Project\Publisher_APP\GeoHypernation\GeoHypernation\bin\Debug\Spire.Doc.xml
-C:\Users\lasha\Desktop\Project\Publisher_APP\GeoHypernation\GeoHypernation\bin\Debug\Spire.License.xml
-C:\Users\lasha\Desktop\Project\Publisher_APP\GeoHypernation\GeoHypernation\bin\Debug\Spire.Pdf.xml
+C:\Users\lasha\Desktop\Project\Publisher_APP\GeoHypernation\GeoHypernation\bin\Debug\Newtonsoft.Json.xml
 C:\Users\lasha\Desktop\Project\Publisher_APP\GeoHypernation\GeoHypernation\obj\Debug\GeoHypernation.csproj.AssemblyReference.cache
+C:\Users\lasha\Desktop\Project\Publisher_APP\GeoHypernation\GeoHypernation\obj\Debug\GeoHypernation.HelpForm.resources
 C:\Users\lasha\Desktop\Project\Publisher_APP\GeoHypernation\GeoHypernation\obj\Debug\GeoHypernation.MainForm.resources
 C:\Users\lasha\Desktop\Project\Publisher_APP\GeoHypernation\GeoHypernation\obj\Debug\GeoHypernation.Properties.Resources.resources
 C:\Users\lasha\Desktop\Project\Publisher_APP\GeoHypernation\GeoHypernation\obj\Debug\GeoHypernation.csproj.GenerateResource.cache
@@ -32,6 +28,3 @@ C:\Users\lasha\Desktop\Project\Publisher_APP\GeoHypernation\GeoHypernation\obj\D
 C:\Users\lasha\Desktop\Project\Publisher_APP\GeoHypernation\GeoHypernation\obj\Debug\GeoHypernation.csproj.CopyComplete
 C:\Users\lasha\Desktop\Project\Publisher_APP\GeoHypernation\GeoHypernation\obj\Debug\GeoHypernation.exe
 C:\Users\lasha\Desktop\Project\Publisher_APP\GeoHypernation\GeoHypernation\obj\Debug\GeoHypernation.pdb
-C:\Users\lasha\Desktop\Project\Publisher_APP\GeoHypernation\GeoHypernation\obj\Debug\GeoHypernation.HelpForm.resources
-C:\Users\lasha\Desktop\Project\Publisher_APP\GeoHypernation\GeoHypernation\bin\Debug\Newtonsoft.Json.dll
-C:\Users\lasha\Desktop\Project\Publisher_APP\GeoHypernation\GeoHypernation\bin\Debug\Newtonsoft.Json.xml

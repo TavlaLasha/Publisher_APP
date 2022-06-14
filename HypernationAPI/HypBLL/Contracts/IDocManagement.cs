@@ -14,7 +14,7 @@ namespace BLL.Contracts
         string HyphenateText(string text);
         bool CleanDocument(object filename, object saveAs, DocCleanDTO docclDTo);
         string CleanText(string text, DocCleanDTO docclDTo);
-        object[] GetPages(object filename, int page, bool clean);
+        DocPagesDTO GetPages(object filename, int page, bool clean);
         bool ConvertToPDF(string input, string output, WdSaveFormat format);
         bool ZipUpFiles(string dirPath, string outputPath);
     }

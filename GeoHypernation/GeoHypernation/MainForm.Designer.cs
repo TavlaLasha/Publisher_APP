@@ -44,7 +44,6 @@
             this.filename_lbl = new System.Windows.Forms.Label();
             this.size_lbl = new System.Windows.Forms.Label();
             this.page_lbl = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.type_lbl = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -114,7 +113,6 @@
             this.docBox.Controls.Add(this.filename_lbl);
             this.docBox.Controls.Add(this.size_lbl);
             this.docBox.Controls.Add(this.page_lbl);
-            this.docBox.Controls.Add(this.label3);
             this.docBox.Controls.Add(this.label6);
             this.docBox.Controls.Add(this.type_lbl);
             this.docBox.Controls.Add(this.label2);
@@ -203,11 +201,6 @@
             // 
             resources.ApplyResources(this.page_lbl, "page_lbl");
             this.page_lbl.Name = "page_lbl";
-            // 
-            // label3
-            // 
-            resources.ApplyResources(this.label3, "label3");
-            this.label3.Name = "label3";
             // 
             // label6
             // 
@@ -355,7 +348,6 @@
         private System.Windows.Forms.Label filename_lbl;
         private System.Windows.Forms.Label size_lbl;
         private System.Windows.Forms.Label page_lbl;
-        private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label type_lbl;
         private System.Windows.Forms.Label label2;

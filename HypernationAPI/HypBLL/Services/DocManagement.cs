@@ -122,7 +122,7 @@ namespace BLL
             return hyp.ExecuteTxt(docclDTo);
         }
 
-        public object[] GetPages(object filename, int page = 1, bool clean = false)
+        public DocPagesDTO GetPages(object filename, int page = 1, bool clean = false)
         {
             if (!File.Exists((string)filename))
                 throw new HttpException("File does not exist in temporary storage");
@@ -181,7 +181,8 @@ namespace BLL
 
                 tempDirectory = Directory.CreateDirectory(tempDirectory).FullName;
 
-                Dictionary<int, string> pages = new Dictionary<int, string>();
+                DocPagesDTO pagesDTO = new DocPagesDTO();
+                pagesDTO.Pages = new Dictionary<int, string>();
                 Range range;
                 for (int i = start; i <= end; i++)
                 {
@@ -208,27 +209,29 @@ namespace BLL
                         if (File.Exists(tempPath))
                         {
                             string text = File.ReadAllText(tempPath, Encoding.Default);
+                            text = text.Replace("\r\n", " ");
                             text = text.Replace("\n", "");
                             text = text.Replace("\r", "");
                             // Remove tab spaces
                             text = text.Replace("\t", " ");
-                            pages.Add(i, text);
+                            pagesDTO.Pages.Add(i, text);
                         }
                     }
                 }
                 WordDoc.Close(WdSaveOptions.wdDoNotSaveChanges);
                 wordApp.Quit();
 
+                pagesDTO.PageCount = PageCount;
 
                 //HTMLConverter s = new HTMLConverter();
                 //string data = s.ConvertToHtml((string)tempPath);
 
-                return new object[2] { pages, PageCount.ToString() };
+                return pagesDTO;
             }
             catch
             {
                 wordApp.Quit(WdSaveOptions.wdDoNotSaveChanges);
-                return new string[0];
+                return null;
             }
         }
 

@@ -22,21 +22,12 @@ namespace GeoHypernation
 
         private string FileName = "";
         private int DocPageCount = 0;
-        //private delegate void SafeCallDelegate(bool visibility);
         private bool Working = false;
         private bool IsSaved = true;
 
-        //private bool cl_splace = false;
-        //v
-        //private bool cl_par = false;
-        //private bool cl_newLines = false;
-        //private bool cor_PDashStarts = false;
-        //private bool cl_tabs = false;
-        //private bool do_hyp = false;
-
         private string WorkingDir;
         private string WorkingDocPath;
-        private int CurrentPage=0;
+        private int CurrentPage = 0;
         List<int> Pages = null;
         private string RecommendedDocType = ".docx";
 
@@ -69,15 +60,39 @@ namespace GeoHypernation
             catch(Exception ex)
             {
                 MessageBox.Show($"მოხდა შეცდომა. ბოდიშს გიხდით \n\n Err_UpDoc", "შეცდომა", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                this.Close();
             }
         }
         //Calling this method when document has changed.
         private void InitializeDocBox(string filename)
         {
             CurrentPage = 1;
-            size_lbl.SetTextAsync((new FileInfo(filename).Length / 1000.0).ToString() + " Kb");
+            double size = new FileInfo(filename).Length / 1024.0;
+            if(size > 1024.0)
+                size_lbl.SetTextAsync(String.Format("{0:F2}", size / 1024.0) + " MB");
+            else
+                size_lbl.SetTextAsync(String.Format("{0:F2}", size) + " Kb");
             type_lbl.SetTextAsync(Path.GetExtension(filename));
-            filename_lbl.SetTextAsync(new FileInfo(filename).Name);
+            filename_lbl.SetText(new FileInfo(filename).Name);
+
+            Graphics g = this.CreateGraphics();
+            Font f = filename_lbl.Font;
+            string labelstr = filename_lbl.Text;
+            char[] char_arr = labelstr.ToCharArray();
+            int width;
+            int count = 0;
+            for (int i = 0; i < char_arr.Length; i++)
+            {
+                width = (int)(g.MeasureString(labelstr.Substring(labelstr.Length-i, i), f).Width);
+                if (width >= filename_lbl.Width)
+                {
+                    count = i;
+                    break;
+                }
+            }
+            if(count > 0)
+                filename_lbl.SetText($"...{labelstr.Substring(filename_lbl.Text.Length - (count-2), count-2)}");
+                        
             GetPages(true);
         }
         private void GetPages(bool clean = false)
@@ -138,6 +153,7 @@ namespace GeoHypernation
                     Navigate_WebBrowser(FileName);
                     Pagination_Box.Controls.Clear();
                     CurrentPage = 0;
+                    page_lbl.SetTextAsync("---");
                     IsSaved = true;
                     Change_SaveBtn_State(enabled: false);
                 }
@@ -202,6 +218,7 @@ namespace GeoHypernation
 
         #endregion
 
+
         #region Form Style Methods
         private void Change_SaveBtn_State(bool enabled)
         {
@@ -210,6 +227,7 @@ namespace GeoHypernation
         }
 
         #endregion
+
 
         #region Form Control Methods
         private void Change_working_state(bool working = false)
@@ -376,6 +394,7 @@ namespace GeoHypernation
 
         #endregion
 
+
         #region Form Events
         private void Start_btn_Click(object sender, EventArgs e)
         {
@@ -484,7 +503,7 @@ namespace GeoHypernation
         {
             if (!IsSaved)
             {
-                DialogResult dlgResult = MessageBox.Show("დარწმუნებული ხართ რომ არ გინდათ დამუშავებული ფაილის შენახვა?", "წაიშალოს ცვლილებები?", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                DialogResult dlgResult = MessageBox.Show("დარწმუნებული ხართ რომ არ გინდათ დამუშავებული ფაილის შენახვა?\n\nდოკუმენტზე განხორციელებული ყველა ცვლილება დაიკარგება.", "წაიშალოს ცვლილებები?", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                 if (dlgResult == DialogResult.Yes)
                     Close_Doc();
 
@@ -492,7 +511,10 @@ namespace GeoHypernation
                     e.Cancel = true;
             }
             else
-                Close_Doc();
+                if(!Working)
+                    Close_Doc();
+                else
+                    e.Cancel = true;
         }
         private void Close_btn_Click(object sender, EventArgs e)
         {
