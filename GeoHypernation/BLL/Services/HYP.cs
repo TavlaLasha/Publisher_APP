@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace BLL.Services
@@ -11,9 +12,14 @@ namespace BLL.Services
     public class HYP : IHYP
     {
         private Application wordApp;
+        private string Text;
         public HYP(Application wordApp)
         {
             this.wordApp = wordApp;
+        }
+        public HYP(string text)
+        {
+            Text = text;
         }
         public Application HYPExecute()
         {
@@ -31,6 +37,23 @@ namespace BLL.Services
             wordApp = CleanHarmonics(wordApp);
 
             return wordApp;
+        }
+        public string HYPExecuteTxt()
+        {
+            if (Text == string.Empty || Text.Length < 3)
+                throw new Exception("No Text Given");
+
+            Text = CleanOldHyp(Text);
+
+            Text = HYPWovels(Text);
+            Text = HYPConsonants(Text);
+            Text = CleanFirst(Text);
+            Text = CleanLast(Text);
+            Text = CleanConstr(Text);
+            Text = CleanLastConpunct(Text);
+            Text = CleanHarmonics(Text);
+
+            return Text;
         }
         public Application CleanOldHyp(Application wordApp)
         {
@@ -110,6 +133,84 @@ namespace BLL.Services
             Console.WriteLine("end_cllastcomp");
 
             return wordApp;
+        }
+
+        //For Palin Text
+        public string CleanOldHyp(string text)
+        {
+            var pattern = "\xad";
+            var regex = new Regex(pattern);
+            text = regex.Replace(text, "");
+
+            return text;
+        }
+        public string HYPConsonants(string text)
+        {
+            var pattern = @"([ბ-დვ-თკ-ნპ-ტფ-ჰ])([ბ-დვ-თკ-ნპ-ტფ-ჰ][აეიოუ])";
+            var regex = new Regex(pattern);
+            text = regex.Replace(text, "$1\xad$2");
+
+            return text;
+        }
+
+        public string HYPWovels(string text)
+        {
+            var pattern = "([აეიოუ])";
+            var regex = new Regex(pattern);
+            text = regex.Replace(text, "$1\xad");
+
+            return text;
+        }
+
+        public string CleanFirst(string text)
+        {
+            var pattern = $@"([\ \«\-\—\─\(\„\”][ა-ჰ]){"\xad"}";
+            var regex = new Regex(pattern);
+            text = regex.Replace(text, "$1");
+
+            return text;
+        }
+
+        public string CleanLast(string text)
+        {
+            //var pattern = $@"^(([ა-ჰ]){"\xad"}([\ \.\,\!\?\)\-\;\:\»\“^13])|{"\xad"}([ა-ჰ])([\ \.\,\!\?\)\-\;\:\»\“^13]))$";
+            //var regex = new Regex(pattern);
+            //text = regex.Replace(text, "$1$2");
+            //return text;
+
+            var pattern = $@"([ა-ჰ]){"\xad"}([\ \.\,\!\?\)\-\;\:\»\“^13])";
+            var pattern2 = $@"{"\xad"}([ა-ჰ][\ \.\,\!\?\)\-\;\:\»\“^13])";
+            var regex = new Regex(pattern);
+            var regex2 = new Regex(pattern2);
+
+            text = regex.Replace(text, "$1$2");
+            text = regex2.Replace(text, "$1");
+            return text;
+        }
+        public string CleanHarmonics(string text)
+        {
+            var pattern = $@"([ბდზთპტფღყჩცწჭხჯ]){"\xad"}([ბდზთპტფღყჩცწჭხჯ])";
+            var regex = new Regex(pattern);
+            text = regex.Replace(text, "$1$2");
+
+            return text;
+        }
+        public string CleanConstr(string text)
+        {
+            var pattern = $@"{"\xad"}([ბ-დვ-თკ-ნპ-ტფ-ჰ]{"\xad"})";
+            var regex = new Regex(pattern);
+            text = regex.Replace(text, "$1");
+
+            return text;
+        }
+
+        public string CleanLastConpunct(string text)
+        {
+            var pattern = $@"{"\xad"}(ი[სხნ][\ \.\,\!\?\)\-\;\:\“^13])";
+            var regex = new Regex(pattern);
+            text = regex.Replace(text, "$1");
+
+            return text;
         }
 
         public Application FindAndReplace(Application wordApp, object toFindText, object replaceWithText)

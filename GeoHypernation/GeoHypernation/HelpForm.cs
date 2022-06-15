@@ -15,7 +15,8 @@ namespace GeoHypernation
 {
     public partial class HelpForm : Form
     {
-        readonly string exeDir = Path.GetDirectoryName((new System.Uri(Assembly.GetEntryAssembly().CodeBase)).AbsolutePath);
+        readonly string exeDir = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+        
         public HelpForm()
         {
             InitializeComponent();
@@ -23,7 +24,11 @@ namespace GeoHypernation
 
         private void HelpForm_Load(object sender, EventArgs e)
         {
-            Info_listBox.LoadFile(Path.Combine(exeDir, "info.rtf"));
+            string InfoPath = Path.Combine(exeDir, "info.rtf");
+            if (File.Exists(InfoPath))
+                Info_listBox.LoadFile(InfoPath);
+            else
+                Info_listBox.Text = "შეცდომა. საინფორმაციო ფაილი ვერ მოიძებნა";
         }
     }
 }

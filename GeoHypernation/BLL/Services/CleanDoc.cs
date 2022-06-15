@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace BLL.Services
@@ -12,9 +13,14 @@ namespace BLL.Services
     public class CleanDoc : ICleanDoc
     {
         private Application wordApp;
+        private string Text;
         public CleanDoc(Application wordApp)
         {
             this.wordApp = wordApp;
+        }
+        public CleanDoc(string text)
+        {
+            Text = text;
         }
         public Application Execute(DocCleanDCM docClean)
         {
@@ -40,6 +46,29 @@ namespace BLL.Services
                 wordApp = CleanTabs(wordApp);
 
             return wordApp;
+        }
+
+        public string ExecuteTxt(DocCleanDCM docClean)
+        {
+            if (Text == string.Empty || Text.Length < 3)
+                throw new Exception("Invalid request: No Text Given");
+
+            if (docClean == null)
+                throw new Exception("Invalid request: No instructions given.");
+
+            if (docClean.CleanSpaces)
+                Text = CleanSpaces(Text);
+
+            if (docClean.CleanExcessParagraphs)
+                Text = CleanExcParagraphs(Text);
+
+            if (docClean.CorrectPDashStarts)
+                Text = CorrectPDashStarts(Text);
+
+            if (docClean.CleanTabs)
+                Text = CleanTabs(Text);
+
+            return Text;
         }
 
         public Application CleanExcParagraphs(Application wordApp)
@@ -75,6 +104,43 @@ namespace BLL.Services
             Console.WriteLine("CleanTabs");
             wordApp = FindAndReplace(wordApp, "(^13)^9[^9]", @"\1");
             return wordApp;
+        }
+
+        //For Plain Text
+        public string CleanExcParagraphs(string text)
+        {
+            var pattern = "\n\n+";
+            var regex = new Regex(pattern);
+            text = regex.Replace(text, "\n\n");
+
+            return text;
+        }
+
+        public string CleanSpaces(string text)
+        {
+            var pattern = @" +";
+            var regex = new Regex(pattern);
+            text = regex.Replace(text, @" ");
+
+            return text;
+        }
+
+        public string CorrectPDashStarts(string text)
+        {
+            var pattern = "[-─]";
+            var regex = new Regex(pattern);
+            text = regex.Replace(text, @"—");
+
+            return text;
+        }
+
+        public string CleanTabs(string text)
+        {
+            var pattern = "\t";
+            var regex = new Regex(pattern);
+            text = regex.Replace(text, " ");
+
+            return text;
         }
 
         public Application FindAndReplace(Application wordApp, object toFindText, object replaceWithText)

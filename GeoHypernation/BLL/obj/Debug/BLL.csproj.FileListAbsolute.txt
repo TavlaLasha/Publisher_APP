@@ -7,3 +7,4 @@ C:\Users\lasha\Desktop\Project\Publisher_APP\GeoHypernation\BLL\obj\Debug\BLL.cs
 C:\Users\lasha\Desktop\Project\Publisher_APP\GeoHypernation\BLL\obj\Debug\BLL.csproj.CopyComplete
 C:\Users\lasha\Desktop\Project\Publisher_APP\GeoHypernation\BLL\obj\Debug\BLL.dll
 C:\Users\lasha\Desktop\Project\Publisher_APP\GeoHypernation\BLL\obj\Debug\BLL.pdb
+C:\Users\lasha\Desktop\Project\Publisher_APP\GeoHypernation\BLL\bin\Debug\Standard.Licensing.dll

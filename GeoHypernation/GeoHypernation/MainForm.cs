@@ -1,6 +1,8 @@
 ﻿using BLL.Services;
 using Models.DataControlModels;
 using Models.DataViewModels;
+using Standard.Licensing;
+using Standard.Licensing.Security.Cryptography;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -31,18 +33,44 @@ namespace GeoHypernation
         List<int> Pages = null;
         private string RecommendedDocType = ".docx";
 
+        private bool limited = false;
+
         WorkWithDoc wwd;
+        LicenseManagement lc;
 
         public MainForm()
         {
             InitializeComponent();
             this.AllowDrop = true;
             Upload_picture.Click += Upload_picture_Click;
+            manual_btn.Click += manual_btn_Click;
             this.DragEnter += new DragEventHandler(Upload_picture_DragEnter);
             this.DragDrop += new DragEventHandler(Upload_picture_DragDrop);
-            Pagination_Box.Left = (preview_splitContainer.Panel2.Height - Pagination_Box.Left) / 2;
-            Save_btn.Left = ((preview_splitContainer.Panel2.Width + Pagination_Box.Left) / 2)+100;
             Change_SaveBtn_State(enabled: false);
+            lc = new LicenseManagement();
+            
+
+            //string passPhrase = "ChamshvebiLicense2022";
+
+            //var keyGenerator = Standard.Licensing.Security.Cryptography.KeyGenerator.Create();
+            //var keyPair = keyGenerator.GenerateKeyPair();
+            //var privateKey = keyPair.ToEncryptedPrivateKeyString(passPhrase);
+            //var publicKey = keyPair.ToPublicKeyString();
+            //var license = Standard.Licensing.License.New()
+            //    .WithUniqueIdentifier(Guid.NewGuid())
+            //    .As(LicenseType.Standard)
+            //    .ExpiresAt(DateTime.Now.AddDays(30))
+            //    .WithMaximumUtilization(5)
+            //    .WithProductFeatures(new Dictionary<string, string>
+            //        {
+            //            {"Sales Module", "yes"},
+            //            {"Purchase Module", "yes"},
+            //            {"Maximum Transactions", "10000"}
+            //        })
+            //    .LicensedTo("John Doe", "john.doe@example.com")
+            //    .CreateAndSignWithPrivateKey(privateKey, passPhrase);
+
+            //File.WriteAllText("License.lic", license.ToString(), Encoding.UTF8);
         }
 
         #region Document Methods
@@ -50,7 +78,7 @@ namespace GeoHypernation
         {
             try
             {
-                Upload_picture.SetVisibleAsync(false);
+                Upload_panel.SetVisibleAsync(false);
                 Change_working_state(true);
                 wwd = new WorkWithDoc(file);
                 Change_working_state(false);
@@ -72,7 +100,7 @@ namespace GeoHypernation
                 size_lbl.SetTextAsync(String.Format("{0:F2}", size / 1024.0) + " MB");
             else
                 size_lbl.SetTextAsync(String.Format("{0:F2}", size) + " Kb");
-            type_lbl.SetTextAsync(Path.GetExtension(filename));
+            type_lbl.SetTextAsync(Path.GetExtension(filename).Replace(".", string.Empty));
             filename_lbl.SetText(new FileInfo(filename).Name);
 
             Graphics g = this.CreateGraphics();
@@ -112,9 +140,6 @@ namespace GeoHypernation
                         DocPageCount = result.PageCount;
                         Pages = result.Pages;
 
-                        if (DocPageCount > 0)
-                            page_lbl.SetTextAsync(DocPageCount.ToString());
-
                         string FilePath = Path.Combine(WorkingDir, $"{CurrentPage}.html");
                         if (File.Exists(FilePath) && Pages.Count > 0)
                         {
@@ -139,7 +164,7 @@ namespace GeoHypernation
         {
             try
             {
-                Upload_picture.SetVisible(true);
+                Upload_panel.SetVisible(true);
                 FileName = string.Empty;
                 if (CurrentPage != 0)
                 {
@@ -153,7 +178,6 @@ namespace GeoHypernation
                     Navigate_WebBrowser(FileName);
                     Pagination_Box.Controls.Clear();
                     CurrentPage = 0;
-                    page_lbl.SetTextAsync("---");
                     IsSaved = true;
                     Change_SaveBtn_State(enabled: false);
                 }
@@ -201,18 +225,32 @@ namespace GeoHypernation
         }
         private void Upload_picture_DragDrop(object sender, DragEventArgs e)
         {
-            if (!Working && FileName == string.Empty)
+            try
             {
-                var files = (string[])e.Data.GetData(DataFormats.FileDrop);
-                if (files.Length == 1)
+                if (!Working && FileName == string.Empty)
                 {
-                    FileName = files.SingleOrDefault();
-                    Upload_Doc(FileName);
+                    var files = (string[])e.Data.GetData(DataFormats.FileDrop);
+                    if (files.Length == 1)
+                    {
+                        FileName = files.SingleOrDefault();
+                        string ext = Path.GetExtension(FileName);
+                        if (ext.Equals(".doc") || ext.Equals(".docx") || ext.Equals(".rtf"))
+                            Upload_Doc(FileName);
+                        else
+                        {
+                            FileName = string.Empty;
+                            MessageBox.Show("ფაილი უნდა იყოს MS Word-ის ტიპის.\n\nდაშვებულია მხოლოდ შემდეგი ტიპები: .docx .doc და .rtf", "შეცდომა", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("ფაილი ვერ მივიღეთ.", "შეცდომა", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
-                else
-                {
-                    MessageBox.Show("მოხდა შეცდომა. ბოდიშს გიხდით", "შეცდომა", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
+            }
+            catch
+            {
+                MessageBox.Show($"მოხდა შეცდომა. ბოდიშს გიხდით\n\nDoc Drop", "შეცდომა", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -222,8 +260,11 @@ namespace GeoHypernation
         #region Form Style Methods
         private void Change_SaveBtn_State(bool enabled)
         {
-            Save_btn.SetEnabled(enabled);
-            Save_btn.SetForeColor(Save_btn.Enabled ? Color.Black : Color.Gray);
+            Save_btn.SetVisible(enabled);
+            Finnished_pic.SetVisible(enabled);
+            FinnishedShape_pic.SetVisible(enabled);
+            if (RecommendedDocType.Equals(".doc"))
+                type_lbl.SetText(RecommendedDocType.Replace(".", string.Empty));
         }
 
         #endregion
@@ -232,16 +273,27 @@ namespace GeoHypernation
         #region Form Control Methods
         private void Change_working_state(bool working = false)
         {
-            Working = working;
-            loading_box.SetVisibleAsync(Working);
-
-            List<Button> btn = Pagination_Box.Controls.OfType<Button>().ToList();
-            foreach (var b in btn)
+            try
             {
-                b.SetEnabledAsync(!working);
+                Working = working;
+                loading_box.SetVisibleAsync(Working);
+
+                List<Button> btn = Pagination_Box.Controls.OfType<Button>().ToList();
+                if (CurrentPage != 1)
+                    previous_btn.SetEnabledAsync(!working);
+                foreach (var b in btn)
+                {
+                    b.SetEnabledAsync(!working);
+                }
+                if (CurrentPage != DocPageCount)
+                    next_btn.SetEnabledAsync(!working);
+                if (!working)
+                    progress_lbl.SetTextAsync("გთხოვთ მოიცადოთ...");
             }
-            if (!working)
-                progress_lbl.SetTextAsync("გთხოვთ მოიცადოთ...");
+            catch
+            {
+                MessageBox.Show($"მოხდა შეცდომა. ბოდიშს გიხდით \n\n Change working state", "შეცდომა", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
         private void Clear_Pagination()
         {
@@ -257,118 +309,154 @@ namespace GeoHypernation
         }
         private void Create_Pagination_Buttons(List<int> pages, int pageCount)
         {
-            int btnHeight = Pagination_Box.Height;
-            var btnColor = Color.White;
-            if (CurrentPage == 1 || CurrentPage > 3 || CurrentPage >= Pages[0])
+            try
             {
-                Clear_Pagination();
-                int end = (pages.Count > 5 && pages.Last() == pageCount) ? 5 : pages.Count;
-                int index = 0;
-                if (CurrentPage == 4 && (pages.Count > 2 && pages[0] == 2))
+                int btnHeight = Pagination_Box.Height;
+                var btnColor = Color.Transparent;
+                var btnTextColor = Color.White;
+                var btnBorderRadius = 5;
+                var btnBorderColor = Color.White;
+                if (CurrentPage == 1 || CurrentPage > 3 || CurrentPage >= Pages[0])
                 {
-                    Button btnFirstPage = new Button
+                    Clear_Pagination();
+                    int end = (pages.Count > 5 && pages.Last() == pageCount) ? 5 : pages.Count;
+                    int index = 0;
+                    if (CurrentPage == 4 && (pages.Count > 2 && pages[0] == 2))
                     {
-                        Location = new System.Drawing.Point(38, 0),
-                        Size = new System.Drawing.Size(33, 20),
-                        BackColor = btnColor,
-                        Cursor = Cursors.Hand,
-                        Name = $"1_btn",
-                        Text = "1",
-                        Enabled = !(CurrentPage == pages.Last()),
-                        FlatAppearance = { BorderSize = (CurrentPage == pages.Last()) ? 1 : 0 }
-                    };
-                    btnFirstPage.Click += new System.EventHandler(this.Page_btn_Click);
-                    Pagination_Box.AddControl(btnFirstPage);
-                    index = 1;
-                }
-                else if (CurrentPage > 4)
-                {
-                    Button btnFirstPage = new Button
-                    {
-                        Location = new System.Drawing.Point(15, 0),
-                        Size = new System.Drawing.Size(33, 20),
-                        BackColor = btnColor,
-                        Cursor = Cursors.Hand,
-                        Name = $"1_btn",
-                        Text = "1",
-                        Enabled = !(CurrentPage == pages.Last()),
-                        FlatAppearance = { BorderSize = (CurrentPage == pages.Last()) ? 1 : 0 }
-                    };
-                    btnFirstPage.Click += new System.EventHandler(this.Page_btn_Click);
-                    Pagination_Box.AddControl(btnFirstPage);
-
-                    Label sepLbl = new Label
-                    {
-                        Location = new System.Drawing.Point(55, 1),
-                        Size = new System.Drawing.Size(20, btnHeight),
-                        Name = "sep_lbl",
-                        Text = "..."
-                    };
-                    Pagination_Box.AddControl(sepLbl);
-                    index = 1;
-                }
-                for (int i = 1; i <= end; i++)
-                {
-                    Button btnPage = new Button
-                    {
-                        Location = new System.Drawing.Point(38 * (i + index), 0),
-                        Size = new System.Drawing.Size(33, btnHeight),
-                        BackColor = btnColor,
-                        Cursor = Cursors.Hand,
-                        FlatStyle = FlatStyle.Flat,
-                        Font = new Font(this.Font.FontFamily, 12),
-                        Name = pages[i - 1].ToString() + "_btn",
-                        Text = pages[i - 1].ToString(),
-                        Enabled = !(CurrentPage == pages[i - 1]),
-                        FlatAppearance = { BorderSize = (CurrentPage == pages[i - 1]) ? 1 : 0 }
-                    };
-                    btnPage.Click += new System.EventHandler(this.Page_btn_Click);
-
-                    Pagination_Box.AddControl(btnPage);
-                }
-                if (pages.Count > 5 && end < pageCount)
-                {
-                    if (pages[4] == pageCount - 1)
-                    {
-                        Button btnFinalPage = new Button
+                        Button btnFirstPage = new Button
                         {
-                            Location = new System.Drawing.Point(38 * (end + 1), 0),
-                            Size = new System.Drawing.Size(33, 20),
+                            Location = new System.Drawing.Point(38, 0),
+                            Size = new System.Drawing.Size(33, 22),
                             BackColor = btnColor,
+                            ForeColor = btnTextColor,
+                            //BorderRadius = btnBorderRadius,
+                            //BorderColor = btnBorderColor,
+                            FlatStyle = FlatStyle.Flat,
                             Cursor = Cursors.Hand,
-                            Name = $"{pages.Last()}_btn",
-                            Text = pages.Last().ToString(),
-                            Enabled = !(CurrentPage == pages.Last()),
-                            FlatAppearance = { BorderSize = (CurrentPage == pages.Last()) ? 1 : 0 }
+                            Name = $"1_btn",
+                            Text = "1",
+                            Enabled = !(CurrentPage == 1),
+                            FlatAppearance = { BorderSize = 1, BorderColor = (CurrentPage == 1) ? Color.White : Color.Gray }
                         };
-                        btnFinalPage.Click += new System.EventHandler(this.Page_btn_Click);
-                        Pagination_Box.AddControl(btnFinalPage);
+                        btnFirstPage.Click += new System.EventHandler(this.Page_btn_Click);
+                        btnFirstPage.Update();
+                        Pagination_Box.AddControl(btnFirstPage);
+                        index = 1;
                     }
-                    else
+                    else if (CurrentPage > 4)
                     {
+                        Button btnFirstPage = new Button
+                        {
+                            Location = new System.Drawing.Point(15, 0),
+                            Size = new System.Drawing.Size(33, 22),
+                            BackColor = btnColor,
+                            ForeColor = btnTextColor,
+                            //BorderRadius = btnBorderRadius,
+                            //BorderColor = btnBorderColor,
+                            FlatStyle = FlatStyle.Flat,
+                            Cursor = Cursors.Hand,
+                            Name = $"1_btn",
+                            Text = "1",
+                            Enabled = !(CurrentPage == 1),
+                            FlatAppearance = { BorderSize = 1, BorderColor = (CurrentPage == 1) ? Color.White : Color.Gray }
+                        };
+                        btnFirstPage.Click += new System.EventHandler(this.Page_btn_Click);
+                        btnFirstPage.Update();
+                        Pagination_Box.AddControl(btnFirstPage);
+
                         Label sepLbl = new Label
                         {
-                            Location = new System.Drawing.Point(38 * (end + 1 + index), 0),
+                            Location = new System.Drawing.Point(55, 1),
                             Size = new System.Drawing.Size(20, btnHeight),
+                            ForeColor = Color.White,
                             Name = "sep_lbl",
                             Text = "..."
                         };
                         Pagination_Box.AddControl(sepLbl);
-                        Button btnFinalPage = new Button
+                        index = 1;
+                    }
+                    for (int i = 1; i <= end; i++)
+                    {
+                        Button btnPage = new Button
                         {
-                            Location = new System.Drawing.Point(36 * (end + 2 + index), 0),
-                            Size = new System.Drawing.Size(33, 20),
+                            Location = new System.Drawing.Point(38 * (i + index), 0),
+                            Size = new System.Drawing.Size(37, btnHeight),
                             BackColor = btnColor,
+                            ForeColor = btnTextColor,
+                            //BorderRadius = btnBorderRadius,
+                            //BorderColor = btnBorderColor,
                             Cursor = Cursors.Hand,
-                            Name = $"{pages.Last()}_btn",
-                            Text = pages.Last().ToString(),
-                            Enabled = !(CurrentPage == pages.Last()),
-                            FlatAppearance = { BorderSize = (CurrentPage == pages.Last()) ? 1 : 0 }
+                            FlatStyle = FlatStyle.Flat,
+                            Font = new Font(this.Font.FontFamily, 12),
+                            Name = $"{pages[i - 1]}_btn",
+                            Text = pages[i - 1].ToString(),
+                            Enabled = !(CurrentPage == pages[i - 1]),
+                            FlatAppearance = { BorderSize = 1, BorderColor = (CurrentPage == pages[i - 1]) ? Color.White : Color.Gray }
                         };
-                        btnFinalPage.Click += new System.EventHandler(this.Page_btn_Click);
-                        Pagination_Box.AddControl(btnFinalPage);
+                        btnPage.Click += new System.EventHandler(this.Page_btn_Click);
+                        btnPage.Update();
+                        Pagination_Box.AddControl(btnPage);
+                    }
+                    if (pages.Count > 5 && end < pageCount)
+                    {
+                        if (pages[4] == pageCount - 1)
+                        {
+                            Button btnFinalPage = new Button
+                            {
+                                Location = new System.Drawing.Point(38 * (end + index + 1), 0),
+                                Size = new System.Drawing.Size(33, 22),
+                                BackColor = btnColor,
+                                ForeColor = btnTextColor,
+                                //BorderRadius = btnBorderRadius,
+                                //BorderColor = btnBorderColor,
+                                FlatStyle = FlatStyle.Flat,
+                                Cursor = Cursors.Hand,
+                                Name = $"{pages.Last()}_btn",
+                                Text = pages.Last().ToString(),
+                                Enabled = !(CurrentPage == pages.Last()),
+                                FlatAppearance = { BorderSize = 1, BorderColor = (CurrentPage == pages.Last()) ? Color.White : Color.Gray }
+                            };
+                            btnFinalPage.Click += new System.EventHandler(this.Page_btn_Click);
+                            btnFinalPage.Update();
+                            Pagination_Box.AddControl(btnFinalPage);
+                        }
+                        else
+                        {
+                            Label sepLbl = new Label
+                            {
+                                Location = new System.Drawing.Point(38 * (end + 1 + index), 0),
+                                Size = new System.Drawing.Size(20, btnHeight),
+                                ForeColor = Color.White,
+                                Name = "sep_lbl",
+                                Text = "..."
+                            };
+                            Pagination_Box.AddControl(sepLbl);
+                            Button btnFinalPage = new Button
+                            {
+                                Location = new System.Drawing.Point(36 * (end + 2 + index), 0),
+                                Size = new System.Drawing.Size(33, 22),
+                                BackColor = btnColor,
+                                ForeColor = btnTextColor,
+                                //BorderRadius = btnBorderRadius,
+                                //BorderColor = btnBorderColor,
+                                FlatStyle = FlatStyle.Flat,
+                                Cursor = Cursors.Hand,
+                                Name = $"{pages.Last()}_btn",
+                                Text = pages.Last().ToString(),
+                                Enabled = !(CurrentPage == pages.Last()),
+                                FlatAppearance = { BorderSize = 1, BorderColor = (CurrentPage == pages.Last()) ? Color.White : Color.Gray }
+                                //FlatAppearance = { BorderSize = (CurrentPage == pages.Last()) ? 1 : 0 }
+                            };
+                            btnFinalPage.Click += new System.EventHandler(this.Page_btn_Click);
+                            btnFinalPage.Update();
+                            Pagination_Box.AddControl(btnFinalPage);
+                        }
                     }
                 }
+            }
+            catch
+            {
+                MessageBox.Show($"მოხდა შეცდომა. ბოდიშს გიხდით\n\nPagination", "შეცდომა", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
         private void Navigate_WebBrowser(string uri)
@@ -391,6 +479,51 @@ namespace GeoHypernation
                     webBrowser.Navigate(uri);
             }
         }
+        private void Change_Page(int page)
+        {
+            try
+            {
+                if (this.Controls.Find($"{CurrentPage}_btn", true).Length > 0)
+                {
+                    Button btn = (Button)this.Controls.Find($"{CurrentPage}_btn", true).FirstOrDefault();
+                    btn.SetEnabled(true);
+                    btn.FlatAppearance.BorderColor = Color.Gray;
+                    btn.Update();
+                }
+                CurrentPage = page;
+                if (CurrentPage == 1)
+                    previous_btn.SetEnabled(false);
+                else
+                    previous_btn.SetEnabled(true);
+
+                if (CurrentPage == DocPageCount)
+                    next_btn.SetEnabled(false);
+                else
+                    next_btn.SetEnabled(true);
+
+                string PagePath = Path.Combine(WorkingDir, $"{CurrentPage}.html");
+
+                if (CurrentPage == 1 || CurrentPage > 3 || (Pages != null && (CurrentPage == Pages[0]) || (Pages.Count > 5 && CurrentPage == Pages[4])))
+                {
+                    GetPages();
+                }
+                if (File.Exists(PagePath))
+                {
+                    webBrowser.Navigate(PagePath);
+                    if (this.Controls.Find($"{CurrentPage}_btn", true).Length > 0)
+                    {
+                        Button btn = (Button)this.Controls.Find($"{CurrentPage}_btn", true).FirstOrDefault();
+                        btn.FlatAppearance.BorderColor = Color.White;
+                        btn.SetEnabled(false);
+                        btn.Update();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"მოხდა შეცდომა. ბოდიშს გიხდით \n {ex.Message}", "შეცდომა", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
 
         #endregion
 
@@ -400,23 +533,23 @@ namespace GeoHypernation
         {
             if (FileName != "")
             {
-                bool do_hyp = false;
-                DocCleanDCM dcdm = new DocCleanDCM();
-                dcdm.CleanSpaces = space_chkbx.Checked;
-                dcdm.CleanExcessParagraphs = par_chkbx.Checked;
-                dcdm.CleanNewLines = newline_chkbx.Checked;
-                dcdm.CorrectPDashStarts = pdashstart_chkbx.Checked;
-                dcdm.CleanTabs = tab_chkbx.Checked;
-                do_hyp = hyp_chkbx.Checked;
-
                 try
                 {
+                    bool do_hyp = false;
+                    DocCleanDCM dcdm = new DocCleanDCM();
+                    dcdm.CleanSpaces = space_chkbx.Checked;
+                    dcdm.CleanTabs = space_chkbx.Checked;
+                    dcdm.CleanExcessParagraphs = par_chkbx.Checked;
+                    dcdm.CleanNewLines = newline_chkbx.Checked;
+                    dcdm.CorrectPDashStarts = pdashstart_chkbx.Checked;
+                    do_hyp = hyp_chkbx.Checked;
+
                     Thread thread = new Thread(
                         delegate ()
                         {
                             try
                             {
-                                if (dcdm.CleanSpaces || dcdm.CleanExcessParagraphs || dcdm.CleanNewLines || dcdm.CorrectPDashStarts || dcdm.CleanTabs)
+                                if (dcdm.CleanSpaces || dcdm.CleanExcessParagraphs || dcdm.CleanNewLines || dcdm.CorrectPDashStarts)
                                 {
                                     progress_lbl.SetTextAsync("მიმდინარეობს გასუფთავება...");
                                     if (!wwd.CleanDocument(dcdm))
@@ -460,25 +593,7 @@ namespace GeoHypernation
             try
             {
                 Button btnPager = (sender as Button);
-                if (this.Controls.Find($"{CurrentPage}_btn", true).Length > 0)
-                {
-                    Button btn = (Button)this.Controls.Find($"{CurrentPage}_btn", true).FirstOrDefault();
-                    btn.SetEnabled(true);
-                    btn.FlatAppearance.BorderSize = 0;
-                }
-                CurrentPage = int.Parse(btnPager.Text);
-                string PagePath = Path.Combine(WorkingDir, $"{CurrentPage}.html");
-
-                if (CurrentPage == 1 || CurrentPage > 3 || (Pages != null && (CurrentPage == Pages[0]) || (Pages.Count > 5 && CurrentPage == Pages[4])))
-                {
-                    GetPages();
-                }
-                if (File.Exists(PagePath))
-                {
-                    webBrowser.Navigate(PagePath);
-                    btnPager.SetEnabled(false);
-                    btnPager.FlatAppearance.BorderSize = 1;
-                }
+                Change_Page(int.Parse(btnPager.Text));
             }
             catch (Exception ex)
             {
@@ -495,77 +610,196 @@ namespace GeoHypernation
             pdashstart_chkbx.SetCheckedAsync(chk.Checked);
             pdashstart_chkbx.SetEnabledAsync(!(chk.Checked));
 
-            tab_chkbx.SetCheckedAsync(chk.Checked);
-            tab_chkbx.SetEnabledAsync(!(chk.Checked));
             RecommendedDocType = (chk.Checked) ? ".doc" : ".docx";
         }
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (!IsSaved)
+            try
             {
-                DialogResult dlgResult = MessageBox.Show("დარწმუნებული ხართ რომ არ გინდათ დამუშავებული ფაილის შენახვა?\n\nდოკუმენტზე განხორციელებული ყველა ცვლილება დაიკარგება.", "წაიშალოს ცვლილებები?", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-                if (dlgResult == DialogResult.Yes)
-                    Close_Doc();
+                if (!IsSaved)
+                {
+                    DialogResult dlgResult = MessageBox.Show("დარწმუნებული ხართ რომ არ გინდათ დამუშავებული ფაილის შენახვა?\n\nდოკუმენტზე განხორციელებული ყველა ცვლილება დაიკარგება.", "წაიშალოს ცვლილებები?", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                    if (dlgResult == DialogResult.Yes)
+                        Close_Doc();
 
+                    else
+                        e.Cancel = true;
+                }
+                else
+                    if (!Working)
+                    Close_Doc();
                 else
                     e.Cancel = true;
             }
-            else
-                if(!Working)
-                    Close_Doc();
-                else
-                    e.Cancel = true;
+            catch
+            {
+                MessageBox.Show($"მოხდა შეცდომა. ბოდიშს გიხდით\n\nClosing", "შეცდომა", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
         private void Close_btn_Click(object sender, EventArgs e)
         {
-            if (!IsSaved)
+            try
             {
-                DialogResult dlgResult = MessageBox.Show("დარწმუნებული ხართ რომ არ გინდათ დამუშავებული ფაილის შენახვა?\n\nდოკუმენტზე განხორციელებული ყველა ცვლილება დაიკარგება.", "წაიშალოს ცვლილებები?", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-                if (dlgResult == DialogResult.Yes)
+                if (!IsSaved)
+                {
+                    DialogResult dlgResult = MessageBox.Show("დარწმუნებული ხართ რომ არ გინდათ დამუშავებული ფაილის შენახვა?\n\nდოკუმენტზე განხორციელებული ყველა ცვლილება დაიკარგება.", "წაიშალოს ცვლილებები?", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                    if (dlgResult == DialogResult.Yes)
+                        Close_Doc();
+                }
+                else
                     Close_Doc();
             }
-            else
-                Close_Doc();
+            catch
+            {
+                MessageBox.Show($"მოხდა შეცდომა. ბოდიშს გიხდით\n\nClose Request", "შეცდომა", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
         private void Save_btn_Click(object sender, EventArgs e)
         {
-            if (File.Exists(FileName))
+            try
             {
-                int DefIndex = 1;
-                if (RecommendedDocType == ".doc")
-                    DefIndex = 2;
-                else if (RecommendedDocType == ".rtf")
-                    DefIndex = 3;
+                if (File.Exists(FileName))
+                {
+                    int DefIndex = 1;
+                    if (RecommendedDocType == ".doc")
+                        DefIndex = 2;
+                    else if (RecommendedDocType == ".rtf")
+                        DefIndex = 3;
+                    else if (RecommendedDocType == ".pdf")
+                        DefIndex = 4;
 
-                SaveFileDialog saveFileDialog = new SaveFileDialog
+                    SaveFileDialog saveFileDialog = new SaveFileDialog
+                    {
+                        InitialDirectory = @"Documents",
+                        Title = "სად შევინახოთ დამუშავებული ფაილი",
+                        CheckFileExists = false,
+                        CheckPathExists = false,
+                        //DefaultExt = RecommendedDocType.TrimStart('.'),
+                        Filter = "Word Document (*.docx)|*.docx |Word Document (*.doc)|*.doc |Rich Text Format (*.rtf)|*.rtf |Portable Document Format (*.pdf)|*.pdf",
+                        FilterIndex = DefIndex,
+                        RestoreDirectory = true,
+                        FileName = $@"{Path.GetDirectoryName(FileName)}\{Path.GetFileNameWithoutExtension(FileName)}{RecommendedDocType}"
+                    };
+                    if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                    {
+                        wwd.SaveDoc(saveFileDialog.FileName, Path.GetExtension(saveFileDialog.FileName));
+                        IsSaved = true;
+                    }
+                }
+                else
                 {
-                    InitialDirectory = @"Documents",
-                    Title = "სად შევინახოთ დამუშავებული ფაილი",
-                    CheckFileExists = false,
-                    CheckPathExists = false,
-                    //DefaultExt = RecommendedDocType.TrimStart('.'),
-                    Filter = "Word Document (*.docx)|*.docx |Word Document (*.doc)|*.doc |Rich Text Format (*.rtf)|*.rtf",
-                    FilterIndex = DefIndex,
-                    RestoreDirectory = true,
-                    FileName = $@"{Path.GetDirectoryName(FileName)}\{Path.GetFileNameWithoutExtension(FileName)}{RecommendedDocType}"
-                };
-                if (saveFileDialog.ShowDialog() == DialogResult.OK)
-                {
-                    wwd.SaveDoc(saveFileDialog.FileName, Path.GetExtension(saveFileDialog.FileName));
-                    IsSaved = true;
+                    MessageBox.Show("დოკუმენტი არ გვაქვს", "შეცდომა", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
-            else
+            catch
             {
-                MessageBox.Show("დოკუმენტი არ გვაქვს", "შეცდომა", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"მოხდა შეცდომა. ბოდიშს გიხდით\n\nAtSaving", "შეცდომა", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
         private void Help_btn_Click(object sender, EventArgs e)
         {
-            HelpForm hpf = new HelpForm();
-            hpf.ShowDialog();
+            try
+            {
+                HelpForm hpf = new HelpForm();
+                hpf.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"მოხდა შეცდომა. ბოდიშს გიხდით", "შეცდომა", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
+        Size sz;
+        FormWindowState LastWindowState = FormWindowState.Minimized;
+        bool maxmin = false;
+        protected override void OnResizeBegin(EventArgs e)
+        {
+            SuspendLayout();
+            base.OnResizeBegin(e);
+            sz = this.Size;
+        }
+        protected override void OnResizeEnd(EventArgs e)
+        {
+            if ((sz.Width != this.Size.Width || sz.Height != this.Size.Height) && WindowState == LastWindowState && !maxmin)
+            {
+                this.Visible = false;
+                Doc_Panel.BorderRadius = 1;
+                Doc_Panel.BorderSize = 0;
+                ResumeLayout();
+                base.OnResizeEnd(e);
+                Doc_Panel.BorderRadius = 10;
+                Doc_Panel.BorderSize = 3;
+                this.Visible = true;
+            }
+            else
+            {
+                ResumeLayout();
+            }
+            LastWindowState = WindowState;
+            maxmin = false;
+        }
+        protected override void OnResize(EventArgs e)
+        {
+            if (WindowState != LastWindowState || maxmin)
+            {
+                if (WindowState == FormWindowState.Maximized)
+                {
+                    this.Visible = false;
+                    Doc_Panel.BorderRadius = 1;
+                    Doc_Panel.BorderSize = 0;
+                    base.OnResize(e);
+                    Doc_Panel.BorderRadius = 10;
+                    Doc_Panel.BorderSize = 3;
+                    this.Visible = true;
+                }
+                if (WindowState == FormWindowState.Normal)
+                {
+                    this.Visible = false;
+                    Doc_Panel.BorderRadius = 1;
+                    Doc_Panel.BorderSize = 0;
+                    base.OnResize(e);
+                    Doc_Panel.BorderRadius = 10;
+                    Doc_Panel.BorderSize = 3;
+                    this.Visible = true;
+                }
+                maxmin = true;
+            }
+        }
+        protected override void OnShown(EventArgs e)
+        {
+            base.OnShown(e);
+            if (lc.license == null)
+            {
+                limited = true;
+                LicenseForm lcf = new LicenseForm();
+                DialogResult result = lcf.ShowDialog();
+                if (result == DialogResult.Cancel)
+                    this.Close();
+                limited = true;
+            }
+        }
+        private void manual_btn_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                ManualForm mf = new ManualForm();
+                mf.Show();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"მოხდა შეცდომა. ბოდიშს გიხდით", "შეცდომა", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+        private void next_btn_Click(object sender, EventArgs e)
+        {
+            Change_Page(CurrentPage + 1);
+        }
+        private void previous_btn_Click(object sender, EventArgs e)
+        {
+            Change_Page(CurrentPage - 1);
+        }
         #endregion
+
+
     }
 }

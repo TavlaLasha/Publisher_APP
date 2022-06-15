@@ -43,6 +43,9 @@
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="Standard.Licensing, Version=1.1.5.0, Culture=neutral, PublicKeyToken=9f81b18f6db6aea5, processorArchitecture=MSIL">
+      <HintPath>..\packages\Standard.Licensing.1.1.5\lib\net45\Standard.Licensing.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -59,11 +62,26 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DesignHelpers\RoundedButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="DesignHelpers\RoundedCheckBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="DesignHelpers\RoundedPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="HelpForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="HelpForm.Designer.cs">
       <DependentUpon>HelpForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="LicenseForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LicenseForm.Designer.cs">
+      <DependentUpon>LicenseForm.cs</DependentUpon>
     </Compile>
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
@@ -71,13 +89,25 @@
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="ManualForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ManualForm.Designer.cs">
+      <DependentUpon>ManualForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="HelpForm.resx">
       <DependentUpon>HelpForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="LicenseForm.resx">
+      <DependentUpon>LicenseForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ManualForm.resx">
+      <DependentUpon>ManualForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
@@ -89,6 +119,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <None Include="info.rtf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

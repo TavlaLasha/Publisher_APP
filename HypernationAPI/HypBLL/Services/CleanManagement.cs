@@ -111,48 +111,42 @@ namespace BLL.Services
             return wordApp;
         }
 
+        //For Plain Text
+        public string CleanExcParagraphs(string text)
+        {
+            var pattern = "\n\n+";
+            var regex = new Regex(pattern);
+            text = regex.Replace(text, "\n\n");
 
-
-        //public string CleanExcParagraphs(string text)
-        //{
-        //    var pattern = "^13{2}[^13]@([!^13])";
-        //    var regex = new Regex(pattern);
-        //    text = regex.Replace(text, "");
-
-        //    Console.WriteLine("CleanSpaces");
-        //    text = FindAndReplace(text, "^13{2}[^13]@([!^13])", @"^13\1");
-        //    return text;
-        //}
+            return text;
+        }
 
         public string CleanSpaces(string text)
         {
-            var pattern = @"\s+";
+            var pattern = @" +";
             var regex = new Regex(pattern);
             text = regex.Replace(text, @" ");
 
             return text;
         }
 
-        //public string CleanNewLines(string text)
-        //{
-        //    Console.WriteLine("CleanNewLines");
-        //    text = FindAndReplace(text, "^11", "^13");
-        //    return text;
-        //}
-        //public string CorrectPDashStarts(string text)
-        //{
-        //    Console.WriteLine("CorrectPDashStarts");
-        //    text = FindAndReplace(text, "(^13)[-─]", @"\1— ");
-        //    return text;
-        //}
+        public string CorrectPDashStarts(string text)
+        {
+            var pattern = "[-─]";
+            var regex = new Regex(pattern);
+            text = regex.Replace(text, @"—");
 
-        ////For InDesign
-        //public string CleanTabs(string text)
-        //{
-        //    Console.WriteLine("CleanTabs");
-        //    text = FindAndReplace(text, "(^13)^9[^9]", @"\1");
-        //    return text;
-        //}
+            return text;
+        }
+
+        public string CleanTabs(string text)
+        {
+            var pattern = "\t";
+            var regex = new Regex(pattern);
+            text = regex.Replace(text, " ");
+
+            return text;
+        }
 
         private Application FindAndReplace(Application wordApp, object toFindText, object replaceWithText)
         {

@@ -30,107 +30,98 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.main_splitContainer = new System.Windows.Forms.SplitContainer();
-            this.Help_btn = new System.Windows.Forms.Button();
-            this.docBox = new System.Windows.Forms.GroupBox();
-            this.button1 = new System.Windows.Forms.Button();
+            this.FinnishedShape_pic = new System.Windows.Forms.PictureBox();
+            this.label2 = new System.Windows.Forms.Label();
             this.ForIndesign_chkbx = new System.Windows.Forms.CheckBox();
             this.hyp_chkbx = new System.Windows.Forms.CheckBox();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.pdashstart_chkbx = new System.Windows.Forms.CheckBox();
             this.newline_chkbx = new System.Windows.Forms.CheckBox();
-            this.tab_chkbx = new System.Windows.Forms.CheckBox();
+            this.Help_btn = new System.Windows.Forms.Button();
             this.par_chkbx = new System.Windows.Forms.CheckBox();
             this.space_chkbx = new System.Windows.Forms.CheckBox();
-            this.start_btn = new System.Windows.Forms.Button();
-            this.filename_lbl = new System.Windows.Forms.Label();
-            this.size_lbl = new System.Windows.Forms.Label();
-            this.page_lbl = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.type_lbl = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
+            this.Finnished_pic = new System.Windows.Forms.PictureBox();
+            this.Doc_pic = new System.Windows.Forms.PictureBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.preview_splitContainer = new System.Windows.Forms.SplitContainer();
+            this.type_lbl = new System.Windows.Forms.Label();
+            this.Doc_Panel = new GeoHypernation.DesignHelpers.RoundedPanel();
+            this.previous_btn = new System.Windows.Forms.Button();
+            this.next_btn = new System.Windows.Forms.Button();
+            this.Pagination_Box = new System.Windows.Forms.Panel();
             this.loading_box = new System.Windows.Forms.Panel();
             this.progress_lbl = new System.Windows.Forms.Label();
             this.loading_img = new System.Windows.Forms.PictureBox();
+            this.filename_lbl = new System.Windows.Forms.Label();
+            this.size_lbl = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
+            this.Preview_Panel = new GeoHypernation.DesignHelpers.RoundedPanel();
             this.webBrowser = new System.Windows.Forms.WebBrowser();
-            this.Pagination_Box = new System.Windows.Forms.Panel();
-            this.Save_btn = new System.Windows.Forms.Button();
+            this.Save_btn = new GeoHypernation.RoundedButton();
+            this.start_btn = new GeoHypernation.RoundedButton();
+            this.Upload_panel = new System.Windows.Forms.Panel();
+            this.manual_btn = new System.Windows.Forms.Label();
             this.Upload_picture = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.main_splitContainer)).BeginInit();
             this.main_splitContainer.Panel1.SuspendLayout();
             this.main_splitContainer.Panel2.SuspendLayout();
             this.main_splitContainer.SuspendLayout();
-            this.docBox.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.preview_splitContainer)).BeginInit();
-            this.preview_splitContainer.Panel1.SuspendLayout();
-            this.preview_splitContainer.Panel2.SuspendLayout();
-            this.preview_splitContainer.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.FinnishedShape_pic)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Finnished_pic)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Doc_pic)).BeginInit();
+            this.Doc_Panel.SuspendLayout();
             this.loading_box.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.loading_img)).BeginInit();
+            this.Preview_Panel.SuspendLayout();
+            this.Upload_panel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Upload_picture)).BeginInit();
             this.SuspendLayout();
             // 
             // main_splitContainer
             // 
+            this.main_splitContainer.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(43)))), ((int)(((byte)(43)))));
             resources.ApplyResources(this.main_splitContainer, "main_splitContainer");
-            this.main_splitContainer.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
+            this.main_splitContainer.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
             this.main_splitContainer.Name = "main_splitContainer";
             // 
             // main_splitContainer.Panel1
             // 
-            this.main_splitContainer.Panel1.BackColor = System.Drawing.SystemColors.ControlDark;
-            this.main_splitContainer.Panel1.Controls.Add(this.Help_btn);
-            this.main_splitContainer.Panel1.Controls.Add(this.docBox);
+            this.main_splitContainer.Panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(53)))), ((int)(((byte)(53)))), ((int)(((byte)(53)))));
+            this.main_splitContainer.Panel1.Controls.Add(this.Doc_Panel);
+            resources.ApplyResources(this.main_splitContainer.Panel1, "main_splitContainer.Panel1");
             // 
             // main_splitContainer.Panel2
             // 
-            this.main_splitContainer.Panel2.Controls.Add(this.preview_splitContainer);
+            this.main_splitContainer.Panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(53)))), ((int)(((byte)(53)))), ((int)(((byte)(53)))));
+            this.main_splitContainer.Panel2.Controls.Add(this.Save_btn);
+            this.main_splitContainer.Panel2.Controls.Add(this.FinnishedShape_pic);
+            this.main_splitContainer.Panel2.Controls.Add(this.label2);
+            this.main_splitContainer.Panel2.Controls.Add(this.ForIndesign_chkbx);
+            this.main_splitContainer.Panel2.Controls.Add(this.hyp_chkbx);
+            this.main_splitContainer.Panel2.Controls.Add(this.pictureBox2);
+            this.main_splitContainer.Panel2.Controls.Add(this.pdashstart_chkbx);
+            this.main_splitContainer.Panel2.Controls.Add(this.start_btn);
+            this.main_splitContainer.Panel2.Controls.Add(this.newline_chkbx);
+            this.main_splitContainer.Panel2.Controls.Add(this.Help_btn);
+            this.main_splitContainer.Panel2.Controls.Add(this.par_chkbx);
+            this.main_splitContainer.Panel2.Controls.Add(this.space_chkbx);
+            this.main_splitContainer.Panel2.Controls.Add(this.Finnished_pic);
+            this.main_splitContainer.Panel2.Controls.Add(this.Doc_pic);
+            this.main_splitContainer.Panel2.Controls.Add(this.label1);
+            this.main_splitContainer.Panel2.Controls.Add(this.type_lbl);
+            resources.ApplyResources(this.main_splitContainer.Panel2, "main_splitContainer.Panel2");
+            this.main_splitContainer.Panel2.ForeColor = System.Drawing.SystemColors.ButtonFace;
             // 
-            // Help_btn
+            // FinnishedShape_pic
             // 
-            resources.ApplyResources(this.Help_btn, "Help_btn");
-            this.Help_btn.BackColor = System.Drawing.SystemColors.ControlDark;
-            this.Help_btn.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.Help_btn.FlatAppearance.BorderSize = 0;
-            this.Help_btn.Name = "Help_btn";
-            this.Help_btn.UseVisualStyleBackColor = false;
-            this.Help_btn.Click += new System.EventHandler(this.Help_btn_Click);
+            resources.ApplyResources(this.FinnishedShape_pic, "FinnishedShape_pic");
+            this.FinnishedShape_pic.Name = "FinnishedShape_pic";
+            this.FinnishedShape_pic.TabStop = false;
             // 
-            // docBox
+            // label2
             // 
-            this.docBox.Controls.Add(this.button1);
-            this.docBox.Controls.Add(this.ForIndesign_chkbx);
-            this.docBox.Controls.Add(this.hyp_chkbx);
-            this.docBox.Controls.Add(this.pdashstart_chkbx);
-            this.docBox.Controls.Add(this.newline_chkbx);
-            this.docBox.Controls.Add(this.tab_chkbx);
-            this.docBox.Controls.Add(this.par_chkbx);
-            this.docBox.Controls.Add(this.space_chkbx);
-            this.docBox.Controls.Add(this.start_btn);
-            this.docBox.Controls.Add(this.filename_lbl);
-            this.docBox.Controls.Add(this.size_lbl);
-            this.docBox.Controls.Add(this.page_lbl);
-            this.docBox.Controls.Add(this.label6);
-            this.docBox.Controls.Add(this.type_lbl);
-            this.docBox.Controls.Add(this.label2);
-            this.docBox.Controls.Add(this.label5);
-            this.docBox.Controls.Add(this.label1);
-            this.docBox.Controls.Add(this.pictureBox1);
-            resources.ApplyResources(this.docBox, "docBox");
-            this.docBox.Name = "docBox";
-            this.docBox.TabStop = false;
-            // 
-            // button1
-            // 
-            this.button1.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.button1.FlatAppearance.BorderSize = 0;
-            resources.ApplyResources(this.button1, "button1");
-            this.button1.Name = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.Close_btn_Click);
+            resources.ApplyResources(this.label2, "label2");
+            this.label2.Name = "label2";
             // 
             // ForIndesign_chkbx
             // 
@@ -147,6 +138,12 @@
             this.hyp_chkbx.Name = "hyp_chkbx";
             this.hyp_chkbx.UseVisualStyleBackColor = true;
             // 
+            // pictureBox2
+            // 
+            resources.ApplyResources(this.pictureBox2, "pictureBox2");
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.TabStop = false;
+            // 
             // pdashstart_chkbx
             // 
             resources.ApplyResources(this.pdashstart_chkbx, "pdashstart_chkbx");
@@ -159,11 +156,15 @@
             this.newline_chkbx.Name = "newline_chkbx";
             this.newline_chkbx.UseVisualStyleBackColor = true;
             // 
-            // tab_chkbx
+            // Help_btn
             // 
-            resources.ApplyResources(this.tab_chkbx, "tab_chkbx");
-            this.tab_chkbx.Name = "tab_chkbx";
-            this.tab_chkbx.UseVisualStyleBackColor = true;
+            resources.ApplyResources(this.Help_btn, "Help_btn");
+            this.Help_btn.BackColor = System.Drawing.Color.Transparent;
+            this.Help_btn.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.Help_btn.FlatAppearance.BorderSize = 0;
+            this.Help_btn.Name = "Help_btn";
+            this.Help_btn.UseVisualStyleBackColor = false;
+            this.Help_btn.Click += new System.EventHandler(this.Help_btn_Click);
             // 
             // par_chkbx
             // 
@@ -176,85 +177,82 @@
             resources.ApplyResources(this.space_chkbx, "space_chkbx");
             this.space_chkbx.Checked = true;
             this.space_chkbx.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.space_chkbx.FlatAppearance.BorderSize = 0;
             this.space_chkbx.Name = "space_chkbx";
             this.space_chkbx.UseVisualStyleBackColor = true;
             // 
-            // start_btn
+            // Finnished_pic
             // 
-            this.start_btn.Cursor = System.Windows.Forms.Cursors.Hand;
-            resources.ApplyResources(this.start_btn, "start_btn");
-            this.start_btn.Name = "start_btn";
-            this.start_btn.UseVisualStyleBackColor = true;
-            this.start_btn.Click += new System.EventHandler(this.Start_btn_Click);
+            resources.ApplyResources(this.Finnished_pic, "Finnished_pic");
+            this.Finnished_pic.Name = "Finnished_pic";
+            this.Finnished_pic.TabStop = false;
             // 
-            // filename_lbl
+            // Doc_pic
             // 
-            resources.ApplyResources(this.filename_lbl, "filename_lbl");
-            this.filename_lbl.Name = "filename_lbl";
-            // 
-            // size_lbl
-            // 
-            resources.ApplyResources(this.size_lbl, "size_lbl");
-            this.size_lbl.Name = "size_lbl";
-            // 
-            // page_lbl
-            // 
-            resources.ApplyResources(this.page_lbl, "page_lbl");
-            this.page_lbl.Name = "page_lbl";
-            // 
-            // label6
-            // 
-            resources.ApplyResources(this.label6, "label6");
-            this.label6.Name = "label6";
-            // 
-            // type_lbl
-            // 
-            resources.ApplyResources(this.type_lbl, "type_lbl");
-            this.type_lbl.Name = "type_lbl";
-            // 
-            // label2
-            // 
-            resources.ApplyResources(this.label2, "label2");
-            this.label2.Name = "label2";
-            // 
-            // label5
-            // 
-            resources.ApplyResources(this.label5, "label5");
-            this.label5.Name = "label5";
+            resources.ApplyResources(this.Doc_pic, "Doc_pic");
+            this.Doc_pic.Name = "Doc_pic";
+            this.Doc_pic.TabStop = false;
             // 
             // label1
             // 
             resources.ApplyResources(this.label1, "label1");
             this.label1.Name = "label1";
             // 
-            // pictureBox1
+            // type_lbl
             // 
-            this.pictureBox1.Image = global::GeoHypernation.Properties.Resources.microsoft_word_document_icon;
-            resources.ApplyResources(this.pictureBox1, "pictureBox1");
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.TabStop = false;
+            resources.ApplyResources(this.type_lbl, "type_lbl");
+            this.type_lbl.Name = "type_lbl";
             // 
-            // preview_splitContainer
+            // Doc_Panel
             // 
-            resources.ApplyResources(this.preview_splitContainer, "preview_splitContainer");
-            this.preview_splitContainer.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
-            this.preview_splitContainer.Name = "preview_splitContainer";
+            resources.ApplyResources(this.Doc_Panel, "Doc_Panel");
+            this.Doc_Panel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(53)))), ((int)(((byte)(53)))), ((int)(((byte)(53)))));
+            this.Doc_Panel.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(53)))), ((int)(((byte)(53)))), ((int)(((byte)(53)))));
+            this.Doc_Panel.BorderColor = System.Drawing.Color.Yellow;
+            this.Doc_Panel.BorderRadius = 25;
+            this.Doc_Panel.BorderSize = 3;
+            this.Doc_Panel.Controls.Add(this.previous_btn);
+            this.Doc_Panel.Controls.Add(this.next_btn);
+            this.Doc_Panel.Controls.Add(this.Pagination_Box);
+            this.Doc_Panel.Controls.Add(this.loading_box);
+            this.Doc_Panel.Controls.Add(this.filename_lbl);
+            this.Doc_Panel.Controls.Add(this.size_lbl);
+            this.Doc_Panel.Controls.Add(this.button1);
+            this.Doc_Panel.Controls.Add(this.Preview_Panel);
+            this.Doc_Panel.ForeColor = System.Drawing.Color.White;
+            this.Doc_Panel.Name = "Doc_Panel";
+            this.Doc_Panel.TextColor = System.Drawing.Color.White;
             // 
-            // preview_splitContainer.Panel1
+            // previous_btn
             // 
-            this.preview_splitContainer.Panel1.Controls.Add(this.loading_box);
-            this.preview_splitContainer.Panel1.Controls.Add(this.webBrowser);
+            resources.ApplyResources(this.previous_btn, "previous_btn");
+            this.previous_btn.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.previous_btn.FlatAppearance.BorderSize = 0;
+            this.previous_btn.Name = "previous_btn";
+            this.previous_btn.UseVisualStyleBackColor = true;
+            this.previous_btn.Click += new System.EventHandler(this.previous_btn_Click);
             // 
-            // preview_splitContainer.Panel2
+            // next_btn
             // 
-            this.preview_splitContainer.Panel2.Controls.Add(this.Pagination_Box);
-            this.preview_splitContainer.Panel2.Controls.Add(this.Save_btn);
+            resources.ApplyResources(this.next_btn, "next_btn");
+            this.next_btn.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.next_btn.FlatAppearance.BorderSize = 0;
+            this.next_btn.Name = "next_btn";
+            this.next_btn.UseVisualStyleBackColor = true;
+            this.next_btn.Click += new System.EventHandler(this.next_btn_Click);
+            // 
+            // Pagination_Box
+            // 
+            resources.ApplyResources(this.Pagination_Box, "Pagination_Box");
+            this.Pagination_Box.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(53)))), ((int)(((byte)(53)))), ((int)(((byte)(53)))));
+            this.Pagination_Box.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.Pagination_Box.Name = "Pagination_Box";
             // 
             // loading_box
             // 
+            resources.ApplyResources(this.loading_box, "loading_box");
             this.loading_box.Controls.Add(this.progress_lbl);
             this.loading_box.Controls.Add(this.loading_img);
-            resources.ApplyResources(this.loading_box, "loading_box");
             this.loading_box.Name = "loading_box";
             // 
             // progress_lbl
@@ -267,11 +265,47 @@
             // 
             // loading_img
             // 
+            this.loading_img.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(53)))), ((int)(((byte)(53)))), ((int)(((byte)(53)))));
             resources.ApplyResources(this.loading_img, "loading_img");
             this.loading_img.Image = global::GeoHypernation.Properties.Resources._200;
             this.loading_img.Name = "loading_img";
             this.loading_img.TabStop = false;
             this.loading_img.UseWaitCursor = true;
+            // 
+            // filename_lbl
+            // 
+            resources.ApplyResources(this.filename_lbl, "filename_lbl");
+            this.filename_lbl.ForeColor = System.Drawing.SystemColors.HighlightText;
+            this.filename_lbl.Name = "filename_lbl";
+            // 
+            // size_lbl
+            // 
+            resources.ApplyResources(this.size_lbl, "size_lbl");
+            this.size_lbl.ForeColor = System.Drawing.SystemColors.Info;
+            this.size_lbl.Name = "size_lbl";
+            // 
+            // button1
+            // 
+            this.button1.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.button1.FlatAppearance.BorderSize = 0;
+            resources.ApplyResources(this.button1, "button1");
+            this.button1.ForeColor = System.Drawing.SystemColors.ButtonFace;
+            this.button1.Name = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.Close_btn_Click);
+            // 
+            // Preview_Panel
+            // 
+            resources.ApplyResources(this.Preview_Panel, "Preview_Panel");
+            this.Preview_Panel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.Preview_Panel.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.Preview_Panel.BorderColor = System.Drawing.Color.Gray;
+            this.Preview_Panel.BorderRadius = 0;
+            this.Preview_Panel.BorderSize = 2;
+            this.Preview_Panel.Controls.Add(this.webBrowser);
+            this.Preview_Panel.ForeColor = System.Drawing.Color.White;
+            this.Preview_Panel.Name = "Preview_Panel";
+            this.Preview_Panel.TextColor = System.Drawing.Color.White;
             // 
             // webBrowser
             // 
@@ -279,28 +313,54 @@
             resources.ApplyResources(this.webBrowser, "webBrowser");
             this.webBrowser.Name = "webBrowser";
             // 
-            // Pagination_Box
-            // 
-            resources.ApplyResources(this.Pagination_Box, "Pagination_Box");
-            this.Pagination_Box.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.Pagination_Box.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.Pagination_Box.Name = "Pagination_Box";
-            // 
             // Save_btn
             // 
-            resources.ApplyResources(this.Save_btn, "Save_btn");
-            this.Save_btn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.Save_btn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(223)))), ((int)(((byte)(145)))));
+            this.Save_btn.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(223)))), ((int)(((byte)(145)))));
+            this.Save_btn.BorderColor = System.Drawing.Color.PaleVioletRed;
+            this.Save_btn.BorderRadius = 12;
+            this.Save_btn.BorderSize = 0;
             this.Save_btn.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.Save_btn.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.Save_btn.FlatAppearance.BorderSize = 3;
-            this.Save_btn.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Gray;
-            this.Save_btn.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(62)))), ((int)(((byte)(62)))));
+            this.Save_btn.FlatAppearance.BorderSize = 0;
+            resources.ApplyResources(this.Save_btn, "Save_btn");
+            this.Save_btn.ForeColor = System.Drawing.Color.White;
             this.Save_btn.Name = "Save_btn";
-            this.Save_btn.UseVisualStyleBackColor = true;
+            this.Save_btn.TextColor = System.Drawing.Color.White;
+            this.Save_btn.UseVisualStyleBackColor = false;
             this.Save_btn.Click += new System.EventHandler(this.Save_btn_Click);
+            // 
+            // start_btn
+            // 
+            this.start_btn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
+            this.start_btn.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
+            this.start_btn.BorderColor = System.Drawing.SystemColors.ActiveCaption;
+            this.start_btn.BorderRadius = 12;
+            this.start_btn.BorderSize = 0;
+            this.start_btn.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.start_btn.FlatAppearance.BorderSize = 0;
+            resources.ApplyResources(this.start_btn, "start_btn");
+            this.start_btn.ForeColor = System.Drawing.Color.White;
+            this.start_btn.Name = "start_btn";
+            this.start_btn.TextColor = System.Drawing.Color.White;
+            this.start_btn.UseVisualStyleBackColor = false;
+            this.start_btn.Click += new System.EventHandler(this.Start_btn_Click);
+            // 
+            // Upload_panel
+            // 
+            this.Upload_panel.Controls.Add(this.manual_btn);
+            this.Upload_panel.Controls.Add(this.Upload_picture);
+            resources.ApplyResources(this.Upload_panel, "Upload_panel");
+            this.Upload_panel.Name = "Upload_panel";
+            // 
+            // manual_btn
+            // 
+            resources.ApplyResources(this.manual_btn, "manual_btn");
+            this.manual_btn.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.manual_btn.Name = "manual_btn";
             // 
             // Upload_picture
             // 
+            this.Upload_picture.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(43)))), ((int)(((byte)(43)))));
             this.Upload_picture.Cursor = System.Windows.Forms.Cursors.Hand;
             resources.ApplyResources(this.Upload_picture, "Upload_picture");
             this.Upload_picture.Name = "Upload_picture";
@@ -310,24 +370,29 @@
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.Upload_picture);
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.Controls.Add(this.Upload_panel);
             this.Controls.Add(this.main_splitContainer);
+            this.DoubleBuffered = true;
             this.Name = "MainForm";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.main_splitContainer.Panel1.ResumeLayout(false);
             this.main_splitContainer.Panel2.ResumeLayout(false);
+            this.main_splitContainer.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.main_splitContainer)).EndInit();
             this.main_splitContainer.ResumeLayout(false);
-            this.docBox.ResumeLayout(false);
-            this.docBox.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            this.preview_splitContainer.Panel1.ResumeLayout(false);
-            this.preview_splitContainer.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.preview_splitContainer)).EndInit();
-            this.preview_splitContainer.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.FinnishedShape_pic)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Finnished_pic)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Doc_pic)).EndInit();
+            this.Doc_Panel.ResumeLayout(false);
+            this.Doc_Panel.PerformLayout();
             this.loading_box.ResumeLayout(false);
             this.loading_box.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.loading_img)).EndInit();
+            this.Preview_Panel.ResumeLayout(false);
+            this.Upload_panel.ResumeLayout(false);
+            this.Upload_panel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Upload_picture)).EndInit();
             this.ResumeLayout(false);
 
@@ -336,32 +401,35 @@
         #endregion
         private System.Windows.Forms.SplitContainer main_splitContainer;
         private System.Windows.Forms.Button Help_btn;
-        private System.Windows.Forms.GroupBox docBox;
         private System.Windows.Forms.CheckBox ForIndesign_chkbx;
         private System.Windows.Forms.CheckBox hyp_chkbx;
         private System.Windows.Forms.CheckBox pdashstart_chkbx;
         private System.Windows.Forms.CheckBox newline_chkbx;
-        private System.Windows.Forms.CheckBox tab_chkbx;
         private System.Windows.Forms.CheckBox par_chkbx;
         private System.Windows.Forms.CheckBox space_chkbx;
-        private System.Windows.Forms.Button start_btn;
         private System.Windows.Forms.Label filename_lbl;
         private System.Windows.Forms.Label size_lbl;
-        private System.Windows.Forms.Label page_lbl;
-        private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label type_lbl;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.SplitContainer preview_splitContainer;
+        private System.Windows.Forms.PictureBox Doc_pic;
         private System.Windows.Forms.Panel loading_box;
         private System.Windows.Forms.Label progress_lbl;
         private System.Windows.Forms.PictureBox loading_img;
         private System.Windows.Forms.WebBrowser webBrowser;
         private System.Windows.Forms.Panel Pagination_Box;
-        private System.Windows.Forms.Button Save_btn;
         private System.Windows.Forms.Button button1;
+        private RoundedButton start_btn;
+        private DesignHelpers.RoundedPanel Doc_Panel;
+        private DesignHelpers.RoundedPanel Preview_Panel;
+        private System.Windows.Forms.PictureBox pictureBox2;
+        private RoundedButton Save_btn;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.PictureBox FinnishedShape_pic;
+        private System.Windows.Forms.PictureBox Finnished_pic;
+        private System.Windows.Forms.Button next_btn;
+        private System.Windows.Forms.Button previous_btn;
+        private System.Windows.Forms.Panel Upload_panel;
+        private System.Windows.Forms.Label manual_btn;
         private System.Windows.Forms.PictureBox Upload_picture;
     }
 }

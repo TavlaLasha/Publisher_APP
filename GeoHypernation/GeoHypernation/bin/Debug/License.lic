@@ -1,0 +1,16 @@
+﻿<License>
+  <Id>1c31c03e-bc2d-4267-9101-808d41a426df</Id>
+  <Type>Trial</Type>
+  <Expiration>Thu, 14 Jul 2022 18:43:33 GMT</Expiration>
+  <Quantity>5</Quantity>
+  <ProductFeatures>
+    <Feature name="Sales Module">yes</Feature>
+    <Feature name="Purchase Module">yes</Feature>
+    <Feature name="Maximum Transactions">10000</Feature>
+  </ProductFeatures>
+  <Customer>
+    <Name>John Doe</Name>
+    <Email>john.doe@example.com</Email>
+  </Customer>
+  <Signature>MEUCIBxpq1w/KIb89YyeW/Nk8qtgyGvBjlB2/Zz12+fHC0EdAiEAqOgmSDuc9ZxXhPrXL85FJ0SdKHpWRgrsGzeIogFxysM=</Signature>
+</License>

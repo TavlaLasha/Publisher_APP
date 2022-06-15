@@ -35,6 +35,9 @@
       <HintPath>..\packages\Microsoft.Office.Interop.Word.15.0.4797.1003\lib\net20\Microsoft.Office.Interop.Word.dll</HintPath>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
+    <Reference Include="Standard.Licensing, Version=1.1.5.0, Culture=neutral, PublicKeyToken=9f81b18f6db6aea5, processorArchitecture=MSIL">
+      <HintPath>..\packages\Standard.Licensing.1.1.5\lib\net45\Standard.Licensing.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.IO.Compression.FileSystem" />
@@ -52,6 +55,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\CleanDoc.cs" />
     <Compile Include="Services\HYP.cs" />
+    <Compile Include="Services\LicenseManagement.cs" />
     <Compile Include="Services\WorkWithDoc.cs" />
   </ItemGroup>
   <ItemGroup>

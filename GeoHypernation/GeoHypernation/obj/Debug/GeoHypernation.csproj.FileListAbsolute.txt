@@ -28,3 +28,7 @@ C:\Users\lasha\Desktop\Project\Publisher_APP\GeoHypernation\GeoHypernation\obj\D
 C:\Users\lasha\Desktop\Project\Publisher_APP\GeoHypernation\GeoHypernation\obj\Debug\GeoHypernation.csproj.CopyComplete
 C:\Users\lasha\Desktop\Project\Publisher_APP\GeoHypernation\GeoHypernation\obj\Debug\GeoHypernation.exe
 C:\Users\lasha\Desktop\Project\Publisher_APP\GeoHypernation\GeoHypernation\obj\Debug\GeoHypernation.pdb
+C:\Users\lasha\Desktop\Project\Publisher_APP\GeoHypernation\GeoHypernation\bin\Debug\Standard.Licensing.dll
+C:\Users\lasha\Desktop\Project\Publisher_APP\GeoHypernation\GeoHypernation\obj\Debug\GeoHypernation.LicenseForm.resources
+C:\Users\lasha\Desktop\Project\Publisher_APP\GeoHypernation\GeoHypernation\bin\Debug\info.rtf
+C:\Users\lasha\Desktop\Project\Publisher_APP\GeoHypernation\GeoHypernation\obj\Debug\GeoHypernation.ManualForm.resources

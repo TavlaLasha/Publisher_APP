@@ -28,12 +28,17 @@ namespace BLL.Services
         private Application WordApp = null;
         private Document WordDoc = null;
 
+        private string Text;
+
 
         public WorkWithDoc(string docPath)
         {
-            //syncContext = AsyncOperationManager.SynchronizationContext;
             TakeDoc(docPath);
             OpenDoc();
+        }
+        public WorkWithDoc(TextDTO textDTO)
+        {
+            Text = textDTO.Text;
         }
 
         public void TakeDoc(string fileName)
@@ -85,6 +90,26 @@ namespace BLL.Services
             WordDoc.Save();
 
             return true;
+        }
+        public string HypernateText()
+        {
+            if (string.IsNullOrEmpty(Text))
+                throw new Exception("Not text given");
+
+            HYP hyp = new HYP(Text);
+            Text = hyp.HYPExecuteTxt();
+
+            return Text;
+        }
+        public string CleanText(DocCleanDCM docClean)
+        {
+            if (string.IsNullOrEmpty(Text))
+                throw new Exception("Not text given");
+
+            CleanDoc cld = new CleanDoc(Text);
+            Text = cld.ExecuteTxt(docClean);
+
+            return Text;
         }
         public DocDTO GetPages(int page = 1, bool clean = false)
         {
@@ -199,6 +224,8 @@ namespace BLL.Services
                 WDFormat = WdSaveFormat.wdFormatDocument97;
             else if (format.Equals(".rtf"))
                 WDFormat = WdSaveFormat.wdFormatRTF;
+            else if (format.Equals(".pdf"))
+                WDFormat = WdSaveFormat.wdFormatPDF;
             else
                 WDFormat = WdSaveFormat.wdFormatDocumentDefault;
 
