@@ -10,13 +10,13 @@ namespace BLL.Logics
     public class Licensing
     {
 
-        private string LicensePath = 
-        public Licensing()
-        {
-            if (File.Exists())
-            {
+        //private string LicensePath = 
+        //public Licensing()
+        //{
+        //    if (File.Exists())
+        //    {
 
-            }
-        }
+        //    }
+        //}
     }
 }
