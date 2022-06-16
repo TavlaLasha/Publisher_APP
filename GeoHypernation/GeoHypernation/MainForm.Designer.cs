@@ -30,20 +30,6 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.main_splitContainer = new System.Windows.Forms.SplitContainer();
-            this.FinnishedShape_pic = new System.Windows.Forms.PictureBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.ForIndesign_chkbx = new System.Windows.Forms.CheckBox();
-            this.hyp_chkbx = new System.Windows.Forms.CheckBox();
-            this.pictureBox2 = new System.Windows.Forms.PictureBox();
-            this.pdashstart_chkbx = new System.Windows.Forms.CheckBox();
-            this.newline_chkbx = new System.Windows.Forms.CheckBox();
-            this.Help_btn = new System.Windows.Forms.Button();
-            this.par_chkbx = new System.Windows.Forms.CheckBox();
-            this.space_chkbx = new System.Windows.Forms.CheckBox();
-            this.Finnished_pic = new System.Windows.Forms.PictureBox();
-            this.Doc_pic = new System.Windows.Forms.PictureBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.type_lbl = new System.Windows.Forms.Label();
             this.Doc_Panel = new GeoHypernation.DesignHelpers.RoundedPanel();
             this.previous_btn = new System.Windows.Forms.Button();
             this.next_btn = new System.Windows.Forms.Button();
@@ -57,22 +43,37 @@
             this.Preview_Panel = new GeoHypernation.DesignHelpers.RoundedPanel();
             this.webBrowser = new System.Windows.Forms.WebBrowser();
             this.Save_btn = new GeoHypernation.RoundedButton();
+            this.FinnishedShape_pic = new System.Windows.Forms.PictureBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.ForIndesign_chkbx = new System.Windows.Forms.CheckBox();
+            this.hyp_chkbx = new System.Windows.Forms.CheckBox();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.pdashstart_chkbx = new System.Windows.Forms.CheckBox();
             this.start_btn = new GeoHypernation.RoundedButton();
+            this.newline_chkbx = new System.Windows.Forms.CheckBox();
+            this.Help_btn = new System.Windows.Forms.Button();
+            this.par_chkbx = new System.Windows.Forms.CheckBox();
+            this.space_chkbx = new System.Windows.Forms.CheckBox();
+            this.Finnished_pic = new System.Windows.Forms.PictureBox();
+            this.Doc_pic = new System.Windows.Forms.PictureBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.type_lbl = new System.Windows.Forms.Label();
             this.Upload_panel = new System.Windows.Forms.Panel();
-            this.manual_btn = new System.Windows.Forms.Label();
+            this.manual_btn = new System.Windows.Forms.Button();
+            this.upload_btn = new System.Windows.Forms.Button();
             this.Upload_picture = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.main_splitContainer)).BeginInit();
             this.main_splitContainer.Panel1.SuspendLayout();
             this.main_splitContainer.Panel2.SuspendLayout();
             this.main_splitContainer.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.FinnishedShape_pic)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Finnished_pic)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Doc_pic)).BeginInit();
             this.Doc_Panel.SuspendLayout();
             this.loading_box.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.loading_img)).BeginInit();
             this.Preview_Panel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.FinnishedShape_pic)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Finnished_pic)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Doc_pic)).BeginInit();
             this.Upload_panel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Upload_picture)).BeginInit();
             this.SuspendLayout();
@@ -111,97 +112,6 @@
             this.main_splitContainer.Panel2.Controls.Add(this.type_lbl);
             resources.ApplyResources(this.main_splitContainer.Panel2, "main_splitContainer.Panel2");
             this.main_splitContainer.Panel2.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            // 
-            // FinnishedShape_pic
-            // 
-            resources.ApplyResources(this.FinnishedShape_pic, "FinnishedShape_pic");
-            this.FinnishedShape_pic.Name = "FinnishedShape_pic";
-            this.FinnishedShape_pic.TabStop = false;
-            // 
-            // label2
-            // 
-            resources.ApplyResources(this.label2, "label2");
-            this.label2.Name = "label2";
-            // 
-            // ForIndesign_chkbx
-            // 
-            resources.ApplyResources(this.ForIndesign_chkbx, "ForIndesign_chkbx");
-            this.ForIndesign_chkbx.Name = "ForIndesign_chkbx";
-            this.ForIndesign_chkbx.UseVisualStyleBackColor = true;
-            this.ForIndesign_chkbx.Click += new System.EventHandler(this.ForIndesign_chkbx_CheckedChanged);
-            // 
-            // hyp_chkbx
-            // 
-            resources.ApplyResources(this.hyp_chkbx, "hyp_chkbx");
-            this.hyp_chkbx.Checked = true;
-            this.hyp_chkbx.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.hyp_chkbx.Name = "hyp_chkbx";
-            this.hyp_chkbx.UseVisualStyleBackColor = true;
-            // 
-            // pictureBox2
-            // 
-            resources.ApplyResources(this.pictureBox2, "pictureBox2");
-            this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.TabStop = false;
-            // 
-            // pdashstart_chkbx
-            // 
-            resources.ApplyResources(this.pdashstart_chkbx, "pdashstart_chkbx");
-            this.pdashstart_chkbx.Name = "pdashstart_chkbx";
-            this.pdashstart_chkbx.UseVisualStyleBackColor = true;
-            // 
-            // newline_chkbx
-            // 
-            resources.ApplyResources(this.newline_chkbx, "newline_chkbx");
-            this.newline_chkbx.Name = "newline_chkbx";
-            this.newline_chkbx.UseVisualStyleBackColor = true;
-            // 
-            // Help_btn
-            // 
-            resources.ApplyResources(this.Help_btn, "Help_btn");
-            this.Help_btn.BackColor = System.Drawing.Color.Transparent;
-            this.Help_btn.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.Help_btn.FlatAppearance.BorderSize = 0;
-            this.Help_btn.Name = "Help_btn";
-            this.Help_btn.UseVisualStyleBackColor = false;
-            this.Help_btn.Click += new System.EventHandler(this.Help_btn_Click);
-            // 
-            // par_chkbx
-            // 
-            resources.ApplyResources(this.par_chkbx, "par_chkbx");
-            this.par_chkbx.Name = "par_chkbx";
-            this.par_chkbx.UseVisualStyleBackColor = true;
-            // 
-            // space_chkbx
-            // 
-            resources.ApplyResources(this.space_chkbx, "space_chkbx");
-            this.space_chkbx.Checked = true;
-            this.space_chkbx.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.space_chkbx.FlatAppearance.BorderSize = 0;
-            this.space_chkbx.Name = "space_chkbx";
-            this.space_chkbx.UseVisualStyleBackColor = true;
-            // 
-            // Finnished_pic
-            // 
-            resources.ApplyResources(this.Finnished_pic, "Finnished_pic");
-            this.Finnished_pic.Name = "Finnished_pic";
-            this.Finnished_pic.TabStop = false;
-            // 
-            // Doc_pic
-            // 
-            resources.ApplyResources(this.Doc_pic, "Doc_pic");
-            this.Doc_pic.Name = "Doc_pic";
-            this.Doc_pic.TabStop = false;
-            // 
-            // label1
-            // 
-            resources.ApplyResources(this.label1, "label1");
-            this.label1.Name = "label1";
-            // 
-            // type_lbl
-            // 
-            resources.ApplyResources(this.type_lbl, "type_lbl");
-            this.type_lbl.Name = "type_lbl";
             // 
             // Doc_Panel
             // 
@@ -329,6 +239,44 @@
             this.Save_btn.UseVisualStyleBackColor = false;
             this.Save_btn.Click += new System.EventHandler(this.Save_btn_Click);
             // 
+            // FinnishedShape_pic
+            // 
+            resources.ApplyResources(this.FinnishedShape_pic, "FinnishedShape_pic");
+            this.FinnishedShape_pic.Name = "FinnishedShape_pic";
+            this.FinnishedShape_pic.TabStop = false;
+            // 
+            // label2
+            // 
+            resources.ApplyResources(this.label2, "label2");
+            this.label2.Name = "label2";
+            // 
+            // ForIndesign_chkbx
+            // 
+            resources.ApplyResources(this.ForIndesign_chkbx, "ForIndesign_chkbx");
+            this.ForIndesign_chkbx.Name = "ForIndesign_chkbx";
+            this.ForIndesign_chkbx.UseVisualStyleBackColor = true;
+            this.ForIndesign_chkbx.Click += new System.EventHandler(this.ForIndesign_chkbx_CheckedChanged);
+            // 
+            // hyp_chkbx
+            // 
+            resources.ApplyResources(this.hyp_chkbx, "hyp_chkbx");
+            this.hyp_chkbx.Checked = true;
+            this.hyp_chkbx.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.hyp_chkbx.Name = "hyp_chkbx";
+            this.hyp_chkbx.UseVisualStyleBackColor = true;
+            // 
+            // pictureBox2
+            // 
+            resources.ApplyResources(this.pictureBox2, "pictureBox2");
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.TabStop = false;
+            // 
+            // pdashstart_chkbx
+            // 
+            resources.ApplyResources(this.pdashstart_chkbx, "pdashstart_chkbx");
+            this.pdashstart_chkbx.Name = "pdashstart_chkbx";
+            this.pdashstart_chkbx.UseVisualStyleBackColor = true;
+            // 
             // start_btn
             // 
             this.start_btn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
@@ -345,9 +293,65 @@
             this.start_btn.UseVisualStyleBackColor = false;
             this.start_btn.Click += new System.EventHandler(this.Start_btn_Click);
             // 
+            // newline_chkbx
+            // 
+            resources.ApplyResources(this.newline_chkbx, "newline_chkbx");
+            this.newline_chkbx.FlatAppearance.BorderSize = 0;
+            this.newline_chkbx.FlatAppearance.CheckedBackColor = System.Drawing.Color.WhiteSmoke;
+            this.newline_chkbx.Name = "newline_chkbx";
+            this.newline_chkbx.UseVisualStyleBackColor = true;
+            // 
+            // Help_btn
+            // 
+            resources.ApplyResources(this.Help_btn, "Help_btn");
+            this.Help_btn.BackColor = System.Drawing.Color.Transparent;
+            this.Help_btn.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.Help_btn.FlatAppearance.BorderSize = 0;
+            this.Help_btn.Name = "Help_btn";
+            this.Help_btn.UseVisualStyleBackColor = false;
+            this.Help_btn.Click += new System.EventHandler(this.Help_btn_Click);
+            // 
+            // par_chkbx
+            // 
+            resources.ApplyResources(this.par_chkbx, "par_chkbx");
+            this.par_chkbx.Name = "par_chkbx";
+            this.par_chkbx.UseVisualStyleBackColor = true;
+            // 
+            // space_chkbx
+            // 
+            resources.ApplyResources(this.space_chkbx, "space_chkbx");
+            this.space_chkbx.Checked = true;
+            this.space_chkbx.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.space_chkbx.FlatAppearance.BorderSize = 0;
+            this.space_chkbx.Name = "space_chkbx";
+            this.space_chkbx.UseVisualStyleBackColor = true;
+            // 
+            // Finnished_pic
+            // 
+            resources.ApplyResources(this.Finnished_pic, "Finnished_pic");
+            this.Finnished_pic.Name = "Finnished_pic";
+            this.Finnished_pic.TabStop = false;
+            // 
+            // Doc_pic
+            // 
+            resources.ApplyResources(this.Doc_pic, "Doc_pic");
+            this.Doc_pic.Name = "Doc_pic";
+            this.Doc_pic.TabStop = false;
+            // 
+            // label1
+            // 
+            resources.ApplyResources(this.label1, "label1");
+            this.label1.Name = "label1";
+            // 
+            // type_lbl
+            // 
+            resources.ApplyResources(this.type_lbl, "type_lbl");
+            this.type_lbl.Name = "type_lbl";
+            // 
             // Upload_panel
             // 
             this.Upload_panel.Controls.Add(this.manual_btn);
+            this.Upload_panel.Controls.Add(this.upload_btn);
             this.Upload_panel.Controls.Add(this.Upload_picture);
             resources.ApplyResources(this.Upload_panel, "Upload_panel");
             this.Upload_panel.Name = "Upload_panel";
@@ -355,13 +359,25 @@
             // manual_btn
             // 
             resources.ApplyResources(this.manual_btn, "manual_btn");
-            this.manual_btn.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.manual_btn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(43)))), ((int)(((byte)(43)))));
+            this.manual_btn.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.manual_btn.FlatAppearance.BorderSize = 0;
             this.manual_btn.Name = "manual_btn";
+            this.manual_btn.UseVisualStyleBackColor = false;
+            // 
+            // upload_btn
+            // 
+            resources.ApplyResources(this.upload_btn, "upload_btn");
+            this.upload_btn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(43)))), ((int)(((byte)(43)))));
+            this.upload_btn.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.upload_btn.FlatAppearance.BorderSize = 0;
+            this.upload_btn.Name = "upload_btn";
+            this.upload_btn.UseVisualStyleBackColor = false;
             // 
             // Upload_picture
             // 
             this.Upload_picture.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(43)))), ((int)(((byte)(43)))));
-            this.Upload_picture.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.Upload_picture.Cursor = System.Windows.Forms.Cursors.Default;
             resources.ApplyResources(this.Upload_picture, "Upload_picture");
             this.Upload_picture.Name = "Upload_picture";
             this.Upload_picture.TabStop = false;
@@ -369,11 +385,13 @@
             // MainForm
             // 
             resources.ApplyResources(this, "$this");
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(43)))), ((int)(((byte)(43)))));
             this.Controls.Add(this.Upload_panel);
             this.Controls.Add(this.main_splitContainer);
             this.DoubleBuffered = true;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
             this.Name = "MainForm";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.main_splitContainer.Panel1.ResumeLayout(false);
@@ -381,18 +399,17 @@
             this.main_splitContainer.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.main_splitContainer)).EndInit();
             this.main_splitContainer.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.FinnishedShape_pic)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Finnished_pic)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Doc_pic)).EndInit();
             this.Doc_Panel.ResumeLayout(false);
             this.Doc_Panel.PerformLayout();
             this.loading_box.ResumeLayout(false);
             this.loading_box.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.loading_img)).EndInit();
             this.Preview_Panel.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.FinnishedShape_pic)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Finnished_pic)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Doc_pic)).EndInit();
             this.Upload_panel.ResumeLayout(false);
-            this.Upload_panel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Upload_picture)).EndInit();
             this.ResumeLayout(false);
 
@@ -429,7 +446,8 @@
         private System.Windows.Forms.Button next_btn;
         private System.Windows.Forms.Button previous_btn;
         private System.Windows.Forms.Panel Upload_panel;
-        private System.Windows.Forms.Label manual_btn;
+        private System.Windows.Forms.Button manual_btn;
+        private System.Windows.Forms.Button upload_btn;
         private System.Windows.Forms.PictureBox Upload_picture;
     }
 }

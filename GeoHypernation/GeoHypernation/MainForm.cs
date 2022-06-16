@@ -42,10 +42,10 @@ namespace GeoHypernation
         {
             InitializeComponent();
             this.AllowDrop = true;
-            Upload_picture.Click += Upload_picture_Click;
+            upload_btn.Click += upload_btn_Click;
             manual_btn.Click += manual_btn_Click;
-            this.DragEnter += new DragEventHandler(Upload_picture_DragEnter);
-            this.DragDrop += new DragEventHandler(Upload_picture_DragDrop);
+            this.DragEnter += new DragEventHandler(upload_btn_DragEnter);
+            this.DragDrop += new DragEventHandler(upload_btn_DragDrop);
             Change_SaveBtn_State(enabled: false);
             lc = new LicenseManagement();
             
@@ -84,6 +84,8 @@ namespace GeoHypernation
                 Change_working_state(false);
                 WorkingDocPath = (string)wwd.DocPath;
                 InitializeDocBox(file);
+                this.SetFormBorderStyle(FormBorderStyle.Sizable);
+                this.SetMaximizeBox(true);
             }
             catch(Exception ex)
             {
@@ -112,7 +114,7 @@ namespace GeoHypernation
             for (int i = 0; i < char_arr.Length; i++)
             {
                 width = (int)(g.MeasureString(labelstr.Substring(labelstr.Length-i, i), f).Width);
-                if (width >= filename_lbl.Width)
+                if (width >= filename_lbl.GetWidth())
                 {
                     count = i;
                     break;
@@ -180,6 +182,15 @@ namespace GeoHypernation
                     CurrentPage = 0;
                     IsSaved = true;
                     Change_SaveBtn_State(enabled: false);
+                    if (this.GetWindowState() == FormWindowState.Maximized)
+                        this.SetWindowState(FormWindowState.Normal);
+                    this.SetVisible(false);
+                    SuspendLayout();
+                    this.SetSize(new Size(1129, 506));
+                    this.SetFormBorderStyleAsync(FormBorderStyle.FixedSingle);
+                    this.SetMaximizeBoxAsync(false);
+                    ResumeLayout();
+                    this.SetVisible(true);
                 }
             }
             catch (Exception ex)
@@ -193,7 +204,7 @@ namespace GeoHypernation
 
 
         #region File Upload Methods
-        private void Upload_picture_Click(object sender, EventArgs e)
+        private void upload_btn_Click(object sender, EventArgs e)
         {
             if (!Working && FileName == string.Empty)
             {
@@ -202,7 +213,6 @@ namespace GeoHypernation
                     OpenFileDialog ofd = new OpenFileDialog()
                     {
                         InitialDirectory = @"Documents",
-                        FileName = "აირჩიეთ MS Word დოკუმენტი",
                         Filter = "Word Document (*.docx)|*.docx|Word Document (*.doc)|*.doc|Rich Text Format (*.rtf)|*.rtf",
                         Title = "გახსენით MS Word დოკუმენტი"
                     };
@@ -219,11 +229,11 @@ namespace GeoHypernation
                 }
             }
         }
-        private void Upload_picture_DragEnter(object sender, DragEventArgs e)
+        private void upload_btn_DragEnter(object sender, DragEventArgs e)
         {
             if (e.Data.GetDataPresent(DataFormats.FileDrop)) e.Effect = DragDropEffects.Copy;
         }
-        private void Upload_picture_DragDrop(object sender, DragEventArgs e)
+        private void upload_btn_DragDrop(object sender, DragEventArgs e)
         {
             try
             {
@@ -277,16 +287,14 @@ namespace GeoHypernation
             {
                 Working = working;
                 loading_box.SetVisibleAsync(Working);
+                Update_Prev_Next_State(disabled: Working);
 
                 List<Button> btn = Pagination_Box.Controls.OfType<Button>().ToList();
-                if (CurrentPage != 1)
-                    previous_btn.SetEnabledAsync(!working);
                 foreach (var b in btn)
                 {
                     b.SetEnabledAsync(!working);
                 }
-                if (CurrentPage != DocPageCount)
-                    next_btn.SetEnabledAsync(!working);
+
                 if (!working)
                     progress_lbl.SetTextAsync("გთხოვთ მოიცადოთ...");
             }
@@ -311,7 +319,7 @@ namespace GeoHypernation
         {
             try
             {
-                int btnHeight = Pagination_Box.Height;
+                int btnHeight = Pagination_Box.GetHeight();
                 var btnColor = Color.Transparent;
                 var btnTextColor = Color.White;
                 var btnBorderRadius = 5;
@@ -491,15 +499,7 @@ namespace GeoHypernation
                     btn.Update();
                 }
                 CurrentPage = page;
-                if (CurrentPage == 1)
-                    previous_btn.SetEnabled(false);
-                else
-                    previous_btn.SetEnabled(true);
-
-                if (CurrentPage == DocPageCount)
-                    next_btn.SetEnabled(false);
-                else
-                    next_btn.SetEnabled(true);
+                Update_Prev_Next_State();
 
                 string PagePath = Path.Combine(WorkingDir, $"{CurrentPage}.html");
 
@@ -523,6 +523,18 @@ namespace GeoHypernation
             {
                 MessageBox.Show($"მოხდა შეცდომა. ბოდიშს გიხდით \n {ex.Message}", "შეცდომა", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+        private void Update_Prev_Next_State(bool disabled = false)
+        {
+            if (CurrentPage == 1 || disabled)
+                previous_btn.SetEnabled(false);
+            else
+                previous_btn.SetEnabled(true);
+
+            if (CurrentPage == DocPageCount || disabled)
+                next_btn.SetEnabled(false);
+            else
+                next_btn.SetEnabled(true);
         }
 
         #endregion
@@ -722,14 +734,14 @@ namespace GeoHypernation
         {
             if ((sz.Width != this.Size.Width || sz.Height != this.Size.Height) && WindowState == LastWindowState && !maxmin)
             {
-                this.Visible = false;
+                this.SetVisible(false);
                 Doc_Panel.BorderRadius = 1;
                 Doc_Panel.BorderSize = 0;
                 ResumeLayout();
                 base.OnResizeEnd(e);
                 Doc_Panel.BorderRadius = 10;
                 Doc_Panel.BorderSize = 3;
-                this.Visible = true;
+                this.SetVisible(true);
             }
             else
             {
@@ -744,23 +756,23 @@ namespace GeoHypernation
             {
                 if (WindowState == FormWindowState.Maximized)
                 {
-                    this.Visible = false;
+                    this.SetVisible(false);
                     Doc_Panel.BorderRadius = 1;
                     Doc_Panel.BorderSize = 0;
                     base.OnResize(e);
                     Doc_Panel.BorderRadius = 10;
                     Doc_Panel.BorderSize = 3;
-                    this.Visible = true;
+                    this.SetVisible(true);
                 }
                 if (WindowState == FormWindowState.Normal)
                 {
-                    this.Visible = false;
+                    this.SetVisible(false);
                     Doc_Panel.BorderRadius = 1;
                     Doc_Panel.BorderSize = 0;
                     base.OnResize(e);
                     Doc_Panel.BorderRadius = 10;
                     Doc_Panel.BorderSize = 3;
-                    this.Visible = true;
+                    this.SetVisible(true);
                 }
                 maxmin = true;
             }

@@ -76,8 +76,8 @@
     <Compile Include="Contracts\ICleanManagement.cs" />
     <Compile Include="Contracts\IDocManagement.cs" />
     <Compile Include="Contracts\IMorphologyManagement.cs" />
-    <Compile Include="Logics\FileHelper.cs" />
     <Compile Include="Logics\HTMLConverter.cs" />
+    <Compile Include="Logics\Licensing.cs" />
     <Compile Include="Services\BarbarismManagement.cs" />
     <Compile Include="Services\CleanManagement.cs" />
     <Compile Include="Services\HYPManagement.cs" />

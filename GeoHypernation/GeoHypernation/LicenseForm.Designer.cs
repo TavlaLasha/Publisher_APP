@@ -38,6 +38,8 @@ namespace GeoHypernation
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.timer_lbl = new System.Windows.Forms.Label();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -63,7 +65,7 @@ namespace GeoHypernation
             // linkLabel1
             // 
             this.linkLabel1.AutoSize = true;
-            this.linkLabel1.Location = new System.Drawing.Point(13, 187);
+            this.linkLabel1.Location = new System.Drawing.Point(12, 201);
             this.linkLabel1.Name = "linkLabel1";
             this.linkLabel1.Size = new System.Drawing.Size(203, 13);
             this.linkLabel1.TabIndex = 2;
@@ -95,7 +97,7 @@ namespace GeoHypernation
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(102, 239);
+            this.label3.Location = new System.Drawing.Point(103, 239);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(80, 13);
             this.label3.TabIndex = 4;
@@ -104,7 +106,7 @@ namespace GeoHypernation
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(203, 239);
+            this.label4.Location = new System.Drawing.Point(201, 239);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(31, 13);
             this.label4.TabIndex = 4;
@@ -119,11 +121,21 @@ namespace GeoHypernation
             this.timer_lbl.TabIndex = 4;
             this.timer_lbl.Text = "15";
             // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
+            this.pictureBox1.Location = new System.Drawing.Point(-2, -1);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(460, 185);
+            this.pictureBox1.TabIndex = 5;
+            this.pictureBox1.TabStop = false;
+            // 
             // LicenseForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(454, 269);
+            this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.timer_lbl);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
@@ -141,6 +153,7 @@ namespace GeoHypernation
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "ლიცეზია";
             this.TopMost = true;
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -156,5 +169,6 @@ namespace GeoHypernation
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label timer_lbl;
+        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }

@@ -27,24 +27,21 @@ namespace GeoHypernation
 
         private void Start_btn_Click(object sender, EventArgs e)
         {
-            if (!string.IsNullOrEmpty(richTextBox.SelectedText))
-                Text = richTextBox.SelectedText;
-            else
-                Text = richTextBox.Text;
+            Text = richTextBox.Text;
             if (!string.IsNullOrEmpty(Text))
             {
-                wwd = new WorkWithDoc(new TextDTO() { Text = Text});
-
-                bool do_hyp = false;
-                DocCleanDCM dcdm = new DocCleanDCM();
-                dcdm.CleanSpaces = space_chkbx.Checked;
-                dcdm.CleanTabs = space_chkbx.Checked;
-                dcdm.CleanExcessParagraphs = par_chkbx.Checked;
-                dcdm.CorrectPDashStarts = pdashstart_chkbx.Checked;
-                do_hyp = hyp_chkbx.Checked;
-
                 try
                 {
+                    wwd = new WorkWithDoc(new TextDTO() { Text = Text });
+
+                    bool do_hyp = false;
+                    DocCleanDCM dcdm = new DocCleanDCM();
+                    dcdm.CleanSpaces = space_chkbx.Checked;
+                    dcdm.CleanTabs = space_chkbx.Checked;
+                    dcdm.CleanExcessParagraphs = par_chkbx.Checked;
+                    dcdm.CorrectPDashStarts = pdashstart_chkbx.Checked;
+                    do_hyp = hyp_chkbx.Checked;
+
                     Thread thread = new Thread(
                         delegate ()
                         {
@@ -52,7 +49,7 @@ namespace GeoHypernation
                             {
                                 if (dcdm.CleanSpaces || dcdm.CleanExcessParagraphs || dcdm.CorrectPDashStarts)
                                 {
-                                    progress_lbl.SetTextAsync("მიმდინარეობს გასუფთავება...");
+                                    //progress_lbl.SetTextAsync("მიმდინარეობს გასუფთავება...");
                                     Text = wwd.CleanText(dcdm);
                                     if (string.IsNullOrEmpty(Text))
                                     {
@@ -61,7 +58,7 @@ namespace GeoHypernation
                                 }
                                 if (do_hyp)
                                 {
-                                    progress_lbl.SetTextAsync("მიმდინარეობს დამარცვლა...");
+                                    //progress_lbl.SetTextAsync("მიმდინარეობს დამარცვლა...");
                                     Text = wwd.HypernateText();
                                     if (string.IsNullOrEmpty(Text))
                                     {
@@ -91,28 +88,35 @@ namespace GeoHypernation
                 MessageBox.Show("გთხოვთ შეიყვანოთ ტექსტი.", "შეცდომა", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
-        private void Change_working_state(bool working = false)
-        {
-            Working = working;
-            //loading_box.SetVisibleAsync(Working);
+        //private void Change_working_state(bool working = false)
+        //{
+        //    Working = working;
+        //    //loading_box.SetVisibleAsync(Working);
 
-            if (working)
-                progress_lbl.SetTextAsync("გთხოვთ მოიცადოთ...");
-            else
-                progress_lbl.SetTextAsync("");
-        }
+        //    if (working)
+        //        progress_lbl.SetTextAsync("გთხოვთ მოიცადოთ...");
+        //    else
+        //        progress_lbl.SetTextAsync("");
+        //}
 
         private void richTextBox_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Control && e.KeyCode == Keys.V)
+            try
             {
-                richTextBox.Text += (string)Clipboard.GetText();
-                e.Handled = true;
+                if (e.Control && e.KeyCode == Keys.V)
+                {
+                    richTextBox.Text += (string)Clipboard.GetText();
+                    e.Handled = true;
+                }
+                if (e.Control && e.KeyCode == Keys.C)
+                {
+                    Clipboard.SetText(richTextBox.Text);
+                    e.Handled = true;
+                }
             }
-            if (e.Control && e.KeyCode == Keys.C)
+            catch (Exception ex)
             {
-                Clipboard.SetText(richTextBox.Text);
-                e.Handled = true;
+                MessageBox.Show("მოხდა შეცდომა. ბოდიშს გიხდით\n\nBoxKeyDown", "შეცდომა", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -124,6 +128,19 @@ namespace GeoHypernation
         private void copy_btn_Click(object sender, EventArgs e)
         {
             Clipboard.SetText(richTextBox.Text);
+        }
+
+        private void info_btn_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                HelpForm hpf = new HelpForm();
+                hpf.ShowDialog();
+            }
+            catch
+            {
+                MessageBox.Show($"მოხდა შეცდომა. ბოდიშს გიხდით\n\nOnHelp", "შეცდომა", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }
