@@ -38,12 +38,12 @@ namespace GeoHypernation
             this.info_btn = new System.Windows.Forms.Button();
             this.progress_lbl = new System.Windows.Forms.Label();
             this.Text_Panel = new GeoHypernation.DesignHelpers.RoundedPanel();
+            this.copy_btn = new System.Windows.Forms.Button();
             this.paste_btn = new System.Windows.Forms.Button();
             this.richTextBox = new System.Windows.Forms.RichTextBox();
             this.line = new System.Windows.Forms.Panel();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.Start_btn = new GeoHypernation.RoundedButton();
-            this.copy_btn = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
             this.splitContainer.Panel1.SuspendLayout();
             this.splitContainer.Panel2.SuspendLayout();
@@ -150,6 +150,7 @@ namespace GeoHypernation
             // 
             // progress_lbl
             // 
+            this.progress_lbl.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.progress_lbl.AutoSize = true;
             this.progress_lbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.progress_lbl.ForeColor = System.Drawing.SystemColors.Info;
@@ -164,7 +165,6 @@ namespace GeoHypernation
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Text_Panel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(53)))), ((int)(((byte)(53)))), ((int)(((byte)(53)))));
-            this.Text_Panel.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(53)))), ((int)(((byte)(53)))), ((int)(((byte)(53)))));
             this.Text_Panel.BorderColor = System.Drawing.Color.Yellow;
             this.Text_Panel.BorderRadius = 30;
             this.Text_Panel.BorderSize = 3;
@@ -178,6 +178,25 @@ namespace GeoHypernation
             this.Text_Panel.Size = new System.Drawing.Size(554, 264);
             this.Text_Panel.TabIndex = 0;
             this.Text_Panel.TextColor = System.Drawing.Color.White;
+            // 
+            // copy_btn
+            // 
+            this.copy_btn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.copy_btn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.copy_btn.FlatAppearance.BorderSize = 0;
+            this.copy_btn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.copy_btn.Font = new System.Drawing.Font("FiraGO", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.copy_btn.ForeColor = System.Drawing.Color.Gainsboro;
+            this.copy_btn.Image = ((System.Drawing.Image)(resources.GetObject("copy_btn.Image")));
+            this.copy_btn.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.copy_btn.Location = new System.Drawing.Point(431, 14);
+            this.copy_btn.Name = "copy_btn";
+            this.copy_btn.Size = new System.Drawing.Size(95, 30);
+            this.copy_btn.TabIndex = 2;
+            this.copy_btn.Text = "მონიშვნა";
+            this.copy_btn.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.copy_btn.UseVisualStyleBackColor = true;
+            this.copy_btn.Click += new System.EventHandler(this.copy_btn_Click);
             // 
             // paste_btn
             // 
@@ -255,24 +274,6 @@ namespace GeoHypernation
             this.Start_btn.UseVisualStyleBackColor = false;
             this.Start_btn.Click += new System.EventHandler(this.Start_btn_Click);
             // 
-            // copy_btn
-            // 
-            this.copy_btn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.copy_btn.FlatAppearance.BorderSize = 0;
-            this.copy_btn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.copy_btn.Font = new System.Drawing.Font("FiraGO", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.copy_btn.ForeColor = System.Drawing.Color.Gainsboro;
-            this.copy_btn.Image = ((System.Drawing.Image)(resources.GetObject("copy_btn.Image")));
-            this.copy_btn.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.copy_btn.Location = new System.Drawing.Point(431, 14);
-            this.copy_btn.Name = "copy_btn";
-            this.copy_btn.Size = new System.Drawing.Size(95, 30);
-            this.copy_btn.TabIndex = 2;
-            this.copy_btn.Text = "მონიშვნა";
-            this.copy_btn.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.copy_btn.UseVisualStyleBackColor = true;
-            this.copy_btn.Click += new System.EventHandler(this.copy_btn_Click);
-            // 
             // ManualForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -284,6 +285,7 @@ namespace GeoHypernation
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(650, 390);
             this.Name = "ManualForm";
+            this.Text = "ჩამშვები — მექანიკური";
             this.splitContainer.Panel1.ResumeLayout(false);
             this.splitContainer.Panel1.PerformLayout();
             this.splitContainer.Panel2.ResumeLayout(false);

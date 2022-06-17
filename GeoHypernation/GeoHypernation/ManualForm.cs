@@ -27,6 +27,7 @@ namespace GeoHypernation
 
         private void Start_btn_Click(object sender, EventArgs e)
         {
+            progress_lbl.SetTextAsync("");
             Text = richTextBox.Text;
             if (!string.IsNullOrEmpty(Text))
             {
@@ -85,7 +86,7 @@ namespace GeoHypernation
                 }
             }
             else
-                MessageBox.Show("გთხოვთ შეიყვანოთ ტექსტი.", "შეცდომა", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                progress_lbl.SetTextAsync("გთხოვთ შეიყვანოთ ტექსტი");
         }
 
         //private void Change_working_state(bool working = false)

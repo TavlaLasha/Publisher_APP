@@ -21,6 +21,7 @@ namespace GeoHypernation
             timer_lbl.Text = counter.ToString();
         }
 
+
         private void close_btn_Click(object sender, EventArgs e)
         {
             this.Close();
@@ -33,13 +34,6 @@ namespace GeoHypernation
             timer.Interval = (1000);
             timer.Tick += new EventHandler(timer_Tick);
             timer.Start();
-
-            // start processing emails
-
-            // when finished 
-            //timer.Stop();
-            //sw.Stop();
-            //timer_lbl.Text = "Completed in " + sw.Elapsed.Seconds.ToString() + "seconds";
         }
         private void timer_Tick(object sender, EventArgs e)
         {
@@ -50,6 +44,11 @@ namespace GeoHypernation
                 continue_btn.Enabled = true;
             }
             timer_lbl.Text = counter.ToString();
+        }
+
+        private void linkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://astounding-brioche-78af87.netlify.app/home#pricing");
         }
     }
 }

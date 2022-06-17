@@ -777,12 +777,14 @@ namespace GeoHypernation
                 maxmin = true;
             }
         }
+        //License
         protected override void OnShown(EventArgs e)
         {
             base.OnShown(e);
             if (lc.license == null)
             {
                 limited = true;
+                this.SetTextAsync("ჩამშვები — Trial (დარჩენილია 30 დღე)");
                 LicenseForm lcf = new LicenseForm();
                 DialogResult result = lcf.ShowDialog();
                 if (result == DialogResult.Cancel)

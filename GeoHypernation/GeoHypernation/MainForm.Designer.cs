@@ -117,7 +117,6 @@
             // 
             resources.ApplyResources(this.Doc_Panel, "Doc_Panel");
             this.Doc_Panel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(53)))), ((int)(((byte)(53)))), ((int)(((byte)(53)))));
-            this.Doc_Panel.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(53)))), ((int)(((byte)(53)))), ((int)(((byte)(53)))));
             this.Doc_Panel.BorderColor = System.Drawing.Color.Yellow;
             this.Doc_Panel.BorderRadius = 25;
             this.Doc_Panel.BorderSize = 3;
@@ -208,7 +207,6 @@
             // 
             resources.ApplyResources(this.Preview_Panel, "Preview_Panel");
             this.Preview_Panel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.Preview_Panel.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.Preview_Panel.BorderColor = System.Drawing.Color.Gray;
             this.Preview_Panel.BorderRadius = 0;
             this.Preview_Panel.BorderSize = 2;
@@ -304,7 +302,7 @@
             // Help_btn
             // 
             resources.ApplyResources(this.Help_btn, "Help_btn");
-            this.Help_btn.BackColor = System.Drawing.Color.Transparent;
+            this.Help_btn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(53)))), ((int)(((byte)(53)))), ((int)(((byte)(53)))));
             this.Help_btn.Cursor = System.Windows.Forms.Cursors.Hand;
             this.Help_btn.FlatAppearance.BorderSize = 0;
             this.Help_btn.Name = "Help_btn";

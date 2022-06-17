@@ -49,12 +49,6 @@ namespace GeoHypernation.DesignHelpers
             }
         }
 
-        public Color BackgroundColor
-        {
-            get { return this.BackColor; }
-            set { this.BackColor = value; }
-        }
-
         public Color TextColor
         {
             get { return this.ForeColor; }
@@ -66,7 +60,6 @@ namespace GeoHypernation.DesignHelpers
         {
             this.BorderSize = 0;
             this.Size = new Size(150, 40);
-            this.BackColor = Color.MediumSlateBlue;
             this.ForeColor = Color.White;
             this.Resize += new EventHandler(Panel_Resize);
         }
@@ -131,16 +124,6 @@ namespace GeoHypernation.DesignHelpers
                     }
                 }
             }
-        }
-        protected override void OnHandleCreated(EventArgs e)
-        {
-            base.OnHandleCreated(e);
-            this.Parent.BackColorChanged += new EventHandler(Container_BackColorChanged);
-        }
-
-        private void Container_BackColorChanged(object sender, EventArgs e)
-        {
-            this.Invalidate();
         }
         private void Panel_Resize(object sender, EventArgs e)
         {

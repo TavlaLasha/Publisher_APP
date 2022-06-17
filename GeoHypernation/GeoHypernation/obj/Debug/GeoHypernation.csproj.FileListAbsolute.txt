@@ -32,3 +32,8 @@ C:\Users\lasha\Desktop\Project\Publisher_APP\GeoHypernation\GeoHypernation\bin\D
 C:\Users\lasha\Desktop\Project\Publisher_APP\GeoHypernation\GeoHypernation\obj\Debug\GeoHypernation.LicenseForm.resources
 C:\Users\lasha\Desktop\Project\Publisher_APP\GeoHypernation\GeoHypernation\bin\Debug\info.rtf
 C:\Users\lasha\Desktop\Project\Publisher_APP\GeoHypernation\GeoHypernation\obj\Debug\GeoHypernation.ManualForm.resources
+C:\Users\lasha\Desktop\Project\Publisher_APP\GeoHypernation\GeoHypernation\bin\Debug\GeoHypernation.exe.manifest
+C:\Users\lasha\Desktop\Project\Publisher_APP\GeoHypernation\GeoHypernation\bin\Debug\GeoHypernation.application
+C:\Users\lasha\Desktop\Project\Publisher_APP\GeoHypernation\GeoHypernation\obj\Debug\GeoHypernation.TrustInfo.xml
+C:\Users\lasha\Desktop\Project\Publisher_APP\GeoHypernation\GeoHypernation\obj\Debug\GeoHypernation.exe.manifest
+C:\Users\lasha\Desktop\Project\Publisher_APP\GeoHypernation\GeoHypernation\obj\Debug\GeoHypernation.application
