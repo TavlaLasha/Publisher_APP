@@ -48,7 +48,7 @@ namespace GeoHypernation
             this.DragDrop += new DragEventHandler(upload_btn_DragDrop);
             Change_SaveBtn_State(enabled: false);
             lc = new LicenseManagement();
-            
+
 
             //string passPhrase = "ChamshvebiLicense2022";
 
@@ -58,7 +58,7 @@ namespace GeoHypernation
             //var publicKey = keyPair.ToPublicKeyString();
             //var license = Standard.Licensing.License.New()
             //    .WithUniqueIdentifier(Guid.NewGuid())
-            //    .As(LicenseType.Standard)
+            //    .As(LicenseType.Trial)
             //    .ExpiresAt(DateTime.Now.AddDays(30))
             //    .WithMaximumUtilization(5)
             //    .WithProductFeatures(new Dictionary<string, string>
@@ -103,7 +103,7 @@ namespace GeoHypernation
             else
                 size_lbl.SetTextAsync(String.Format("{0:F2}", size) + " Kb");
             type_lbl.SetTextAsync(Path.GetExtension(filename).Replace(".", string.Empty));
-            filename_lbl.SetText(new FileInfo(filename).Name);
+            filename_lbl.SetText(Path.GetFileNameWithoutExtension(new FileInfo(filename).Name));
 
             Graphics g = this.CreateGraphics();
             Font f = filename_lbl.Font;
@@ -617,10 +617,10 @@ namespace GeoHypernation
             CheckBox chk = (sender as CheckBox);
 
             newline_chkbx.SetCheckedAsync(chk.Checked);
-            newline_chkbx.SetEnabledAsync(!(chk.Checked));
+            newline_chkbx.SetAutoCheck(!(chk.Checked));
 
             pdashstart_chkbx.SetCheckedAsync(chk.Checked);
-            pdashstart_chkbx.SetEnabledAsync(!(chk.Checked));
+            pdashstart_chkbx.SetAutoCheck(!(chk.Checked));
 
             RecommendedDocType = (chk.Checked) ? ".doc" : ".docx";
         }
@@ -784,12 +784,24 @@ namespace GeoHypernation
             if (lc.license == null)
             {
                 limited = true;
-                this.SetTextAsync("ჩამშვები — Trial (დარჩენილია 30 დღე)");
+                this.SetTextAsync("ჩამშვები — უფასო");
                 LicenseForm lcf = new LicenseForm();
                 DialogResult result = lcf.ShowDialog();
                 if (result == DialogResult.Cancel)
                     this.Close();
                 limited = true;
+            }
+            else if (lc.license.Type == LicenseType.Trial)
+            {
+                this.SetTextAsync("ჩამშვები — Trial (დარჩენილია 30 დღე)");
+            }
+            if (limited)
+            {
+                hyp_chkbx.SetChecked(false);
+                hyp_chkbx.SetAutoCheck(false);
+                hyp_chkbx.Click += Not_Allowed_Event;
+                ForIndesign_chkbx.SetAutoCheck(false);
+                ForIndesign_chkbx.Click += Not_Allowed_Event;
             }
         }
         private void manual_btn_Click(object sender, EventArgs e)
@@ -811,6 +823,11 @@ namespace GeoHypernation
         private void previous_btn_Click(object sender, EventArgs e)
         {
             Change_Page(CurrentPage - 1);
+        }
+
+        private void Not_Allowed_Event(object sender, EventArgs e)
+        {
+            MessageBox.Show("მოთხოვნილი ფუნქცია მიეკუთვნება პრემიუმ ვერსიას.", "უფასო ვერსიის შეზღუდვა", MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
         #endregion
 

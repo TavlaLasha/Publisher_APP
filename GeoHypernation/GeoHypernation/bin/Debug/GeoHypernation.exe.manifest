@@ -50,19 +50,19 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>QqKbllfjosZNWmbYoC1G7Q+uMN3AjlRX17yeXQ9qRMg=</dsig:DigestValue>
+        <dsig:DigestValue>ml+vjOv7Fe8HBFkIfdEkSlaIWehTn99lpePoxYeX+W8=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="GeoHypernation.exe" size="1535416">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="GeoHypernation.exe" size="1344440">
       <assemblyIdentity name="GeoHypernation" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>MksQ0CTFqmYY4axtGPNddeCM/wOoMmbHjih7S26LX9A=</dsig:DigestValue>
+        <dsig:DigestValue>oZD0gWrcHx1VLV/8fmBD+sbXj3rDU8jnGIRhBhi5UA0=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

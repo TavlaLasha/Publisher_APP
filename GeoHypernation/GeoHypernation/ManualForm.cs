@@ -8,6 +8,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -66,9 +67,12 @@ namespace GeoHypernation
                                         MessageBox.Show("დოკუმენტის დამარცვლის დროს მოხდა შეცდომა. ბოდიშს გიხდით", "შეცდომა", MessageBoxButtons.OK, MessageBoxIcon.Error);
                                     }
                                 }
-
+                                
                                 //Change_working_state(false);
                                 richTextBox.SetTextAsync(Text);
+                                progress_lbl.SetTextAsync("ტექსტი წარმატებით დამუშავდა");
+                                Thread.Sleep(2000);
+                                progress_lbl.SetTextAsync("");
                             }
                             catch
                             {
@@ -78,7 +82,6 @@ namespace GeoHypernation
                     thread.SetApartmentState(ApartmentState.STA);
                     thread.Start();
                     //Change_working_state(true);
-
                 }
                 catch (Exception ex)
                 {
@@ -106,12 +109,26 @@ namespace GeoHypernation
             {
                 if (e.Control && e.KeyCode == Keys.V)
                 {
-                    richTextBox.Text += (string)Clipboard.GetText();
+                    if (!string.IsNullOrEmpty((string)Clipboard.GetText()))
+                    {
+                        string data = (string)Clipboard.GetText();
+                        var pattern = ((char)31).ToString();
+                        var regex = new Regex(pattern);
+                        data = regex.Replace(data, "\xad");
+                        richTextBox.Text += data;
+                    }
                     e.Handled = true;
                 }
                 if (e.Control && e.KeyCode == Keys.C)
                 {
-                    Clipboard.SetText(richTextBox.Text);
+                    if (!string.IsNullOrEmpty(richTextBox.Text))
+                    {
+                        string data = richTextBox.Text;
+                        var pattern = "\xad";
+                        var regex = new Regex(pattern);
+                        data = regex.Replace(data, ((char)31).ToString());
+                        Clipboard.SetText(data);
+                    }
                     e.Handled = true;
                 }
             }
@@ -123,12 +140,40 @@ namespace GeoHypernation
 
         private void paste_btn_Click(object sender, EventArgs e)
         {
-            richTextBox.Text += (string)Clipboard.GetText();
+            try
+            {
+                if (!string.IsNullOrEmpty((string)Clipboard.GetText()))
+                {
+                    string data = (string)Clipboard.GetText();
+                    var pattern = ((char)31).ToString();
+                    var regex = new Regex(pattern);
+                    data = regex.Replace(data, "\xad");
+                    richTextBox.Text += data;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("მოხდა შეცდომა. ბოდიშს გიხდით\n\nPaste", "შეცდომა", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void copy_btn_Click(object sender, EventArgs e)
         {
-            Clipboard.SetText(richTextBox.Text);
+            try
+            {
+                if (!string.IsNullOrEmpty(richTextBox.Text))
+                {
+                    string data = richTextBox.Text;
+                    var pattern = "\xad";
+                    var regex = new Regex(pattern);
+                    data = regex.Replace(data, ((char)31).ToString());
+                    Clipboard.SetText(data);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("მოხდა შეცდომა. ბოდიშს გიხდით\n\nCopy", "შეცდომა", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void info_btn_Click(object sender, EventArgs e)

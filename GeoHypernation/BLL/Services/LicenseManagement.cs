@@ -16,12 +16,13 @@ namespace BLL.Services
         private readonly string LicensePath = Path.Combine(exeDir, "License.lic");
         public License license = null;
         string publicKey;
+        public IEnumerable<IValidationFailure> validationFailures;
         public LicenseManagement()
         {
             if (File.Exists(LicensePath))
             {
                 license = License.Load(File.ReadAllText(LicensePath));
-                var validationFailures = license.Validate()
+                validationFailures = license.Validate()
                     .ExpirationDate()
                     .When(lic => lic.Type == LicenseType.Standard)
                     .And()

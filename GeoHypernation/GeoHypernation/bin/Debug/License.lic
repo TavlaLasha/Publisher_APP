@@ -1,7 +1,7 @@
 ﻿<License>
-  <Id>1c31c03e-bc2d-4267-9101-808d41a426df</Id>
-  <Type>Trial</Type>
-  <Expiration>Thu, 14 Jul 2022 18:43:33 GMT</Expiration>
+  <Id>d87aae4c-e7bb-4274-8115-676208e54d65</Id>
+  <Type>Standard</Type>
+  <Expiration>Sun, 17 Jul 2022 18:19:03 GMT</Expiration>
   <Quantity>5</Quantity>
   <ProductFeatures>
     <Feature name="Sales Module">yes</Feature>
@@ -12,5 +12,5 @@
     <Name>John Doe</Name>
     <Email>john.doe@example.com</Email>
   </Customer>
-  <Signature>MEUCIBxpq1w/KIb89YyeW/Nk8qtgyGvBjlB2/Zz12+fHC0EdAiEAqOgmSDuc9ZxXhPrXL85FJ0SdKHpWRgrsGzeIogFxysM=</Signature>
+  <Signature>MEUCIQDFZ43lV+e8QqPUMS6Yz9f+H5s0PR3o64FRXjHEvOFtVQIgGq9tR4I8VqXg3Sj33IPVaHe2gzWTPK+BQJ13Gqpq298=</Signature>
 </License>
