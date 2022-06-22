@@ -1,4 +1,5 @@
 ﻿using BLL.Contracts;
+using Models.DataViewModels.DocManagement;
 using Models.DataViewModels.WordManagement;
 using Newtonsoft.Json;
 using System;
@@ -19,6 +20,31 @@ namespace HypernationAPI.Controllers
         {
             _morphManagement = morphManagement;
         }
+
+        [Route("api/Morphology/FindMorphologies")]
+        [HttpPost]
+        public HttpResponseMessage FindMorphologies(TextDTO textDTO)
+        {
+            try
+            {
+                FoundOccurrencesDTO fbdt = new FoundOccurrencesDTO();
+                fbdt = _morphManagement.FindMorphologies(textDTO.Text);
+
+                string jObject = JsonConvert.SerializeObject(fbdt);
+
+                HttpResponseMessage result = new HttpResponseMessage(HttpStatusCode.OK)
+                {
+                    Content = new StringContent(jObject, Encoding.UTF8, "application/json")
+                };
+                return result;
+
+            }
+            catch
+            {
+                return Request.CreateResponse(HttpStatusCode.InternalServerError);
+            }
+        }
+
         [Route("api/Morphology/GetAllMorphologies")]
         [HttpGet]
         public HttpResponseMessage GetAllMorphologys()

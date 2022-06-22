@@ -9,6 +9,7 @@ namespace BLL.Contracts
 {
     public interface IMorphologyManagement
     {
+        FoundOccurrencesDTO FindMorphologies(string text);
         IEnumerable<MorphologyDTO> GetAllMorphologies();
         MorphologyDTO GetMorphology(string id);
         bool AddMorphology(MorphologyDTO morphDTO);

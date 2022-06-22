@@ -82,11 +82,11 @@ namespace BLL.Services
             return _unitOfWork.BarbarismRepo.GetAllBarbarisms();
         }
 
-        public FoundBarbarismsDTO FindBarbarisms(string text)
+        public FoundOccurrencesDTO FindBarbarisms(string text)
         {
             IEnumerable<BarbarismDTO> Barbarisms = GetAllBarbarisms();
             List<string> wrongs = Barbarisms.Select(i => i.Wrong_Word).ToList();
-            FoundBarbarismsDTO fbdt = new FoundBarbarismsDTO();
+            FoundOccurrencesDTO fbdt = new FoundOccurrencesDTO();
             fbdt.occurrences = new Dictionary<string, int>();
             for (int i=0; i < wrongs.Count(); i++)
             {

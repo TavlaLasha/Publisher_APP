@@ -129,7 +129,7 @@ namespace GeoHypernation
         {
             CurrentPage = (CurrentPage == 0) ? 1 : CurrentPage;
 
-            if (Pages == null || !Pages.Intersect(new List<int> { CurrentPage + 1, CurrentPage + 2 }).Any() || (CurrentPage == Pages[0]) || (Pages.Count > 5 && CurrentPage == Pages[4]) || (CurrentPage==1 && !Pages.Contains(1)))
+            if (!string.IsNullOrEmpty(FileName) && (Pages == null || !Pages.Intersect(new List<int> { CurrentPage + 1, CurrentPage + 2 }).Any() || (CurrentPage == Pages[0]) || (Pages.Count > 5 && CurrentPage == Pages[4]) || (CurrentPage==1 && !Pages.Contains(1))))
             {
                 Thread thread = new Thread
                 (delegate ()

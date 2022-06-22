@@ -14,6 +14,6 @@ namespace BLL.Contracts
         bool AddBarbarism(BarbarismDTO brbDTO);
         bool EditBarbarism(string id, BarbarismDTO brbDTO);
         bool DeleteBarbarism(string id);
-        FoundBarbarismsDTO FindBarbarisms(string text);
+        FoundOccurrencesDTO FindBarbarisms(string text);
     }
 }

@@ -27,7 +27,7 @@ namespace HypernationAPI.Controllers
         {
             try
             {
-                FoundBarbarismsDTO fbdt = new FoundBarbarismsDTO();
+                FoundOccurrencesDTO fbdt = new FoundOccurrencesDTO();
                 fbdt = _barbManagement.FindBarbarisms(textDTO.Text);
 
                 string jObject = JsonConvert.SerializeObject(fbdt);

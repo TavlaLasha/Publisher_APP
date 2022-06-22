@@ -48,7 +48,7 @@
     <Compile Include="DataViewModels\DocManagement\TextDTO.cs" />
     <Compile Include="DataViewModels\WordManagement\BarbarismDTO.cs" />
     <Compile Include="DataViewModels\DocManagement\DocDTO.cs" />
-    <Compile Include="DataViewModels\WordManagement\FoundBarbarismsDTO.cs" />
+    <Compile Include="DataViewModels\WordManagement\FoundOccurrencesDTO.cs" />
     <Compile Include="DataViewModels\WordManagement\MorphologyDTO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

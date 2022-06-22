@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Models.DataViewModels.WordManagement
 {
-    public class FoundBarbarismsDTO
+    public class FoundOccurrencesDTO
     {
         public TextDTO textDTO { set; get; }
         public Dictionary<string,int> occurrences { set; get; }

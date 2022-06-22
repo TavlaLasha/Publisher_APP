@@ -160,7 +160,7 @@
     <value>NoControl</value>
   </data>
   <data name="previous_btn.Location" type="System.Drawing.Point, System.Drawing">
-    <value>187, 371</value>
+    <value>189, 371</value>
   </data>
   <data name="previous_btn.Size" type="System.Drawing.Size, System.Drawing">
     <value>34, 33</value>
@@ -208,7 +208,7 @@
     <value>NoControl</value>
   </data>
   <data name="next_btn.Location" type="System.Drawing.Point, System.Drawing">
-    <value>552, 371</value>
+    <value>554, 371</value>
   </data>
   <data name="next_btn.Size" type="System.Drawing.Size, System.Drawing">
     <value>34, 33</value>
@@ -232,7 +232,7 @@
     <value>Bottom</value>
   </data>
   <data name="Pagination_Box.Location" type="System.Drawing.Point, System.Drawing">
-    <value>219, 371</value>
+    <value>221, 371</value>
   </data>
   <data name="Pagination_Box.Size" type="System.Drawing.Size, System.Drawing">
     <value>330, 33</value>
@@ -268,7 +268,7 @@
     <value>NoControl</value>
   </data>
   <data name="progress_lbl.Location" type="System.Drawing.Point, System.Drawing">
-    <value>286, 261</value>
+    <value>288, 261</value>
   </data>
   <data name="progress_lbl.Size" type="System.Drawing.Size, System.Drawing">
     <value>179, 20</value>
@@ -304,7 +304,7 @@
     <value>0, 0</value>
   </data>
   <data name="loading_img.Size" type="System.Drawing.Size, System.Drawing">
-    <value>759, 306</value>
+    <value>762, 306</value>
   </data>
   <data name="loading_img.SizeMode" type="System.Windows.Forms.PictureBoxSizeMode, System.Windows.Forms">
     <value>Zoom</value>
@@ -328,7 +328,7 @@
     <value>7, 56</value>
   </data>
   <data name="loading_box.Size" type="System.Drawing.Size, System.Drawing">
-    <value>759, 306</value>
+    <value>762, 306</value>
   </data>
   <data name="loading_box.TabIndex" type="System.Int32, mscorlib">
     <value>9</value>
@@ -358,7 +358,7 @@
     <value>NoControl</value>
   </data>
   <data name="filename_lbl.Location" type="System.Drawing.Point, System.Drawing">
-    <value>272, 20</value>
+    <value>274, 20</value>
   </data>
   <data name="filename_lbl.MaximumSize" type="System.Drawing.Size, System.Drawing">
     <value>240, 95</value>
@@ -400,7 +400,7 @@
     <value>NoControl</value>
   </data>
   <data name="size_lbl.Location" type="System.Drawing.Point, System.Drawing">
-    <value>687, 23</value>
+    <value>690, 23</value>
   </data>
   <data name="size_lbl.Size" type="System.Drawing.Size, System.Drawing">
     <value>28, 17</value>
@@ -469,7 +469,7 @@
     <value>20, 20</value>
   </data>
   <data name="webBrowser.Size" type="System.Drawing.Size, System.Drawing">
-    <value>759, 306</value>
+    <value>762, 306</value>
   </data>
   <data name="webBrowser.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
@@ -490,7 +490,7 @@
     <value>7, 56</value>
   </data>
   <data name="Preview_Panel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>759, 306</value>
+    <value>762, 306</value>
   </data>
   <data name="Preview_Panel.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -511,7 +511,7 @@
     <value>25, 22</value>
   </data>
   <data name="Doc_Panel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>771, 420</value>
+    <value>774, 420</value>
   </data>
   <data name="Doc_Panel.TabIndex" type="System.Int32, mscorlib">
     <value>7</value>
@@ -1199,7 +1199,7 @@
     <value>NoControl</value>
   </data>
   <data name="Help_btn.Location" type="System.Drawing.Point, System.Drawing">
-    <value>252, 16</value>
+    <value>255, 16</value>
   </data>
   <data name="Help_btn.Size" type="System.Drawing.Size, System.Drawing">
     <value>42, 34</value>
@@ -1742,7 +1742,7 @@
     <value>1113, 467</value>
   </data>
   <data name="main_splitContainer.SplitterDistance" type="System.Int32, mscorlib">
-    <value>796</value>
+    <value>799</value>
   </data>
   <data name="main_splitContainer.SplitterWidth" type="System.Int32, mscorlib">
     <value>1</value>
@@ -5656,7 +5656,7 @@
     <value>1113, 467</value>
   </data>
   <data name="Upload_panel.TabIndex" type="System.Int32, mscorlib">
-    <value>32</value>
+    <value>33</value>
   </data>
   <data name="&gt;&gt;Upload_panel.Name" xml:space="preserve">
     <value>Upload_panel</value>
@@ -5939,9 +5939,6 @@
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
 </value>
-  </data>
-  <data name="$this.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
   </data>
   <data name="$this.MinimumSize" type="System.Drawing.Size, System.Drawing">
     <value>869, 482</value>
