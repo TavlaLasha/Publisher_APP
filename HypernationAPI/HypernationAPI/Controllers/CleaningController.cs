@@ -24,7 +24,7 @@ namespace HypernationAPI.Controllers
         }
         [HttpGet]
         [Route("api/CleanDoc/{fileName}")]
-        public HttpResponseMessage CleanDoc(string fileName, bool CleanSpaces=false, bool CleanOldHyphenation = false, bool CleanExcessParagraphs = false, bool CleanNewLines = false, bool CleanTabs = false, bool CorrectPDashStarts = false)
+        public HttpResponseMessage CleanDoc(string fileName, bool CleanSpaces=false, bool CleanExcessParagraphs = false, bool CleanNewLines = false, bool CleanTabs = false, bool CorrectPDashStarts = false)
         {
             try
             {

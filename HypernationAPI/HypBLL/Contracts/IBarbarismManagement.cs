@@ -10,7 +10,8 @@ namespace BLL.Contracts
     public interface IBarbarismManagement
     {
         IEnumerable<BarbarismDTO> GetAllBarbarisms();
-        BarbarismDTO GetBarbarism(string id);
+        BarbarismDTO GetBarbarism(int id);
+        BarbarismDTO GetBarbarism(string wrong_word);
         bool AddBarbarism(BarbarismDTO brbDTO);
         bool EditBarbarism(string id, BarbarismDTO brbDTO);
         bool DeleteBarbarism(string id);

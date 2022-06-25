@@ -36,10 +36,11 @@ namespace BLL.Services
             if (id == string.Empty || Convert.ToInt32(id) < 1)
                 throw new HttpException("No ID given");
 
-            if (_unitOfWork.BarbarismRepo.ExistsBarbarism(id))
-                throw new HttpException($"Data with ID: {id} could not be found");
+            int Id = Convert.ToInt32(id);
+            if (!_unitOfWork.BarbarismRepo.ExistsBarbarismId(Id))
+                throw new HttpException($"Data with ID: {Id} could not be found");
 
-            _unitOfWork.BarbarismRepo.DeleteBarbarism(Convert.ToInt32(id));
+            _unitOfWork.BarbarismRepo.DeleteBarbarism(Id);
             _unitOfWork.BarbarismRepo.SaveChanges();
             return true;
         }
@@ -63,17 +64,28 @@ namespace BLL.Services
             return true;
         }
 
-        public BarbarismDTO GetBarbarism(string id)
+        public BarbarismDTO GetBarbarism(int id)
         {
             UnitOfWork _unitOfWork = new UnitOfWork(new DAL.EF.GeoHypDBContext());
-            if (id == string.Empty || Convert.ToInt32(id) < 1)
+            if (id < 1)
                 throw new HttpException("No ID given");
 
-            int Id = Convert.ToInt32(id);
-            if (!_unitOfWork.BarbarismRepo.ExistsBarbarismId(Id))
-                throw new HttpException($"Data with ID: {Id} could not be found");
+            if (!_unitOfWork.BarbarismRepo.ExistsBarbarismId(id))
+                throw new HttpException($"Data with ID: {id} could not be found");
 
-            return _unitOfWork.BarbarismRepo.GetBarbarism(Id);
+            return _unitOfWork.BarbarismRepo.GetBarbarism(id);
+        }
+
+        public BarbarismDTO GetBarbarism(string wrong_word)
+        {
+            UnitOfWork _unitOfWork = new UnitOfWork(new DAL.EF.GeoHypDBContext());
+            if (string.IsNullOrEmpty(wrong_word))
+                throw new HttpException("No barbarism given");
+
+            if (!_unitOfWork.BarbarismRepo.ExistsBarbarism(wrong_word))
+                throw new HttpException($"Data: {wrong_word} could not be found");
+
+            return _unitOfWork.BarbarismRepo.GetBarbarism(wrong_word);
         }
 
         public IEnumerable<BarbarismDTO> GetAllBarbarisms()

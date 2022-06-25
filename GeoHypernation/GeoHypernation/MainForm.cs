@@ -167,30 +167,35 @@ namespace GeoHypernation
             try
             {
                 Upload_panel.SetVisible(true);
-                FileName = string.Empty;
-                if (CurrentPage != 0)
+                if (!string.IsNullOrEmpty(FileName))
                 {
-                    wwd.CloseDoc();
-                    if (Directory.Exists(WorkingDir))
-                        Directory.Delete(WorkingDir, true);
+                    FileName = string.Empty;
+                    if (CurrentPage != 0)
+                    {
+                        wwd.CloseDoc();
+                        if (Directory.Exists(WorkingDir))
+                            Directory.Delete(WorkingDir, true);
 
-                    if (File.Exists(WorkingDocPath))
-                        File.Delete(WorkingDocPath);
+                        if (File.Exists(WorkingDocPath))
+                            File.Delete(WorkingDocPath);
 
-                    Navigate_WebBrowser(FileName);
-                    Pagination_Box.Controls.Clear();
-                    CurrentPage = 0;
-                    IsSaved = true;
-                    Change_SaveBtn_State(enabled: false);
-                    if (this.GetWindowState() == FormWindowState.Maximized)
-                        this.SetWindowState(FormWindowState.Normal);
-                    this.SetVisible(false);
-                    SuspendLayout();
-                    this.SetSize(new Size(1129, 506));
-                    this.SetFormBorderStyleAsync(FormBorderStyle.FixedSingle);
-                    this.SetMaximizeBoxAsync(false);
-                    ResumeLayout();
-                    this.SetVisible(true);
+                        Navigate_WebBrowser(FileName);
+                        Clear_Pagination();
+                        CurrentPage = 0;
+                        IsSaved = true;
+                        Change_SaveBtn_State(enabled: false);
+                        //Form Size
+                        if (this.GetWindowState() == FormWindowState.Maximized)
+                            this.SetWindowState(FormWindowState.Normal);
+
+                        this.SetVisible(false);
+                        SuspendLayout();
+                        this.SetSize(new Size(1129, 506));
+                        this.SetFormBorderStyleAsync(FormBorderStyle.FixedSingle);
+                        this.SetMaximizeBoxAsync(false);
+                        ResumeLayout();
+                        this.SetVisible(true);
+                    }
                 }
             }
             catch (Exception ex)
@@ -563,26 +568,21 @@ namespace GeoHypernation
                             {
                                 if (dcdm.CleanSpaces || dcdm.CleanExcessParagraphs || dcdm.CleanNewLines || dcdm.CorrectPDashStarts)
                                 {
-                                    progress_lbl.SetTextAsync("მიმდინარეობს გასუფთავება...");
+                                    progress_lbl.SetText("მიმდინარეობს გასუფთავება...");
                                     if (!wwd.CleanDocument(dcdm))
-                                    {
                                         MessageBox.Show("დოკუმენტის გასუფთავების დროს მოხდა შეცდომა. ბოდიშს გიხდით", "შეცდომა", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                                    }
                                 }
                                 if (do_hyp)
                                 {
-                                    progress_lbl.SetTextAsync("მიმდინარეობს დამარცვლა...");
-                                    if (!wwd.HypernateDocument())
-                                    {
+                                    progress_lbl.SetText("მიმდინარეობს დამარცვლა...");
+                                    if (!wwd.HyphenateDocument())
                                         MessageBox.Show("დოკუმენტის დამარცვლის დროს მოხდა შეცდომა. ბოდიშს გიხდით", "შეცდომა", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                                    }
                                 }
 
                                 InitializeDocBox((string)wwd.DocPath);
                                 Change_working_state(false);
                                 IsSaved = false;
                                 Change_SaveBtn_State(enabled: true);
-                                //MessageBox.Show($"ფაილი {Path.GetFileName(FileName)} წარმატებით დამუშავდა.", "წარმატება", MessageBoxButtons.OK, MessageBoxIcon.Information);
                             }
                             catch
                             {
@@ -640,8 +640,8 @@ namespace GeoHypernation
                 else
                     if (!Working)
                     Close_Doc();
-                else
-                    e.Cancel = true;
+                    else
+                        e.Cancel = true;
             }
             catch
             {
@@ -687,7 +687,7 @@ namespace GeoHypernation
                         CheckFileExists = false,
                         CheckPathExists = false,
                         //DefaultExt = RecommendedDocType.TrimStart('.'),
-                        Filter = "Word Document (*.docx)|*.docx |Word Document (*.doc)|*.doc |Rich Text Format (*.rtf)|*.rtf |Portable Document Format (*.pdf)|*.pdf",
+                        Filter = "Word Document (*.docx)|*.docx|Word Document (*.doc)|*.doc|Rich Text Format (*.rtf)|*.rtf|Portable Document Format (*.pdf)|*.pdf",
                         FilterIndex = DefIndex,
                         RestoreDirectory = true,
                         FileName = $@"{Path.GetDirectoryName(FileName)}\{Path.GetFileNameWithoutExtension(FileName)}{RecommendedDocType}"
@@ -793,7 +793,7 @@ namespace GeoHypernation
             }
             else if (lc.license.Type == LicenseType.Trial)
             {
-                this.SetTextAsync("ჩამშვები — Trial (დარჩენილია 30 დღე)");
+                this.SetTextAsync("ჩამშვები — საცდელი (დარჩენილია 7 დღე)");
             }
             if (limited)
             {

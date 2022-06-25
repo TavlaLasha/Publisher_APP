@@ -183,6 +183,7 @@ namespace GeoHypernation
             // 
             this.copy_btn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.copy_btn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.copy_btn.Cursor = System.Windows.Forms.Cursors.Hand;
             this.copy_btn.FlatAppearance.BorderSize = 0;
             this.copy_btn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.copy_btn.Font = new System.Drawing.Font("FiraGO", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -201,6 +202,7 @@ namespace GeoHypernation
             // paste_btn
             // 
             this.paste_btn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.paste_btn.Cursor = System.Windows.Forms.Cursors.Hand;
             this.paste_btn.FlatAppearance.BorderSize = 0;
             this.paste_btn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.paste_btn.Font = new System.Drawing.Font("FiraGO", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -244,6 +246,7 @@ namespace GeoHypernation
             // 
             // pictureBox2
             // 
+            this.pictureBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.pictureBox2.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox2.Image")));
             this.pictureBox2.Location = new System.Drawing.Point(80, 250);
             this.pictureBox2.Name = "pictureBox2";
@@ -285,7 +288,6 @@ namespace GeoHypernation
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(650, 390);
             this.Name = "ManualForm";
-            this.Text = "ჩამშვები — მექანიკური";
             this.splitContainer.Panel1.ResumeLayout(false);
             this.splitContainer.Panel1.PerformLayout();
             this.splitContainer.Panel2.ResumeLayout(false);

@@ -42,12 +42,13 @@ namespace BLL.Services
         {
             if (Text == string.Empty || Text.Length < 3)
                 throw new Exception("No Text Given");
+            Text += " ";
 
             Text = CleanOldHyp(Text);
 
             Text = HYPWovels(Text);
             Text = HYPConsonants(Text);
-            Text = CleanFirst(Text);
+            //Text = CleanFirst(Text);
             Text = CleanLast(Text);
             Text = CleanConstr(Text);
             Text = CleanLastConpunct(Text);
@@ -117,7 +118,8 @@ namespace BLL.Services
         {
             Console.WriteLine("st_clconstr");
 
-            wordApp = FindAndReplace(wordApp, ((char)31).ToString() + $@"([ბ-დვ-თკ-ნპ-ტფ-ჰ]{((char)31).ToString()})", @"\1");
+            wordApp = FindAndReplace(wordApp, ((char)31).ToString() + @"([ბ-დვ-თკ-ნპ-ტფ-ჰ]{1,2}"+((char)31).ToString()+")", @"\1");
+            wordApp = FindAndReplace(wordApp, ((char)31).ToString() + @"([ბ-დვ-თკ-ნპ-ტფ-ჰ]{2,6}[\ \.\,\!\?\)\-\;\:\»\“^13])", @"\1");
 
             Console.WriteLine("end_clconstr");
 
@@ -129,6 +131,7 @@ namespace BLL.Services
             Console.WriteLine("st_cllastcomp");
 
             wordApp = FindAndReplace(wordApp, $@"{((char)31).ToString()}(ი)([სხნ])([\ \.\,\!\?\)\-\;\:\“^13])", @"\1\2\3");
+            wordApp = FindAndReplace(wordApp, @"([^13\ ][ა-ჰ]{2})" + ((char)31).ToString()+ @"([ა-ჰ]{2}[\ \.\,\!\?\)\-\;\:\»\“^13])", @"\1\2");
 
             Console.WriteLine("end_cllastcomp");
 
@@ -146,7 +149,7 @@ namespace BLL.Services
         }
         public string HYPConsonants(string text)
         {
-            var pattern = @"([ბ-დვ-თკ-ნპ-ტფ-ჰ])([ბ-დვ-თკ-ნპ-ტფ-ჰ][აეიოუ])";
+            var pattern = @"\B([ბ-დვ-თკ-ნპ-ტფ-ჰ])([ბ-დვ-თკ-ნპ-ტფ-ჰ][აეიოუ])";
             var regex = new Regex(pattern);
             text = regex.Replace(text, "$1\xad$2");
 
@@ -155,7 +158,7 @@ namespace BLL.Services
 
         public string HYPWovels(string text)
         {
-            var pattern = "([აეიოუ])";
+            var pattern = @"\B([აეიოუ])\B";
             var regex = new Regex(pattern);
             text = regex.Replace(text, "$1\xad");
 
@@ -164,27 +167,26 @@ namespace BLL.Services
 
         public string CleanFirst(string text)
         {
-            var pattern = $@"([\ \«\-\—\─\(\„\”][ა-ჰ]){"\xad"}";
-            var regex = new Regex(pattern);
-            text = regex.Replace(text, "$1");
+            //var pattern = $@"\b([\ \«\-\—\─\(\„\”][ა-ჰ]){"\xad"}";
+            var pattern2 = $@"(^\s|«|-|—|─|\(|„|”|\n|)([ა-ჰ])\xad(\w*)";
+            //var regex = new Regex(pattern);
+            var regex2 = new Regex(pattern2);
+            //text = regex.Replace(text, "$1");
+            text = regex2.Replace(text, "$1$2$3");
 
             return text;
         }
 
         public string CleanLast(string text)
         {
-            //var pattern = $@"^(([ა-ჰ]){"\xad"}([\ \.\,\!\?\)\-\;\:\»\“^13])|{"\xad"}([ა-ჰ])([\ \.\,\!\?\)\-\;\:\»\“^13]))$";
-            //var regex = new Regex(pattern);
-            //text = regex.Replace(text, "$1$2");
-            //return text;
-
-            var pattern = $@"([ა-ჰ]){"\xad"}([\ \.\,\!\?\)\-\;\:\»\“^13])";
-            var pattern2 = $@"{"\xad"}([ა-ჰ][\ \.\,\!\?\)\-\;\:\»\“^13])";
+            var pattern = $@"\xad([ა-ჰ])\b";
+            //var pattern = $@"([ა-ჰ]){"\xad"}([\ \.\,\!\?\)\-\;\:\»\“\n])";
+            //var pattern2 = $@"{"\xad"}([ა-ჰ][\ \.\,\!\?\)\-\;\:\»\“\n])";
             var regex = new Regex(pattern);
-            var regex2 = new Regex(pattern2);
+            //var regex2 = new Regex(pattern2);
 
-            text = regex.Replace(text, "$1$2");
-            text = regex2.Replace(text, "$1");
+            text = regex.Replace(text, "$1");
+            //text = regex2.Replace(text, "$1");
             return text;
         }
         public string CleanHarmonics(string text)
@@ -197,18 +199,24 @@ namespace BLL.Services
         }
         public string CleanConstr(string text)
         {
-            var pattern = $@"{"\xad"}([ბ-დვ-თკ-ნპ-ტფ-ჰ]{"\xad"})";
+            var pattern = "\xad([ბ-დვ-თკ-ნპ-ტფ-ჰ]{1,2}\xad)";
+            var pattern2 = @"\xad([ბ-დვ-თკ-ნპ-ტფ-ჰ]{2,6})\b";
             var regex = new Regex(pattern);
+            var regex2 = new Regex(pattern2);
             text = regex.Replace(text, "$1");
+            text = regex2.Replace(text, "$1");
 
             return text;
         }
 
         public string CleanLastConpunct(string text)
         {
-            var pattern = $@"{"\xad"}(ი[სხნ][\ \.\,\!\?\)\-\;\:\“^13])";
+            var pattern = $@"\xad(ი[სხნ][\ \.\,\!\?\)\-\;\:\“^13])\b";
+            var pattern2 = @"(^\s|«|-|—|─|\(|„|”|\n[ა-ჰ]{2})\xad([ა-ჰ]{2}\s|\.|\,|\!|\?|\)|\-|\;|\:|\»|\“|\n|$)";
             var regex = new Regex(pattern);
+            var regex2 = new Regex(pattern2);
             text = regex.Replace(text, "$1");
+            text = regex2.Replace(text, "$1$2");
 
             return text;
         }

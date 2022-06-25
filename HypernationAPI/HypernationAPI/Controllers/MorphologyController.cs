@@ -97,6 +97,35 @@ namespace HypernationAPI.Controllers
             }
         }
 
+        [Route("api/Morphology/GetMorphologyWName/{wrong_word}")]
+        [HttpGet]
+        public HttpResponseMessage GetMorphologyWName(string wrong_word)
+        {
+            try
+            {
+                MorphologyDTO dt = _morphManagement.GetMorphology(wrong_word);
+
+                string jObject = JsonConvert.SerializeObject(dt);
+
+                HttpResponseMessage result = new HttpResponseMessage(HttpStatusCode.OK)
+                {
+                    Content = new StringContent(jObject, Encoding.UTF8, "application/json")
+                };
+
+                return result;
+            }
+            catch (HttpException ex)
+            {
+                HttpResponseMessage result = Request.CreateResponse(HttpStatusCode.BadRequest);
+                result.Content = new StringContent(ex.Message);
+                return result;
+            }
+            catch
+            {
+                return Request.CreateResponse(HttpStatusCode.InternalServerError);
+            }
+        }
+
         [Route("api/Morphology/AddMorphology")]
         [HttpPost]
         public HttpResponseMessage AddMorphology([FromBody] MorphologyDTO bdt)

@@ -70,11 +70,40 @@ namespace HypernationAPI.Controllers
 
         [Route("api/Barbarism/GetBarbarism/{id}")]
         [HttpGet]
-        public HttpResponseMessage GetBarbarism(string id)
+        public HttpResponseMessage GetBarbarism(int id)
         {
             try
             {
                 BarbarismDTO dt = _barbManagement.GetBarbarism(id);
+
+                string jObject = JsonConvert.SerializeObject(dt);
+
+                HttpResponseMessage result = new HttpResponseMessage(HttpStatusCode.OK)
+                {
+                    Content = new StringContent(jObject, Encoding.UTF8, "application/json")
+                };
+
+                return result;
+            }
+            catch (HttpException ex)
+            {
+                HttpResponseMessage result = Request.CreateResponse(HttpStatusCode.BadRequest);
+                result.Content = new StringContent(ex.Message);
+                return result;
+            }
+            catch
+            {
+                return Request.CreateResponse(HttpStatusCode.InternalServerError);
+            }
+        }
+
+        [Route("api/Barbarism/GetBarbarismWName/{wrongWord}")]
+        [HttpGet]
+        public HttpResponseMessage GetBarbarismWName(string wrongWord)
+        {
+            try
+            {
+                BarbarismDTO dt = _barbManagement.GetBarbarism(wrongWord);
 
                 string jObject = JsonConvert.SerializeObject(dt);
 

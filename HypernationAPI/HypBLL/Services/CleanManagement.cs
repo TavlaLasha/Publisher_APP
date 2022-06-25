@@ -57,28 +57,19 @@ namespace BLL.Services
             if (docClean == null)
                 throw new Exception("Invalid request: No instructions given.");
 
-            if (docClean.CleanSpaces)
-                Text = CleanSpaces(Text);
+            //if (docClean.CleanSpaces)
+            //    Text = CleanSpaces(Text);
 
-            //if (docClean.CleanNewLines)
-            //    Text = CleanNewLines(Text);
+            if (docClean.CleanExcessParagraphs)
+                Text = CleanExcParagraphs(Text);
 
-            //if (docClean.CleanExcessParagraphs)
-            //    Text = CleanExcParagraphs(Text);
+            if (docClean.CorrectPDashStarts)
+                Text = CorrectPDashStarts(Text);
 
-            //if (docClean.CorrectPDashStarts)
-            //    Text = CorrectPDashStarts(Text);
-
-            //if (docClean.CleanTabs)
-            //    Text = CleanTabs(Text);
+            if (docClean.CleanTabs)
+                Text = CleanTabs(Text);
 
             return Text;
-        }
-
-        public Application CleanOldHyp(Application wordApp)
-        {
-            wordApp = FindAndReplace(wordApp, "^-", "");
-            return wordApp;
         }
 
         public Application CleanExcParagraphs(Application wordApp)
@@ -90,6 +81,7 @@ namespace BLL.Services
         public Application CleanSpaces(Application wordApp)
         {
             wordApp = FindAndReplace(wordApp, " [ ]@([! ])", @" \1");
+            wordApp = FindAndReplace(wordApp, @"(?) ([\.\,\;])", @"\1\2");
             return wordApp;
         }
 

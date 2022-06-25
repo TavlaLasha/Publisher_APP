@@ -68,7 +68,7 @@ namespace BLL.Services
                 throw new Exception("File not specified or does not exist");
 
         }
-        public bool HypernateDocument()
+        public bool HyphenateDocument()
         {
             if (WordDoc == null)
                 throw new Exception("Document not open");
@@ -239,18 +239,20 @@ namespace BLL.Services
                                         ref missing, ref missing, ref missing,
                                         ref missing, ref missing, ref missing);
 
-            WordDoc.Close();
-            WordApp.Quit(WdSaveOptions.wdSaveChanges);
-            WordDoc = null;
-            WordApp = null;
         }
         public void CloseDoc()
         {
-            if (WordDoc != null && WordApp != null)
+            try
             {
-                WordDoc.Close(WdSaveOptions.wdDoNotSaveChanges);
-                WordApp.Quit(WdSaveOptions.wdDoNotSaveChanges);
+                if (WordDoc != null && WordApp != null)
+                {
+                    WordDoc.Close(WdSaveOptions.wdDoNotSaveChanges);
+                    WordApp.Quit(WdSaveOptions.wdDoNotSaveChanges);
+                    WordDoc = null;
+                    WordApp = null;
+                }
             }
+            catch {}
         }
     }
 }

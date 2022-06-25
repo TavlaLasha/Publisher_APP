@@ -82,6 +82,7 @@ namespace BLL.Services
         {
             Console.WriteLine("CleanSpaces");
             wordApp = FindAndReplace(wordApp, " [ ]@([! ])", @" \1");
+            wordApp = FindAndReplace(wordApp, @"(?) ([\.\,\;])", @"\1\2");
             return wordApp;
         }
 

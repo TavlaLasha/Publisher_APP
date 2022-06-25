@@ -10,7 +10,7 @@ namespace BLL.Contracts
 {
     public interface IWorkWithDoc
     {
-        bool HypernateDocument();
+        bool HyphenateDocument();
         bool CleanDocument(DocCleanDCM docClean);
         DocDTO GetPages(int page, bool clean);
     }

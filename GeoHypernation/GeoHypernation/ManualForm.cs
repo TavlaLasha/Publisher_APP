@@ -70,9 +70,7 @@ namespace GeoHypernation
                                 
                                 //Change_working_state(false);
                                 richTextBox.SetTextAsync(Text);
-                                progress_lbl.SetTextAsync("ტექსტი წარმატებით დამუშავდა");
-                                Thread.Sleep(2000);
-                                progress_lbl.SetTextAsync("");
+                                Display_Info("ტექსტი წარმატებით დამუშავდა");
                             }
                             catch
                             {
@@ -112,10 +110,12 @@ namespace GeoHypernation
                     if (!string.IsNullOrEmpty((string)Clipboard.GetText()))
                     {
                         string data = (string)Clipboard.GetText();
-                        var pattern = ((char)31).ToString();
+                        var pattern = $"[{((char)31).ToString()}¬]";
                         var regex = new Regex(pattern);
                         data = regex.Replace(data, "\xad");
-                        richTextBox.Text += data;
+                        richTextBox.Focus();
+                        richTextBox.SelectedText = data;
+                        Display_Info("ტექსტი წარმატებით ჩაკოპირდა");
                     }
                     e.Handled = true;
                 }
@@ -128,7 +128,10 @@ namespace GeoHypernation
                         var regex = new Regex(pattern);
                         data = regex.Replace(data, ((char)31).ToString());
                         Clipboard.SetText(data);
+                        Display_Info("ტექსტი წარმატებით დაკოპირდა");
                     }
+                    else
+                        Display_Info("ტექსტის არეალი ცარიელია");
                     e.Handled = true;
                 }
             }
@@ -145,10 +148,12 @@ namespace GeoHypernation
                 if (!string.IsNullOrEmpty((string)Clipboard.GetText()))
                 {
                     string data = (string)Clipboard.GetText();
-                    var pattern = ((char)31).ToString();
+                    var pattern = $"[{((char)31).ToString()}¬]";
                     var regex = new Regex(pattern);
                     data = regex.Replace(data, "\xad");
-                    richTextBox.Text += data;
+                    richTextBox.Focus();
+                    richTextBox.SelectedText = data;
+                    Display_Info("ტექსტი წარმატებით ჩაკოპირდა");
                 }
             }
             catch (Exception ex)
@@ -168,7 +173,10 @@ namespace GeoHypernation
                     var regex = new Regex(pattern);
                     data = regex.Replace(data, ((char)31).ToString());
                     Clipboard.SetText(data);
+                    Display_Info("ტექსტი წარმატებით დაკოპირდა");
                 }
+                else
+                    Display_Info("ტექსტის არეალი ცარიელია");
             }
             catch (Exception ex)
             {
@@ -186,6 +194,33 @@ namespace GeoHypernation
             catch
             {
                 MessageBox.Show($"მოხდა შეცდომა. ბოდიშს გიხდით\n\nOnHelp", "შეცდომა", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void Display_Info(string info)
+        {
+            try
+            {
+                Thread th = new Thread(
+                    delegate ()
+                    {
+                        try
+                        {
+                            progress_lbl.SetText(info);
+                            Thread.Sleep(2000);
+                            progress_lbl.SetText("");
+                        }
+                        catch
+                        {
+                            //Oh Well... Ignore
+                        }
+                    });
+                th.SetApartmentState(ApartmentState.STA);
+                th.Start();
+            }
+            catch
+            {
+                //Oh Well... Ignore
             }
         }
     }

@@ -96,6 +96,17 @@ namespace DAL.Repository
                 Description = i.description
             }).FirstOrDefault();
         }
+
+        public MorphologyDTO GetMorphology(string wrong_word)
+        {
+            return _db.Morphologies.Where(i => i.wrong_word.Equals(wrong_word)).Select(i => new MorphologyDTO
+            {
+                Id = i.id,
+                Wrong_Word = i.wrong_word,
+                Correct_Word = i.correct_word,
+                Description = i.description
+            }).FirstOrDefault();
+        }
         public bool ExistsMorphologyId(int id)
         {
             return _db.Morphologies.Any(i => i.id == id);

@@ -11,7 +11,8 @@ namespace BLL.Contracts
     {
         FoundOccurrencesDTO FindMorphologies(string text);
         IEnumerable<MorphologyDTO> GetAllMorphologies();
-        MorphologyDTO GetMorphology(string id);
+        MorphologyDTO GetMorphology(int id);
+        MorphologyDTO GetMorphology(string wrong_word);
         bool AddMorphology(MorphologyDTO morphDTO);
         bool EditMorphology(string id, MorphologyDTO morphDTO);
         bool DeleteMorphology(string id);

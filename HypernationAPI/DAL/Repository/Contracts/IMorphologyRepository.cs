@@ -11,6 +11,7 @@ namespace DAL.Repository.Contracts
     {
         IEnumerable<MorphologyDTO> GetAllMorphologies();
         MorphologyDTO GetMorphology(int id);
+        MorphologyDTO GetMorphology(string wrong_word);
         bool ExistsMorphology(string wrong_word);
         bool ExistsMorphologyId(int id);
         bool AddMorphology(MorphologyDTO morphDTO);

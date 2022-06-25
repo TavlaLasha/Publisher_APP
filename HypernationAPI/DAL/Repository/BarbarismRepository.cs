@@ -92,6 +92,17 @@ namespace DAL.Repository
             }).FirstOrDefault();
         }
 
+        public BarbarismDTO GetBarbarism(string wrong_word)
+        {
+            return _db.Barbarisms.Where(i => i.wrong_word.Equals(wrong_word)).Select(i => new BarbarismDTO
+            {
+                Id = i.id,
+                Wrong_Word = i.wrong_word,
+                Correct_Word = i.correct_word,
+                Description = i.description
+            }).FirstOrDefault();
+        }
+
         public IEnumerable<BarbarismDTO> GetAllBarbarisms()
         {
             return _db.Barbarisms.Select(i => new BarbarismDTO

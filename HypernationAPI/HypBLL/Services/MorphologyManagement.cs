@@ -78,7 +78,7 @@ namespace BLL.Services
             if (id == string.Empty || Convert.ToInt32(id) < 1)
                 throw new HttpException("No ID given");
 
-            if (_unitOfWork.MorphologyRepo.ExistsMorphology(id))
+            if (!_unitOfWork.MorphologyRepo.ExistsMorphology(id))
                 throw new HttpException($"Data with ID: {id} could not be found");
 
             _unitOfWork.MorphologyRepo.DeleteMorphology(Convert.ToInt32(id));
@@ -105,20 +105,31 @@ namespace BLL.Services
             return true;
         }
 
-        public MorphologyDTO GetMorphology(string id)
+        public MorphologyDTO GetMorphology(int id)
         {
             UnitOfWork _unitOfWork = new UnitOfWork(new DAL.EF.GeoHypDBContext());
-            if (id == string.Empty || Convert.ToInt32(id) < 1)
+            if (id < 1)
                 throw new HttpException("No ID given");
 
-            int Id = Convert.ToInt32(id);
-            if(!_unitOfWork.MorphologyRepo.ExistsMorphologyId(Id))
-                throw new HttpException($"Data with ID: {Id} could not be found");
+            if(!_unitOfWork.MorphologyRepo.ExistsMorphologyId(id))
+                throw new HttpException($"Data with ID: {id} could not be found");
 
-            return _unitOfWork.MorphologyRepo.GetMorphology(Id);
+            return _unitOfWork.MorphologyRepo.GetMorphology(id);
         }
 
-        public IEnumerable<MorphologyDTO> GetAllMorphologies()
+        public MorphologyDTO GetMorphology(string wrong_word)
+        {
+            UnitOfWork _unitOfWork = new UnitOfWork(new DAL.EF.GeoHypDBContext());
+            if (string.IsNullOrEmpty(wrong_word))
+                throw new HttpException("No wrong_word given");
+
+            if(!_unitOfWork.MorphologyRepo.ExistsMorphology(wrong_word))
+                throw new HttpException($"Data: {wrong_word} could not be found");
+
+            return _unitOfWork.MorphologyRepo.GetMorphology(wrong_word);
+        }
+
+    public IEnumerable<MorphologyDTO> GetAllMorphologies()
         {
             UnitOfWork _unitOfWork = new UnitOfWork(new DAL.EF.GeoHypDBContext());
             return _unitOfWork.MorphologyRepo.GetAllMorphologies();

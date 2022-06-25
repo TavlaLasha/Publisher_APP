@@ -95,13 +95,15 @@ namespace BLL
         }
         public Application CleanConstr(Application wordApp)
         {
-            wordApp = FindAndReplace(wordApp, ((char)31).ToString() + $@"([ბ-დვ-თკ-ნპ-ტფ-ჰ]{((char)31).ToString()})", @"\1");
+            wordApp = FindAndReplace(wordApp, ((char)31).ToString() + @"([ბ-დვ-თკ-ნპ-ტფ-ჰ]{1,2}" + ((char)31).ToString() + ")", @"\1");
+            wordApp = FindAndReplace(wordApp, ((char)31).ToString() + @"([ბ-დვ-თკ-ნპ-ტფ-ჰ]{2,6}[\ \.\,\!\?\)\-\;\:\»\“^13])", @"\1");
             return wordApp;
         }
 
         public Application CleanLastConpunct(Application wordApp)
         {
             wordApp = FindAndReplace(wordApp, $@"{((char)31).ToString()}(ი[სხნ][\ \.\,\!\?\)\-\;\:\“^13])", @"\1");
+            wordApp = FindAndReplace(wordApp, @"([^13\ ][ა-ჰ]{2})" + ((char)31).ToString() + @"([ა-ჰ]{2}[\ \.\,\!\?\)\-\;\:\»\“^13])", @"\1\2");
             return wordApp;
         }
 

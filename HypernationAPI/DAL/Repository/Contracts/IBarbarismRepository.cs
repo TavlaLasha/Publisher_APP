@@ -11,6 +11,7 @@ namespace DAL.Repository.Contracts
     {
         IEnumerable<BarbarismDTO> GetAllBarbarisms();
         BarbarismDTO GetBarbarism(int id);
+        BarbarismDTO GetBarbarism(string barbarism);
         bool ExistsBarbarismId(int id);
         bool ExistsBarbarism(string wrong_word);
         bool AddBarbarism(BarbarismDTO brbDTO);
