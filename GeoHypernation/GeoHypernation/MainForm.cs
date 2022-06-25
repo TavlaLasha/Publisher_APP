@@ -293,6 +293,8 @@ namespace GeoHypernation
                 Working = working;
                 loading_box.SetVisibleAsync(Working);
                 Update_Prev_Next_State(disabled: Working);
+                start_btn.SetEnabled(!Working);
+                Save_btn.SetEnabled(!Working);
 
                 List<Button> btn = Pagination_Box.Controls.OfType<Button>().ToList();
                 foreach (var b in btn)
@@ -652,14 +654,17 @@ namespace GeoHypernation
         {
             try
             {
-                if (!IsSaved)
+                if (!Working)
                 {
-                    DialogResult dlgResult = MessageBox.Show("დარწმუნებული ხართ რომ არ გინდათ დამუშავებული ფაილის შენახვა?\n\nდოკუმენტზე განხორციელებული ყველა ცვლილება დაიკარგება.", "წაიშალოს ცვლილებები?", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-                    if (dlgResult == DialogResult.Yes)
+                    if (!IsSaved)
+                    {
+                        DialogResult dlgResult = MessageBox.Show("დარწმუნებული ხართ რომ არ გინდათ დამუშავებული ფაილის შენახვა?\n\nდოკუმენტზე განხორციელებული ყველა ცვლილება დაიკარგება.", "წაიშალოს ცვლილებები?", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                        if (dlgResult == DialogResult.Yes)
+                            Close_Doc();
+                    }
+                    else
                         Close_Doc();
                 }
-                else
-                    Close_Doc();
             }
             catch
             {
