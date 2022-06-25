@@ -55,14 +55,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="GeoHypernation.exe" size="1339832">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="GeoHypernation.exe" size="1335224">
       <assemblyIdentity name="GeoHypernation" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>zggy9eXJuJrmD7ryh0+Yf9eUVmZ5FuYjSMJumZQLfQA=</dsig:DigestValue>
+        <dsig:DigestValue>Ll1vq16SAU3wtzqVovkscdm3GUIJaCO3RwPoLd1JuV4=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
