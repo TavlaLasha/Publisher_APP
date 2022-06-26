@@ -43,26 +43,26 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="BLL.dll" size="24576">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="BLL.dll" size="26112">
       <assemblyIdentity name="BLL" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>yWRI4nopdVu3ftJcwEUdpNKgm4gAv7jFnxiKnkd8u0k=</dsig:DigestValue>
+        <dsig:DigestValue>p7bmt4be1Ty5KOlz/x87S8PM8JMOdoARMP9JdrOzTZY=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="GeoHypernation.exe" size="1335224">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="GeoHypernation.exe" size="1335736">
       <assemblyIdentity name="GeoHypernation" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>u5ABIHDKlnbHgo+NAkP3bN9X5p9sv/IfdqXoCfYdtYw=</dsig:DigestValue>
+        <dsig:DigestValue>iu9NThDhmG0BSQxWaLymfA/sfNasAharuWjGpEt4dzY=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

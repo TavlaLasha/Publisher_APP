@@ -1,16 +1,1 @@
-﻿<License>
-  <Id>30c87d26-1824-4a8f-a533-4a479b799230</Id>
-  <Type>Trial</Type>
-  <Expiration>Sun, 17 Jul 2022 18:19:33 GMT</Expiration>
-  <Quantity>5</Quantity>
-  <ProductFeatures>
-    <Feature name="Sales Module">yes</Feature>
-    <Feature name="Purchase Module">yes</Feature>
-    <Feature name="Maximum Transactions">10000</Feature>
-  </ProductFeatures>
-  <Customer>
-    <Name>John Doe</Name>
-    <Email>john.doe@example.com</Email>
-  </Customer>
-  <Signature>MEUCIQC1OVIPe7a/NY0cmwTHpLIL961N7+Phqpmt5Kx5ZSocHQIgDET2CXU2bjzWW0YavvkqXKL5mGzrXMqC5N0VQtIvzKM=</Signature>
-</License>
+﻿<?xml version="1.0" encoding="utf-8"?><License><Id>ff72e32b-0688-46b8-b8b6-e7e38670c909</Id><Type>Trial</Type><Expiration>Wed, 10 Aug 2022 00:03:35 GMT</Expiration><Quantity>5</Quantity><ProductFeatures><Feature name="Limited">false</Feature></ProductFeatures><Customer><Name>GAU</Name><Email>gau.edu.ge</Email></Customer><Signature>MEYCIQDvQN1olCwjAnDnxFZjvps1Wy555R+asHQnmziBktq93AIhAPQUYDjbiFK+HHIlLIP5K6Qfma3Bw0Tt6aCMocfGXpJZ</Signature></License>

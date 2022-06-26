@@ -59,17 +59,16 @@ namespace GeoHypernation
             //var license = Standard.Licensing.License.New()
             //    .WithUniqueIdentifier(Guid.NewGuid())
             //    .As(LicenseType.Trial)
-            //    .ExpiresAt(DateTime.Now.AddDays(30))
+            //    .ExpiresAt(DateTime.Now.AddDays(45))
             //    .WithMaximumUtilization(5)
             //    .WithProductFeatures(new Dictionary<string, string>
             //        {
-            //            {"Sales Module", "yes"},
-            //            {"Purchase Module", "yes"},
-            //            {"Maximum Transactions", "10000"}
+            //            {"Limited", "false"}
             //        })
-            //    .LicensedTo("John Doe", "john.doe@example.com")
+            //    .LicensedTo("GAU", "gau.edu.ge")
             //    .CreateAndSignWithPrivateKey(privateKey, passPhrase);
 
+            //using (var xmlWriter = System.Xml.XmlWriter.Create("License.lic")) { license.Save(xmlWriter); }
             //File.WriteAllText("License.lic", license.ToString(), Encoding.UTF8);
         }
 
@@ -786,7 +785,34 @@ namespace GeoHypernation
         protected override void OnShown(EventArgs e)
         {
             base.OnShown(e);
-            if (lc.license == null)
+            try
+            {
+                if (lc.Check())
+                {
+                    int days = (lc.days > 0) ? lc.days : 0;
+                    //if(days>0)
+                    //    this.SetTextAsync($"ჩამშვები — საცდელი (დარჩენილია {days} დღე)");
+                }
+                else
+                {
+                    limited = true;
+                    this.SetTextAsync("ჩამშვები — უფასო");
+                    LicenseForm lcf = new LicenseForm();
+                    DialogResult result = lcf.ShowDialog();
+                    if (result == DialogResult.Cancel)
+                        this.Close();
+                    limited = true;
+                }
+                if (limited)
+                {
+                    hyp_chkbx.SetChecked(false);
+                    hyp_chkbx.SetAutoCheck(false);
+                    hyp_chkbx.Click += Not_Allowed_Event;
+                    ForIndesign_chkbx.SetAutoCheck(false);
+                    ForIndesign_chkbx.Click += Not_Allowed_Event;
+                }
+            }
+            catch
             {
                 limited = true;
                 this.SetTextAsync("ჩამშვები — უფასო");
@@ -794,14 +820,7 @@ namespace GeoHypernation
                 DialogResult result = lcf.ShowDialog();
                 if (result == DialogResult.Cancel)
                     this.Close();
-                limited = true;
-            }
-            else if (lc.license.Type == LicenseType.Trial)
-            {
-                this.SetTextAsync("ჩამშვები — საცდელი (დარჩენილია 7 დღე)");
-            }
-            if (limited)
-            {
+
                 hyp_chkbx.SetChecked(false);
                 hyp_chkbx.SetAutoCheck(false);
                 hyp_chkbx.Click += Not_Allowed_Event;
@@ -813,7 +832,7 @@ namespace GeoHypernation
         {
             try
             {
-                ManualForm mf = new ManualForm();
+                ManualForm mf = new ManualForm(limited);
                 mf.Show();
             }
             catch (Exception ex)

@@ -20,10 +20,19 @@ namespace GeoHypernation
         private bool Working = false;
         private string Text;
         WorkWithDoc wwd;
-        public ManualForm()
+        private bool limited;
+        public ManualForm(bool limited)
         {
             InitializeComponent();
             Text = string.Empty;
+            this.limited = limited;
+
+            if (limited)
+            {
+                hyp_chkbx.SetChecked(false);
+                hyp_chkbx.SetAutoCheck(false);
+                hyp_chkbx.Click += Not_Allowed_Event;
+            }
         }
 
         private void Start_btn_Click(object sender, EventArgs e)
@@ -222,6 +231,11 @@ namespace GeoHypernation
             {
                 //Oh Well... Ignore
             }
+        }
+
+        private void Not_Allowed_Event(object sender, EventArgs e)
+        {
+            MessageBox.Show("მოთხოვნილი ფუნქცია მიეკუთვნება პრემიუმ ვერსიას.", "უფასო ვერსიის შეზღუდვა", MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
     }
 }
