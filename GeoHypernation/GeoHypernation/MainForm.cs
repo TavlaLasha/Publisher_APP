@@ -790,8 +790,8 @@ namespace GeoHypernation
                 if (lc.Check())
                 {
                     int days = (lc.days > 0) ? lc.days : 0;
-                    //if(days>0)
-                    //    this.SetTextAsync($"ჩამშვები — საცდელი (დარჩენილია {days} დღე)");
+                    if (days > 0)
+                        this.SetTextAsync($"ჩამშვები — საცდელი (დარჩენილია {days} დღე)");
                 }
                 else
                 {
